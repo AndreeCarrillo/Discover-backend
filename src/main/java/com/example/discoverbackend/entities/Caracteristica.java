@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Entity
 @Table(name="caracteristicas")
 @Data
@@ -15,11 +13,15 @@ public class Caracteristica {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String descripcion;
+
 
     @ManyToOne
     @JoinColumn(name = "tipo_caracteristica_id")
-    private TipoCaracterisitica tipoCaracterisitica;
+    private TipoCaracteristica tipoCaracteristica;
 
 
+    public Caracteristica(String name, TipoCaracteristica tipoCaracteristica) {
+        this.name = name;
+        this.tipoCaracteristica = tipoCaracteristica;
+    }
 }

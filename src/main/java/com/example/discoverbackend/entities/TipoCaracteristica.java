@@ -10,12 +10,16 @@ import java.util.List;
 @Table(name="tipos_caracteristicas")
 @Data
 @NoArgsConstructor
-public class TipoCaracterisitica {
+public class TipoCaracteristica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "tipo_caracteristica")
+    @OneToMany(mappedBy = "tipoCaracteristica")
     private List<Caracteristica> caracteristicas;
+
+    public TipoCaracteristica(String name) {
+        this.name = name;
+    }
 }
