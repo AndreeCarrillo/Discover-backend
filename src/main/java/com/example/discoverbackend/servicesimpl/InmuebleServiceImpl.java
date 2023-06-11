@@ -1,12 +1,23 @@
 package com.example.discoverbackend.servicesimpl;
 
+<<<<<<< HEAD
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> 0bcc5c7027ed3d59af720dc54c2f8aefca7d35af
 import com.example.discoverbackend.entities.Inmueble;
 import com.example.discoverbackend.entities.Usuario;
 import com.example.discoverbackend.entities.Ubigeo;
 import com.example.discoverbackend.repositories.InmuebleRepository;
+<<<<<<< HEAD
 import com.example.discoverbackend.services.InmuebleService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+=======
+import com.example.discoverbackend.repositories.UbigeoRepository;
+import com.example.discoverbackend.repositories.UsuarioRepository;
+import com.example.discoverbackend.services.InmuebleService;
+import jakarta.transaction.Transactional;
+>>>>>>> 0bcc5c7027ed3d59af720dc54c2f8aefca7d35af
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,4 +49,11 @@ public class InmuebleServiceImpl implements InmuebleService {
         return newInmueble;
     }
 
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> 0bcc5c7027ed3d59af720dc54c2f8aefca7d35af
 }

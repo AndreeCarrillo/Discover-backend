@@ -7,6 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+<<<<<<< HEAD
+=======
+import java.util.EmptyStackException;
+>>>>>>> 0bcc5c7027ed3d59af720dc54c2f8aefca7d35af
 import java.util.List;
 
 @CrossOrigin(origins = "htpp://localhost:4200")
@@ -29,12 +33,17 @@ public class InmuebleController {
         return new ResponseEntity<Inmueble>(inmueble, HttpStatus.OK);
     }
 
+<<<<<<< HEAD
     @PostMapping("/inmuebles")
+=======
+    @PostMapping ("/inmuebles")
+>>>>>>> 0bcc5c7027ed3d59af720dc54c2f8aefca7d35af
     public ResponseEntity<Inmueble> createInmueble(@RequestBody Inmueble inmueble) {
         Inmueble newInmueble = inmuebleService.save(inmueble);
         return new ResponseEntity<Inmueble>(newInmueble, HttpStatus.CREATED);
     }
 
+<<<<<<< HEAD
     // @DeleteMapping("/inmuebles/{id}")
     //public ResponseEntity<HttpStatus> deleteInmueble(@PathVariable("id") Long id) {
     //inmuebleService.delete(id, true);
@@ -42,4 +51,12 @@ public class InmuebleController {
     //}
 
 
+=======
+   // @DeleteMapping("/inmuebles/{id}")
+    //public ResponseEntity<HttpStatus> deleteInmueble(@PathVariable("id") Long id) {
+        //inmuebleService.delete(id, true);
+        //return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    //}
+
+>>>>>>> 0bcc5c7027ed3d59af720dc54c2f8aefca7d35af
 }
