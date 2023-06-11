@@ -5,12 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="usuarios")
 @Data
 @NoArgsConstructor
 public class Usuario {
+
+    // estas  TMR LO MAS IMPORTANTE NO VEESSSSS JOFE PERO VEEEEESSS MIS ENTITIES?
+    // escuchas
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,8 +31,11 @@ public class Usuario {
     private Date dateBirth;
     private Date dateAffiliation;
 
+    @OneToMany (mappedBy = "usuario",  cascade={CascadeType.REMOVE})
+    private List<Inmueble> inmuebles;
 
-    public Usuario(String firstName, String lastNameDad, String lastNameMom, String dni, String telephone, String email, String password, String linkPhotoDni, String linkPhotoProfile, Date dateBirth, Date dateAffiliation) {
+
+    public Usuario(String firstName, String lastNameDad, String lastNameMom, String dni, String telephone, String email, String password, String linkPhotoDni, String linkPhotoProfile, Date dateBirth, Date dateAffiliation, List<Inmueble> inmuebles) {
         this.firstName = firstName;
         this.lastNameDad = lastNameDad;
         this.lastNameMom = lastNameMom;
@@ -40,5 +47,6 @@ public class Usuario {
         this.linkPhotoProfile = linkPhotoProfile;
         this.dateBirth = dateBirth;
         this.dateAffiliation = dateAffiliation;
+        this.inmuebles = inmuebles;
     }
 }
