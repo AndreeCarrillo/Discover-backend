@@ -39,7 +39,7 @@ public class InmuebleServiceImpl implements InmuebleService {
 
     @Transactional
     public Inmueble save(Inmueble inmueble){
-        Inmueble newInmueble = inmuebleRepository.save(new Inmueble(inmueble.getAddress(), inmueble.getPrice(), inmueble.getNumBedrooms(), inmueble.getNumBathrooms(), inmueble.getNumGuests(), inmueble.getSquareMeter(), inmueble.getTimeAntiquity(), inmueble.getPhotoLink(), inmueble.getDescription(), inmueble.getUsuario(), inmueble.getUbigeo()));
+        Inmueble newInmueble = inmuebleRepository.save(new Inmueble( inmueble.getPropertyType(), inmueble.getSharedRoom(), inmueble.getAddress(), inmueble.getPrice(), inmueble.getNumBedrooms(), inmueble.getNumBathrooms(), inmueble.getNumGuests(), inmueble.getSquareMeter(), inmueble.getTimeAntiquity(), inmueble.getPhotoLink(), inmueble.getDescription(), inmueble.getUsuario(), inmueble.getUbigeo()));
         return newInmueble;
     }
 

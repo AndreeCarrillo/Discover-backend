@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
+
 @Entity
 @Table(name = "inmuebles")
 @Data
@@ -13,6 +16,8 @@ public class Inmueble {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String propertyType;
+    private String sharedRoom;
     private String address;
     private Double price;
     private Integer numBedrooms;
@@ -20,7 +25,8 @@ public class Inmueble {
     private Integer numGuests;
     private Integer squareMeter;
     private String timeAntiquity;
-    private String photoLink;
+    @ElementCollection
+    private List<String> photoLink;
     private String description;
 
     @ManyToOne
@@ -31,7 +37,10 @@ public class Inmueble {
     @JoinColumn(name = "ubigeo_id")
     private Ubigeo ubigeo;
 
-    public Inmueble(String address, Double price, Integer numBedrooms, Integer numBathrooms, Integer numGuests, Integer squareMeter, String timeAntiquity, String photoLink, String description, Usuario usuario, Ubigeo ubigeo) {
+
+    public Inmueble(String propertyType, String sharedRoom, String address, Double price, Integer numBedrooms, Integer numBathrooms, Integer numGuests, Integer squareMeter, String timeAntiquity, List<String> photoLink, String description, Usuario usuario, Ubigeo ubigeo) {
+        this.propertyType = propertyType;
+        this.sharedRoom = sharedRoom;
         this.address = address;
         this.price = price;
         this.numBedrooms = numBedrooms;
@@ -44,5 +53,4 @@ public class Inmueble {
         this.usuario = usuario;
         this.ubigeo = ubigeo;
     }
-
 }

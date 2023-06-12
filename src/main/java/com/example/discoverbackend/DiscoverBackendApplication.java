@@ -1,13 +1,15 @@
 package com.example.discoverbackend;
 
-import com.example.discoverbackend.entities.Caracteristica;
-import com.example.discoverbackend.entities.TipoCaracteristica;
-import com.example.discoverbackend.repositories.CaracteristicaRepository;
-import com.example.discoverbackend.repositories.TipoCaracteristicaRepository;
+import com.example.discoverbackend.entities.*;
+import com.example.discoverbackend.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+
+import java.util.Arrays;
+import java.util.Date;
 
 @SpringBootApplication
 public class DiscoverBackendApplication {
@@ -19,7 +21,10 @@ public class DiscoverBackendApplication {
     @Bean
     public CommandLineRunner mappingDemo(
         CaracteristicaRepository caracteristicaRepository,
-        TipoCaracteristicaRepository tipoCaracteristicaRepository
+        TipoCaracteristicaRepository tipoCaracteristicaRepository,
+        InmuebleRepository inmuebleRepository,
+        UsuarioRepository usuarioRepository,
+        UbigeoRepository ubigeoRepository
     ){
         return args -> {
             tipoCaracteristicaRepository.save(new TipoCaracteristica("Servicios"));
@@ -60,6 +65,41 @@ public class DiscoverBackendApplication {
             caracteristicaRepository.save(new Caracteristica("Central", tipo4));
             caracteristicaRepository.save(new Caracteristica("Espacioso", tipo4));
             caracteristicaRepository.save(new Caracteristica("Elegante", tipo4));
+
+            System.out.println("--------------");
+
+
+            usuarioRepository.save(new Usuario("Vanessa", "Castillo", "Gomes", "43451826", "901023352","vanessa.castillo@gmail.com","vanessa_2kamx","https://i.postimg.cc/6QN9f9wF/documento-identidad-peru-vanessa.jpg","https://i.postimg.cc/15qXG7wn/Screenshot-2023-05-01-220937.jpg", new Date(86, 1, 18), new Date(123, 3, 1), null));
+            usuarioRepository.save(new Usuario("Carlos", "Rodríguez","Salas", "23456789", "901012352", "carlos.rodriguez@outlook.com", "Carlos1234", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg","https://i.postimg.cc/nL8PsrZ9/hombre-foto.jpg", new Date(1985,05,15), new Date(2023,04,02), null ));
+            usuarioRepository.save(new Usuario("Fernanda","Gómez", "Vargas","34567890","345678921","fernanda.gomez@yahoo.com","Fernanda1234","https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg","https://i.postimg.cc/BZc4JWTC/retrato-de-joven-feliz-positivo-sonriendo-c-mara-166576783.jpg", new Date(1992,10,30), new Date(2023,04,05),null));
+            usuarioRepository.save(new Usuario("Miguel",  "Sánchez", "Ortiz", "12345696", "923457822", "miguel.sanchez@outlook.com", "Miguel1234", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/qqgLDH4d/inline-image-preview.jpg", new Date(1980,12,20), new Date(2023,04,29), null));
+
+
+            Usuario usuario1 = usuarioRepository.findById(Long.valueOf(1)).get();
+            Usuario usuario2 = usuarioRepository.findById(Long.valueOf(2)).get();
+            Usuario usuario3 = usuarioRepository.findById(Long.valueOf(3)).get();
+            Usuario usuario4 = usuarioRepository.findById(Long.valueOf(4)).get();
+
+            System.out.println("--------------");
+
+            ubigeoRepository.save(new Ubigeo(150101, "Lima", "Lima", "Lima", Arrays.asList(null, null)));
+
+            Ubigeo ubigeo1 = ubigeoRepository.findById(Long.valueOf(1)).get();
+            System.out.println("--------------");
+
+            inmuebleRepository.save(new Inmueble("Departamento", "Habitacion Compartida", "Jirón de la Unión 456, Cercado de Lima", 1200.00, 3, 2, 5, 100,"Más de 10 años", Arrays.asList("https://i.postimg.cc/x8VHg1jq/367345008.webp",
+                    "https://i.postimg.cc/zXZwJ0rK/367345011.webp",
+                    "https://i.postimg.cc/9fRzwHPM/367345009.webp"), "Amplio departamento de 3 dormitorios y 2 baños, ideal para una familia. Ubicada en un vecindario tranquilo y seguro. Cerca de parques y escuelas.", usuario1, ubigeo1));
+
+            inmuebleRepository.save(new Inmueble("Departamento", "Alojamiento Entero", "Calle Los Delfines 123, Urb. Santa Rosa", 750.00, 2, 1, 3, 70,"Menos de 1 año", Arrays.asList("https://i.postimg.cc/KvM9f1Zr/360288971.webp",
+                    "https://i.postimg.cc/T1WctsXY/360288974.jpg",
+                    "https://i.postimg.cc/mZvxTfkj/360288970.webp"), "Moderno departamento de estreno con 2 dormitorios y 1 baño. Excelente ubicación, cerca de centros comerciales y transporte público.", usuario2, ubigeo1));
+
+
+            Inmueble inmueble1 = inmuebleRepository.findById(Long.valueOf(1)).get();
+            Inmueble inmueble2 = inmuebleRepository.findById(Long.valueOf(2)).get();
+
+
         };
     }
 }
