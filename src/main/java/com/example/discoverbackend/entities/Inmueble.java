@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "inmuebles")
 @Data
@@ -31,6 +33,8 @@ public class Inmueble {
     @JoinColumn(name = "ubigeo_id")
     private Ubigeo ubigeo;
 
+    @OneToMany (mappedBy = "inmueble", cascade={CascadeType.REMOVE})
+    private List<Opinion> opiniones;
 
     public Inmueble(String address, Double price, Integer numBedrooms, Integer numBathrooms, Integer numGuests, Integer squareMeter, String timeAntiquity, String photoLink, String description, Usuario usuario, Ubigeo ubigeo) {
         this.address = address;
