@@ -1,5 +1,6 @@
 package com.example.discoverbackend.controllers;
 
+import com.example.discoverbackend.dtos.DTOContactoUsuario;
 import com.example.discoverbackend.entities.Usuario;
 import com.example.discoverbackend.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,11 @@ public class UsuarioController {
     public ResponseEntity<Usuario> getEmployeesById(@PathVariable("id") Long id) {
         Usuario usuario = usuarioService.listById(id);
         return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
+    }
+
+    @GetMapping("/contact/{id}")
+    public ResponseEntity<List<DTOContactoUsuario>> listContactUsuario(@PathVariable("id") Long id){
+        List<DTOContactoUsuario> dtoContactoUsuarios = usuarioService.listContactoUsuario(id);
+        return new ResponseEntity<List<DTOContactoUsuario>>(dtoContactoUsuarios, HttpStatus.OK);
     }
 }

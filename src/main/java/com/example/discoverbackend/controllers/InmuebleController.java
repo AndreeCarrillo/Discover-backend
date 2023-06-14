@@ -12,7 +12,7 @@ import java.util.EmptyStackException;
 
 import java.util.List;
 
-@CrossOrigin(origins = "htpp://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class InmuebleController {

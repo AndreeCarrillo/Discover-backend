@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -68,17 +69,54 @@ public class DiscoverBackendApplication {
 
             System.out.println("--------------");
 
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            usuarioRepository.save(new Usuario("Vanessa", "Castillo", "Gomes", "43451826", "901023352","vanessa.castillo@gmail.com","vanessa_2kamx","https://i.postimg.cc/6QN9f9wF/documento-identidad-peru-vanessa.jpg","https://i.postimg.cc/15qXG7wn/Screenshot-2023-05-01-220937.jpg", formatter.parse("1995-09-12"), formatter.parse("2023-03-14"), null));
+            usuarioRepository.save(new Usuario("Carlos", "Rodríguez","Salas", "23456789", "901012352", "carlos.rodriguez@outlook.com", "Carlos1234", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg","https://i.postimg.cc/nL8PsrZ9/hombre-foto.jpg", new Date(85,05,15), new Date(123,04,02), null ));
+            usuarioRepository.save(new Usuario("Fernanda","Gómez", "Vargas","34567890","345678921","fernanda.gomez@yahoo.com","Fernanda1234","https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg","https://i.postimg.cc/BZc4JWTC/retrato-de-joven-feliz-positivo-sonriendo-c-mara-166576783.jpg", new Date(92,10,30), new Date(2023,04,05),null));
+            usuarioRepository.save(new Usuario("Miguel",  "Sánchez", "Ortiz", "12345696", "923457822", "miguel.sanchez@outlook.com", "Miguel1234", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/qqgLDH4d/inline-image-preview.jpg", new Date(80,12,20), new Date(123,04,29), null));
+            usuarioRepository.save(new Usuario("María",  "Fernández", "Castañeda", "12345697", "912345792", "maria.fernandez@gmail.com", "Maria1234", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/1zZvmdcp/photo-1659332589233-3637f89be936.jpg", new Date(95,10,10), new Date(2023,04,30), null));
+            usuarioRepository.save(new Usuario("Juan",  "Perez", "Paz", "12345678", "987654321", "juan.perez@gmail.com", "Juan1234", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/zXb7nNxC/istockphoto-1212501093-640x640.jpg", new Date(95,10,15), new Date(122,1,1), null));
+            usuarioRepository.save(new Usuario("María",  "López", "Vázquez", "87654321", "765432109", "maria.lopez@example.com", "Maria5678", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/zDcZzJLK/women-i-am-young-girls-beautiful.jpg", new Date(1990,2,12), new Date(122,03,15), null));
+            usuarioRepository.save(new Usuario("Pedro",  "Ramírez", "Gutiérrez", "98765432", "876543210", "pedro.ramirez@example.com", "Pedro9012", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/6Q0f9pQX/happy-smile-face.jpg", new Date(85,05,20), new Date(122,05,10), null));
+            usuarioRepository.save(new Usuario("Luis",  "Gonzales", "Vargas", "34567891", "987654321", "luis.gonzales@example.com", "Luis4567", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/Rh37Q1LS/pexels-photo-6421292.jpg", new Date(88,07,20), new Date(122,06,05), null));
+            usuarioRepository.save(new Usuario("Mónica",  "Díaz", "López", "45678912", "987654321", "monica.diaz@example.com", "Monica8910", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/q7k2ZHxZ/concepto-de-bienestar-y-personas-cierre-una-atractiva-rubia-sonriendo-con-dientes-blancos-mirando-la.jpg", new Date(93,02,18), new Date(122,9,01), null));
+            usuarioRepository.save(new Usuario("Jorge",  "Flores", "Castro", "56789123", "947654321", "jorge.flores@example.com", "Jorge2345", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://example.com/foto_perfil.jpg", new Date(98,11,28), new Date(2022,10,15), null));
+            usuarioRepository.save(new Usuario("Carmen",  "Guzmán", "Ramírez", "67891234", "987624321", "carmen.guzman@example.com", "Carmen3456", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/44K21pdH/personas-reales-feliz-chica-natural-sonriendo-y-mirando-t-mido-la-c-mara-ruboriz-ndose-de-halagos-pi.jpg", new Date(80,06,05), new Date(122,11,1), null));
+            usuarioRepository.save(new Usuario("Antonio",  "Vega", "López", "78912345", "907654817", "antonio.vega@example.com", "Antonio7890", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/j5n6yQXs/joven-dispara-con-su-c-mara-retrato-de-un-asi-tico-gracioso-tomando-fotos-disparando-fot-grafo-casua.jpg", new Date(91,03,14), new Date(123,01,15), null));
+            usuarioRepository.save(new Usuario("Sofía",  "Mendoza", "Gómez", "89123456", "917653021", "sofia.mendoza@example.com", "Sofia5678", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/Y9vRbwpB/portrait-people-cute-girl-smile.jpg", new Date(97,9,20), new Date(2023,03,01), null));
+            usuarioRepository.save(new Usuario("Miguel",  "Castillo", "Hernández", "91234567", "985657311", "miguel.castillo@example.com", "Miguel1234", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/Gm3kX1Qg/man-person-portrait-sitting-smile-smiling-wear-looking-at-camera-one-person-real-people.jpg", new Date(92,12,10), new Date(123,04,15), null));
+            usuarioRepository.save(new Usuario("Laura",  "Martínez", "Vargas", "34567891", "957354001", "laura.martinez@example.com", "Laura5678", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/9McV7JV9/female-indian-young-girl-woman-people.jpg", new Date(87,3,5), new Date(123,06,01), null));
+            usuarioRepository.save(new Usuario("Lorena",  "Hernández", "Sánchez", "45678912", "922654321", "lorena.hernandez@example.com", "Lorena9012", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/zXxLXHCp/istockphoto-1443543154-170667a.jpg", new Date(95,8,2), new Date(123,8,15), null));
+            usuarioRepository.save(new Usuario("Javier",  "González", "Morales", "56789123", "917654451", "javier.gonzalez@example.com", "Javier3456", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/0yJ8Rzcz/pexels-photo-5215015.jpg", new Date(84,11,12), new Date(123,10,12), null));
+            usuarioRepository.save(new Usuario("Marisol",  "Sánchez", "López", "67891234", "981234321", "marisol.sanchez@example.com", "Marisol1234", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/J01nRRt9/sonriente-mujer-bonita-joven-mirando-camara-tocar-cara-1262-15253.jpg", new Date(90,06,18), new Date(123,11,01), null));
+            usuarioRepository.save(new Usuario("Gustavo",  "García", "Pérez", "78912345", "987111321", "gustavo.garcia@example.com", "Gustavo5678", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/SRNywVv4/person-smiling.jpg", new Date(82,9,28), new Date(123,12,15), null));
 
-            usuarioRepository.save(new Usuario("Vanessa", "Castillo", "Gomes", "43451826", "901023352","vanessa.castillo@gmail.com","vanessa_2kamx","https://i.postimg.cc/6QN9f9wF/documento-identidad-peru-vanessa.jpg","https://i.postimg.cc/15qXG7wn/Screenshot-2023-05-01-220937.jpg", new Date(86, 1, 18), new Date(123, 3, 1), null));
-            usuarioRepository.save(new Usuario("Carlos", "Rodríguez","Salas", "23456789", "901012352", "carlos.rodriguez@outlook.com", "Carlos1234", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg","https://i.postimg.cc/nL8PsrZ9/hombre-foto.jpg", new Date(1985,05,15), new Date(2023,04,02), null ));
-            usuarioRepository.save(new Usuario("Fernanda","Gómez", "Vargas","34567890","345678921","fernanda.gomez@yahoo.com","Fernanda1234","https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg","https://i.postimg.cc/BZc4JWTC/retrato-de-joven-feliz-positivo-sonriendo-c-mara-166576783.jpg", new Date(1992,10,30), new Date(2023,04,05),null));
-            usuarioRepository.save(new Usuario("Miguel",  "Sánchez", "Ortiz", "12345696", "923457822", "miguel.sanchez@outlook.com", "Miguel1234", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/qqgLDH4d/inline-image-preview.jpg", new Date(1980,12,20), new Date(2023,04,29), null));
+
+
 
 
             Usuario usuario1 = usuarioRepository.findById(Long.valueOf(1)).get();
             Usuario usuario2 = usuarioRepository.findById(Long.valueOf(2)).get();
             Usuario usuario3 = usuarioRepository.findById(Long.valueOf(3)).get();
             Usuario usuario4 = usuarioRepository.findById(Long.valueOf(4)).get();
+            Usuario usuario5 = usuarioRepository.findById(Long.valueOf(5)).get();
+            Usuario usuario6 = usuarioRepository.findById(Long.valueOf(6)).get();
+            Usuario usuario7 = usuarioRepository.findById(Long.valueOf(7)).get();
+            Usuario usuario8 = usuarioRepository.findById(Long.valueOf(8)).get();
+            Usuario usuario9 = usuarioRepository.findById(Long.valueOf(9)).get();
+            Usuario usuario10 = usuarioRepository.findById(Long.valueOf(10)).get();
+            Usuario usuario11 = usuarioRepository.findById(Long.valueOf(11)).get();
+            Usuario usuario12 = usuarioRepository.findById(Long.valueOf(12)).get();
+            Usuario usuario13 = usuarioRepository.findById(Long.valueOf(13)).get();
+            Usuario usuario14 = usuarioRepository.findById(Long.valueOf(14)).get();
+            Usuario usuario15 = usuarioRepository.findById(Long.valueOf(15)).get();
+            Usuario usuario16 = usuarioRepository.findById(Long.valueOf(16)).get();
+            Usuario usuario17 = usuarioRepository.findById(Long.valueOf(17)).get();
+            Usuario usuario18 = usuarioRepository.findById(Long.valueOf(18)).get();
+            Usuario usuario19 = usuarioRepository.findById(Long.valueOf(19)).get();
+            Usuario usuario20 = usuarioRepository.findById(Long.valueOf(20)).get();
+
+
 
             System.out.println("--------------");
 

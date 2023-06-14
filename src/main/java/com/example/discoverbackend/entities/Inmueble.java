@@ -37,6 +37,8 @@ public class Inmueble {
     @JoinColumn(name = "ubigeo_id")
     private Ubigeo ubigeo;
 
+    @OneToMany (mappedBy = "inmueble", cascade={CascadeType.REMOVE})
+    private List<Opinion> opiniones;
 
     public Inmueble(String propertyType, String sharedRoom, String address, Double price, Integer numBedrooms, Integer numBathrooms, Integer numGuests, Integer squareMeter, String timeAntiquity, List<String> photoLink, String description, Usuario usuario, Ubigeo ubigeo) {
         this.propertyType = propertyType;
