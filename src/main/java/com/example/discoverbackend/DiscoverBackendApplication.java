@@ -9,7 +9,9 @@ import org.springframework.context.annotation.Bean;
 
 
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
 @SpringBootApplication
@@ -120,10 +122,6 @@ public class DiscoverBackendApplication {
             Usuario usuario18 = usuarioRepository.findById(Long.valueOf(18)).get();
             Usuario usuario19 = usuarioRepository.findById(Long.valueOf(19)).get();
             Usuario usuario20 = usuarioRepository.findById(Long.valueOf(20)).get();
-
-            System.out.println("--------------");
-
-            //alquilerrepositories
 
             System.out.println("--------------");
 
@@ -357,7 +355,7 @@ public class DiscoverBackendApplication {
             Foto foto8 = fotoRepository.findById(Long.valueOf(8)).get();
             Foto foto9 = fotoRepository.findById(Long.valueOf(9)).get();
             Foto foto10 = fotoRepository.findById(Long.valueOf(10)).get();
-            Foto foto11= fotoRepository.findById(Long.valueOf(11)).get();
+            Foto foto11 = fotoRepository.findById(Long.valueOf(11)).get();
             Foto foto12 = fotoRepository.findById(Long.valueOf(12)).get();
             Foto foto13 = fotoRepository.findById(Long.valueOf(13)).get();
             Foto foto14 = fotoRepository.findById(Long.valueOf(14)).get();
@@ -492,6 +490,20 @@ public class DiscoverBackendApplication {
             inmuebleFotoRepository.save(new InmuebleFoto(inmueble20, foto48));
             inmuebleFotoRepository.save(new InmuebleFoto(inmueble20, foto31));
 
+            System.out.println("--------------");
+
+            alquilerRepository.save(new Alquiler(usuario1, inmueble1, 1100D, new Date(121, Calendar.APRIL, 1), false));
+            alquilerRepository.save(new Alquiler(usuario3, inmueble3, 1950D, new Date(122,   Calendar.JUNE, 21), false));
+            alquilerRepository.save(new Alquiler(usuario4, inmueble4, 900D, new Date(120,    Calendar.MARCH, 24), false));
+            alquilerRepository.save(new Alquiler(usuario5, inmueble5, 1100D, new Date(121,   Calendar.MARCH, 15), false));
+            alquilerRepository.save(new Alquiler(usuario8, inmueble8, 1400D, new Date(122,   Calendar.DECEMBER, 2), false));
+            alquilerRepository.save(new Alquiler(usuario10, inmueble10, 2500D, new Date(123, Calendar.MARCH, 7), true));
+            alquilerRepository.save(new Alquiler(usuario11, inmueble11, 1100D, new Date(123, Calendar.APRIL, 15), true));
+            alquilerRepository.save(new Alquiler(usuario12, inmueble12, 1600D, new Date(122, Calendar.OCTOBER, 19), false));
+            alquilerRepository.save(new Alquiler(usuario13, inmueble13, 700D, new Date(121,  Calendar.AUGUST,24), false));
+            alquilerRepository.save(new Alquiler(usuario15, inmueble15, 1300D, new Date(123, Calendar.MARCH, 9), true));
+            alquilerRepository.save(new Alquiler(usuario18, inmueble18, 900D, new Date(122,  Calendar.JANUARY,30), false));
+            alquilerRepository.save(new Alquiler(usuario20, inmueble20, 1100D, new Date(122, Calendar.JULY, 2), false));
 
         };
     }
