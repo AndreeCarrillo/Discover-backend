@@ -33,24 +33,39 @@ public class InmuebleServiceImpl implements InmuebleService {
                 foto.setInmueble(null);
                 foto.getFoto().setInmuebleFotos(null);
             }
-            //for(Opinion o: i.getOpiniones()){
-               // o.setInmueble(null);
-            // o.getClient().setOpiniones(null);
-            // o.getClient().setInmuebles(null);
-            //}
+            /*for(Opinion o: i.getOpiniones()){
+                 o.setInmueble(null);
+                 o.getClient().setOpiniones(null);
+                 o.getClient().setInmuebles(null);
+            }*/
         }
         return inmuebles;
     }
     public Inmueble listById(Long id){
         Inmueble inmueble;
         inmueble=inmuebleRepository.findById(id).orElseThrow();
-        inmueble.setUsuario(null);
+        inmueble.getUsuario().setInmuebles(null);
+        inmueble.getUsuario().setOpiniones(null);
+        inmueble.setOpiniones(null);
+        inmueble.getUbigeo().setInmuebleZonaList(null);
+        for(InmuebleFoto foto: inmueble.getInmuebleFotoList()){
+            foto.setInmueble(null);
+            foto.getFoto().setInmuebleFotos(null);
+        }
         return inmueble;
     }
 
     @Transactional
     public Inmueble save(Inmueble inmueble){
         Inmueble newInmueble = inmuebleRepository.save(new Inmueble(inmueble.getPropertyType(), inmueble.getSharedRoom(), inmueble.getAddress(), inmueble.getPrice(), inmueble.getNumBedrooms(), inmueble.getNumBathrooms(), inmueble.getNumGuests(), inmueble.getSquareMeter(), inmueble.getTimeAntiquity(), inmueble.getDescription(), inmueble.getUsuario(), inmueble.getUbigeo()));
+        newInmueble.getUsuario().setInmuebles(null);
+        newInmueble.getUsuario().setOpiniones(null);
+        newInmueble.setOpiniones(null);
+        newInmueble.getUbigeo().setInmuebleZonaList(null);
+        for(InmuebleFoto foto: newInmueble.getInmuebleFotoList()){
+            foto.setInmueble(null);
+            foto.getFoto().setInmuebleFotos(null);
+        }
         return newInmueble;
     }
     @Transactional
