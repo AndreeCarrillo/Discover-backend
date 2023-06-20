@@ -25,8 +25,6 @@ public class Inmueble {
     private Integer numGuests;
     private Integer squareMeter;
     private String timeAntiquity;
-    @ElementCollection
-    private List<String> photoLink;
     private String description;
 
     @ManyToOne
@@ -39,8 +37,11 @@ public class Inmueble {
 
     @OneToMany (mappedBy = "inmueble", cascade={CascadeType.REMOVE})
     private List<Opinion> opiniones;
+    @OneToMany(mappedBy = "inmueble")
+    private List<InmuebleFoto> inmuebleFotoList;
 
-    public Inmueble(String propertyType, String sharedRoom, String address, Double price, Integer numBedrooms, Integer numBathrooms, Integer numGuests, Integer squareMeter, String timeAntiquity, List<String> photoLink, String description, Usuario usuario, Ubigeo ubigeo) {
+
+    public Inmueble(String propertyType, String sharedRoom, String address, Double price, Integer numBedrooms, Integer numBathrooms, Integer numGuests, Integer squareMeter, String timeAntiquity, String description, Usuario usuario, Ubigeo ubigeo) {
         this.propertyType = propertyType;
         this.sharedRoom = sharedRoom;
         this.address = address;
@@ -50,7 +51,6 @@ public class Inmueble {
         this.numGuests = numGuests;
         this.squareMeter = squareMeter;
         this.timeAntiquity = timeAntiquity;
-        this.photoLink = photoLink;
         this.description = description;
         this.usuario = usuario;
         this.ubigeo = ubigeo;

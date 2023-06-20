@@ -12,5 +12,5 @@ public interface InmuebleService {
 
     public Inmueble save(Inmueble inmueble);
 
-    //public void delete(Long id, boolean forced);
+    public void delete(Long id, boolean forced);
 }

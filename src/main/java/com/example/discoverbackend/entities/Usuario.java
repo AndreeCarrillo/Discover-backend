@@ -13,8 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Usuario {
 
-    // estas  TMR LO MAS IMPORTANTE NO VEESSSSS JOFE PERO VEEEEESSS MIS ENTITIES?
-    // escuchas
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

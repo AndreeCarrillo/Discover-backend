@@ -21,9 +21,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     public List<Usuario> listAll() {
         List<Usuario> usuarios;
         usuarios = usuarioRepository.findAll();
-        for (Usuario u: usuarios){
+        /*for (Usuario u: usuarios){
             u.setInmuebles(null);
-        }
+        }*/
         return usuarios;
     }
 

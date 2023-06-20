@@ -29,18 +29,27 @@ public class InmuebleServiceImpl implements InmuebleService {
     public List<Inmueble> listAll(){
         List<Inmueble> inmuebles;
         inmuebles=inmuebleRepository.findAll();
+        for (Inmueble i: inmuebles){
+            i.setUsuario(null);
+        }
         return inmuebles;
     }
     public Inmueble listById(Long id){
         Inmueble inmueble;
-        inmueble=inmuebleRepository.findById(id).get();
+        inmueble=inmuebleRepository.findById(id).orElseThrow();
+        inmueble.setUsuario(null);
         return inmueble;
     }
 
     @Transactional
     public Inmueble save(Inmueble inmueble){
-        Inmueble newInmueble = inmuebleRepository.save(new Inmueble( inmueble.getPropertyType(), inmueble.getSharedRoom(), inmueble.getAddress(), inmueble.getPrice(), inmueble.getNumBedrooms(), inmueble.getNumBathrooms(), inmueble.getNumGuests(), inmueble.getSquareMeter(), inmueble.getTimeAntiquity(), inmueble.getPhotoLink(), inmueble.getDescription(), inmueble.getUsuario(), inmueble.getUbigeo()));
+        Inmueble newInmueble = inmuebleRepository.save(new Inmueble(inmueble.getPropertyType(), inmueble.getSharedRoom(), inmueble.getAddress(), inmueble.getPrice(), inmueble.getNumBedrooms(), inmueble.getNumBathrooms(), inmueble.getNumGuests(), inmueble.getSquareMeter(), inmueble.getTimeAntiquity(), inmueble.getDescription(), inmueble.getUsuario(), inmueble.getUbigeo()));
         return newInmueble;
+    }
+    @Transactional
+    public void delete(Long id, boolean forced) {
+        Inmueble inmueble = inmuebleRepository.findById(id).get();
+        inmuebleRepository.delete(inmueble);
     }
 
 }

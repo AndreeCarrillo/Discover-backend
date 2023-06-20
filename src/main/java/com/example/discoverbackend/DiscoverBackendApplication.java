@@ -25,7 +25,9 @@ public class DiscoverBackendApplication {
         TipoCaracteristicaRepository tipoCaracteristicaRepository,
         InmuebleRepository inmuebleRepository,
         UsuarioRepository usuarioRepository,
-        UbigeoRepository ubigeoRepository
+        UbigeoRepository ubigeoRepository,
+        FotoRepository fotoRepository,
+        InmuebleFotoRepository inmuebleFotoRepository
     ){
         return args -> {
             tipoCaracteristicaRepository.save(new TipoCaracteristica("Servicios"));
@@ -116,26 +118,282 @@ public class DiscoverBackendApplication {
             Usuario usuario19 = usuarioRepository.findById(Long.valueOf(19)).get();
             Usuario usuario20 = usuarioRepository.findById(Long.valueOf(20)).get();
 
-
-
             System.out.println("--------------");
 
             ubigeoRepository.save(new Ubigeo(150101, "Lima", "Lima", "Lima", Arrays.asList(null, null)));
 
             Ubigeo ubigeo1 = ubigeoRepository.findById(Long.valueOf(1)).get();
+
             System.out.println("--------------");
-
-            inmuebleRepository.save(new Inmueble("Departamento", "Habitacion Compartida", "Jirón de la Unión 456, Cercado de Lima", 1200.00, 3, 2, 5, 100,"Más de 10 años", Arrays.asList("https://i.postimg.cc/x8VHg1jq/367345008.webp",
-                    "https://i.postimg.cc/zXZwJ0rK/367345011.webp",
-                    "https://i.postimg.cc/9fRzwHPM/367345009.webp"), "Amplio departamento de 3 dormitorios y 2 baños, ideal para una familia. Ubicada en un vecindario tranquilo y seguro. Cerca de parques y escuelas.", usuario1, ubigeo1));
-
-            inmuebleRepository.save(new Inmueble("Departamento", "Alojamiento Entero", "Calle Los Delfines 123, Urb. Santa Rosa", 750.00, 2, 1, 3, 70,"Menos de 1 año", Arrays.asList("https://i.postimg.cc/KvM9f1Zr/360288971.webp",
-                    "https://i.postimg.cc/T1WctsXY/360288974.jpg",
-                    "https://i.postimg.cc/mZvxTfkj/360288970.webp"), "Moderno departamento de estreno con 2 dormitorios y 1 baño. Excelente ubicación, cerca de centros comerciales y transporte público.", usuario2, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Departamento", "Habitacion Compartida", "Jirón de la Unión 456, Cercado de Lima", 1200.00, 3, 2, 5, 100,"Más de 10 años", "Amplio departamento de 3 dormitorios y 2 baños, ideal para una familia. Ubicada en un vecindario tranquilo y seguro. Cerca de parques y escuelas.", usuario13, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Departamento", "Alojamiento Entero", "Calle Los Delfines 123, Urb. Santa Rosa", 750.00, 2, 1, 3, 70,"Menos de 1 año",  "Moderno departamento de estreno con 2 dormitorios y 1 baño. Excelente ubicación, cerca de centros comerciales y transporte público.", usuario7, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Casa","Alojamiento Entero", "Av. Separadora Industrial 345, Salamanca",2000.00, 4,3,6, 150,"Más de 20 años",  "Hermosa casa de dos pisos con 4 dormitorios, 3 baños y amplios espacios. Jardín privado y garaje para 2 autos. Ideal para familias grandes.", usuario19, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Departamento","Alojamiento Entero", "Calle San Martín 567",900.00, 1,1,2, 50,"Estreno", "Acogedor departamento de estreno con 1 dormitorio y 1 baño. Cuenta con una cocina moderna y una terraza con vista a la ciudad. Ideal para parejas o profesionales.", usuario2, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Compartida", "Av. Bolivia 789",1300.00, 3,2,4, 110,"Más de 5 años",  "Bonito departamento de 3 dormitorios y 2 baños, ubicado en una zona residencial tranquila. Cuenta con áreas comunes como piscina y zona de parrillas.", usuario16, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Casa","Habitacion Compartida", "Jirón Los Laureles 112",2200.00, 4,3,8, 180,"Más de 10 años", "Amplia casa de dos pisos con 4 dormitorios, 3 baños y un estudio. Espacios luminosos y cómodos. Ubicada en una zona residencial con vigilancia 24/7.", usuario4, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Departamento","Alojamiento Entero", "Calle Los Pinos 123, Urb. La Campiña",1500.00, 2,2,3, 90,"Menos de 1 año",  "Moderno departamento de estreno con 2 dormitorios y 2 baños en edificio con piscina, gimnasio y zona de parrillas. Ubicado cerca de centros comerciales y parques.", usuario11, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Privada", "Av. Nueva Toledo 431",850.00, 1,1,2, 45,"Más de 2 años",  "Acogedor departamento de 1 dormitorio y 1 baño, perfecto para parejas o profesionales. Cuenta con una cocina abierta y un pequeño balcón. Cerca de tiendas y transporte público.", usuario6, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Casa","Alojamiento Entero", "Calle Los Alpes 145, Urb. Santa Luzmila",2800.00, 5,4,10, 200,"Más de 20 años",  "Espaciosa casa de dos pisos con 5 dormitorios, 4 baños y un amplio jardín. Ideal para familias numerosas o grupos de amigos. Ubicada en una tranquila calle residencial.", usuario18, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Casa","Alojamiento Entero", "Av. Riva Agüero 678",1100.00, 3,2,5, 95,"Más de 5 años",  "Cómodo casa de 3 dormitorios y 2 baños, ideal para familias. Cuenta con una amplia sala y comedor. Ubicado cerca de colegios y áreas verdes.", usuario3, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Casa","Habitacion Privada", "Av. Carlos Izaguirre 987",1600.00, 3,3,6, 120,"Estreno",  "Exclusiva casa de estreno con 3 dormitorios y 3 baños. Acabados de lujo, cocina moderna y vista panorámica. Edificio con gimnasio, piscina y seguridad 24/7.", usuario15, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Privada", "Calle San Felipe 890",700.00, 1,1,2, 40,"Más de 10 años", "Departamento acogedor de 1 dormitorio y 1 baño, ideal para estudiantes o profesionales solteros. Cerca de universidades y servicios básicos.", usuario8, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Casa","Habitacion Privada", "Calle Los Alamos 135, Urb. Las Praderas",1900.00, 4,3,7, 160,"Más de 40 años", "Encantadora casa de estilo clásico con 4 dormitorios y 3 baños. Espacios amplios y luminosos, con techos altos y detalles arquitectónicos únicos. Ideal para amantes de lo vintage.", usuario9, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Casa","Habitacion Privada", "Av. Manco Cápac 543",1400.00, 3,2,5, 105,"Más de 50 años",  "Casa con encanto de 3 dormitorios y 2 baños en un tranquilo barrio residencial. Cuenta con un jardín y un patio trasero. Perfecta para familias que buscan un hogar con carácter y personalidad.", usuario5, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Privada", "Calle Los Olivos 321",1000.00, 2,1,4, 75,"Menos de 1 año", "Departamento moderno de estreno con 2 dormitorios y 1 baño. Ubicado en un edificio con áreas comunes, como gimnasio y terraza. Cerca de centros comerciales y transporte público.", usuario1, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Casa","Habitacion Privada", "Calle Los Nogales 654, Urb. El Trébol",2400.00, 5,4,8, 210,"Más de 20 años", "Casa espaciosa de 5 dormitorios y 4 baños, ideal para familias numerosas. Cuenta con una sala de estar, comedor y un amplio jardín. Ubicada en un vecindario seguro y tranquilo.", usuario14, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Privada", "Av. Central 432, San Antonio",950.00, 2,1,3, 65,"Más de 2 años", "Confortable departamento de 2 dormitorios y 1 baño en una ubicación céntrica. A pocos minutos de tiendas, restaurantes y parques. Ideal para parejas o pequeñas familias.", usuario20, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Casa","Habitacion Privada", "Av. Lurín 785",1800.00, 4,3,6, 150,"Más de 5 años", "Amplia casa de 4 dormitorios y 3 baños en una tranquila zona residencial. Cuenta con una espaciosa sala de estar, comedor y jardín. Perfecta para familias que buscan comodidad y seguridad.", usuario12, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Privada", "Calle Gonzales Prada 678",1200.00, 3,2,4, 100,"Estreno",  "Moderno y elegante departamento de estreno con 3 dormitorios y 2 baños. Cuenta con una amplia cocina y un balcón con vista al parque. Edificio con áreas comunes y seguridad 24/7.", usuario7, ubigeo1));
+            inmuebleRepository.save(new Inmueble("","", "Jr. La honestida",500.00, 4,2,5, 140,"Menos de 1 año", "Como apartamento", usuario18, ubigeo1));
 
 
             Inmueble inmueble1 = inmuebleRepository.findById(Long.valueOf(1)).get();
             Inmueble inmueble2 = inmuebleRepository.findById(Long.valueOf(2)).get();
+            Inmueble inmueble3 = inmuebleRepository.findById(Long.valueOf(3)).get();
+            Inmueble inmueble4 = inmuebleRepository.findById(Long.valueOf(4)).get();
+            Inmueble inmueble5 = inmuebleRepository.findById(Long.valueOf(5)).get();
+            Inmueble inmueble6 = inmuebleRepository.findById(Long.valueOf(6)).get();
+            Inmueble inmueble7 = inmuebleRepository.findById(Long.valueOf(7)).get();
+            Inmueble inmueble8 = inmuebleRepository.findById(Long.valueOf(8)).get();
+            Inmueble inmueble9 = inmuebleRepository.findById(Long.valueOf(9)).get();
+            Inmueble inmueble10 = inmuebleRepository.findById(Long.valueOf(10)).get();
+            Inmueble inmueble11 = inmuebleRepository.findById(Long.valueOf(11)).get();
+            Inmueble inmueble12 = inmuebleRepository.findById(Long.valueOf(12)).get();
+            Inmueble inmueble13 = inmuebleRepository.findById(Long.valueOf(13)).get();
+            Inmueble inmueble14 = inmuebleRepository.findById(Long.valueOf(14)).get();
+            Inmueble inmueble15 = inmuebleRepository.findById(Long.valueOf(15)).get();
+            Inmueble inmueble16 = inmuebleRepository.findById(Long.valueOf(16)).get();
+            Inmueble inmueble17 = inmuebleRepository.findById(Long.valueOf(17)).get();
+            Inmueble inmueble18 = inmuebleRepository.findById(Long.valueOf(18)).get();
+            Inmueble inmueble19 = inmuebleRepository.findById(Long.valueOf(19)).get();
+            Inmueble inmueble20 = inmuebleRepository.findById(Long.valueOf(20)).get();
+
+            System.out.println("--------------");
+
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/x8VHg1jq/367345008.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/zXZwJ0rK/367345011.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/9fRzwHPM/367345009.webp"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/KvM9f1Zr/360288971.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/T1WctsXY/360288974.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/mZvxTfkj/360288970.webp"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/258M0C9k/364654991.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/qRNYdjdW/364654992.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/wTXrH1Sx/364654996.webp"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/FRkP6zy4/345316152.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/L5MV0T4t/345316147.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/htG1whn5/345316151.webp"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/50JHhkv2/367715337.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/bJqJCScG/367715330.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/ZKXqkMzz/345316140.jpg"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/3xSQ5yv4/367321952.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/cCMPD6WJ/367321961.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/9FbvZ418/367321956.webp"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/K8dQMxXp/339288566.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/fLMccb8C/346415581.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/cCbfGB0k/361164698.webp"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/43Wd0NJB/363145161.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/1zmckHFP/363145172.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/ZRg8yzMK/363145169.webp"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/W1XJkPDL/273805402.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/3N5yT8qp/273805399.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/hPnJZGTR/273805396.webp"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/XJwj9w2G/243716601.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/7h9qWqrq/243716590.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/W1hs5RWP/243716589.jpg"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/BQw0LYq7/361633141.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/CxBVjG5h/361633140.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/0N7R497h/361633142.jpg"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/XNsMmHyN/367737000.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/mrYJw8ss/367737013.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/Y98Vc00D/367737015.jpg"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/pdJc8rfV/364365708.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/gcTS3fZh/364365675.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/J4HTxPN2/364365700.jpg"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/PrVwxtJ9/SALA-COMEDOR-1.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/1tYHcqfS/367132600.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/cHjz1j7f/367132599.jpg"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/Nj4P2L7s/357173625.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/259cTJKg/357173631.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/Y0YdrSCw/357173633.webp"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/zvxVRCBw/359977702.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/QMcCqGCd/359971433.webp"));
+
+            fotoRepository.save(new Foto( "https://i.postimg.cc/wx4qLT2k/366593944.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/3xmYsjTL/366593940.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/9fBVMWzZ/366593930.jpg"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/zGCYtJC6/362152449.jpg"));
+            fotoRepository.save(new Foto( "https://i.postimg.cc/d11MVrbc/362152453.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/sX0kQ1zQ/362152456.webp"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/CKMMbZ3m/364014549.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/FKqt17Nf/364014536.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/m2S0CdTW/364014535.jpg"));
+
+            fotoRepository.save(new Foto("https://i.postimg.cc/CKMMbZ3m/364014549.webp"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/FKqt17Nf/364014536.jpg"));
+            fotoRepository.save(new Foto("https://i.postimg.cc/m2S0CdTW/364014535.jpg"));
+
+            Foto foto1 = fotoRepository.findById(Long.valueOf(1)).get();
+            Foto foto2 = fotoRepository.findById(Long.valueOf(2)).get();
+            Foto foto3 = fotoRepository.findById(Long.valueOf(3)).get();
+            Foto foto4 = fotoRepository.findById(Long.valueOf(4)).get();
+            Foto foto5 = fotoRepository.findById(Long.valueOf(5)).get();
+            Foto foto6 = fotoRepository.findById(Long.valueOf(6)).get();
+            Foto foto7 = fotoRepository.findById(Long.valueOf(7)).get();
+            Foto foto8 = fotoRepository.findById(Long.valueOf(8)).get();
+            Foto foto9 = fotoRepository.findById(Long.valueOf(9)).get();
+            Foto foto10 = fotoRepository.findById(Long.valueOf(10)).get();
+            Foto foto11= fotoRepository.findById(Long.valueOf(11)).get();
+            Foto foto12 = fotoRepository.findById(Long.valueOf(12)).get();
+            Foto foto13 = fotoRepository.findById(Long.valueOf(13)).get();
+            Foto foto14 = fotoRepository.findById(Long.valueOf(14)).get();
+            Foto foto15 = fotoRepository.findById(Long.valueOf(15)).get();
+            Foto foto16 = fotoRepository.findById(Long.valueOf(16)).get();
+            Foto foto17 = fotoRepository.findById(Long.valueOf(17)).get();
+            Foto foto18 = fotoRepository.findById(Long.valueOf(18)).get();
+            Foto foto19 = fotoRepository.findById(Long.valueOf(19)).get();
+            Foto foto20 = fotoRepository.findById(Long.valueOf(20)).get();
+            Foto foto21 = fotoRepository.findById(Long.valueOf(21)).get();
+            Foto foto22 = fotoRepository.findById(Long.valueOf(22)).get();
+            Foto foto23 = fotoRepository.findById(Long.valueOf(23)).get();
+            Foto foto24 = fotoRepository.findById(Long.valueOf(24)).get();
+            Foto foto25 = fotoRepository.findById(Long.valueOf(25)).get();
+            Foto foto26 = fotoRepository.findById(Long.valueOf(26)).get();
+            Foto foto27 = fotoRepository.findById(Long.valueOf(27)).get();
+            Foto foto28 = fotoRepository.findById(Long.valueOf(28)).get();
+            Foto foto29 = fotoRepository.findById(Long.valueOf(29)).get();
+            Foto foto30 = fotoRepository.findById(Long.valueOf(30)).get();
+            Foto foto31 = fotoRepository.findById(Long.valueOf(31)).get();
+            Foto foto32 = fotoRepository.findById(Long.valueOf(32)).get();
+            Foto foto33 = fotoRepository.findById(Long.valueOf(33)).get();
+            Foto foto34 = fotoRepository.findById(Long.valueOf(34)).get();
+            Foto foto35 = fotoRepository.findById(Long.valueOf(35)).get();
+            Foto foto36 = fotoRepository.findById(Long.valueOf(36)).get();
+            Foto foto37 = fotoRepository.findById(Long.valueOf(37)).get();
+            Foto foto38 = fotoRepository.findById(Long.valueOf(38)).get();
+            Foto foto39 = fotoRepository.findById(Long.valueOf(39)).get();
+            Foto foto40 = fotoRepository.findById(Long.valueOf(40)).get();
+            Foto foto41 = fotoRepository.findById(Long.valueOf(41)).get();
+            Foto foto42 = fotoRepository.findById(Long.valueOf(42)).get();
+            Foto foto43 = fotoRepository.findById(Long.valueOf(43)).get();
+            Foto foto44 = fotoRepository.findById(Long.valueOf(44)).get();
+            Foto foto45 = fotoRepository.findById(Long.valueOf(45)).get();
+            Foto foto46 = fotoRepository.findById(Long.valueOf(46)).get();
+            Foto foto47 = fotoRepository.findById(Long.valueOf(47)).get();
+            Foto foto48 = fotoRepository.findById(Long.valueOf(48)).get();
+            Foto foto49 = fotoRepository.findById(Long.valueOf(49)).get();
+            Foto foto50 = fotoRepository.findById(Long.valueOf(50)).get();
+            Foto foto51 = fotoRepository.findById(Long.valueOf(51)).get();
+            Foto foto52 = fotoRepository.findById(Long.valueOf(52)).get();
+            Foto foto53 = fotoRepository.findById(Long.valueOf(53)).get();
+            Foto foto54 = fotoRepository.findById(Long.valueOf(54)).get();
+            Foto foto55 = fotoRepository.findById(Long.valueOf(55)).get();
+            Foto foto56 = fotoRepository.findById(Long.valueOf(56)).get();
+            Foto foto57 = fotoRepository.findById(Long.valueOf(57)).get();
+            Foto foto58 = fotoRepository.findById(Long.valueOf(58)).get();
+            Foto foto59 = fotoRepository.findById(Long.valueOf(59)).get();
+
+
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble1, foto1));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble1, foto2));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble1, foto3));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble2, foto4));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble2, foto5));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble2, foto6));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble3, foto7));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble3, foto8));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble3, foto9));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble4, foto10));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble4, foto11));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble4, foto12));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble5, foto13));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble5, foto14));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble5, foto15));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble6, foto16));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble6, foto17));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble6, foto18));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble7, foto19));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble7, foto20));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble7, foto21));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble8, foto22));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble8, foto23));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble8, foto24));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble9, foto25));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble9, foto26));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble9, foto27));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble10, foto28));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble10, foto29));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble10, foto30));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble11, foto32));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble11, foto33));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble12, foto34));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble12, foto35));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble12, foto36));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble12, foto37));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble12, foto38));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble12, foto39));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble12, foto40));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble12, foto41));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble12, foto42));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble13, foto43));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble13, foto44));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble13, foto45));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble14, foto46));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble14, foto47));
+
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble15, foto49));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble15, foto50));
+
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble16, foto52));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble16, foto53));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble16, foto54));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble17, foto55));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble17, foto56));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble18, foto57));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble18, foto58));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble19, foto59));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble19, foto51));
+
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble20, foto48));
+            inmuebleFotoRepository.save(new InmuebleFoto(inmueble20, foto31));
 
 
         };
