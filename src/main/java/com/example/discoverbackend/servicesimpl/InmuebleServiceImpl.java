@@ -1,19 +1,14 @@
 package com.example.discoverbackend.servicesimpl;
 
+import com.example.discoverbackend.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.example.discoverbackend.entities.Inmueble;
-import com.example.discoverbackend.entities.Usuario;
-import com.example.discoverbackend.entities.Ubigeo;
 import com.example.discoverbackend.repositories.InmuebleRepository;
 import com.example.discoverbackend.services.InmuebleService;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.example.discoverbackend.repositories.UbigeoRepository;
 import com.example.discoverbackend.repositories.UsuarioRepository;
-import com.example.discoverbackend.services.InmuebleService;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -30,7 +25,19 @@ public class InmuebleServiceImpl implements InmuebleService {
         List<Inmueble> inmuebles;
         inmuebles=inmuebleRepository.findAll();
         for (Inmueble i: inmuebles){
-            i.setUsuario(null);
+            i.getUsuario().setInmuebles(null);
+            i.getUsuario().setOpiniones(null);
+            i.setOpiniones(null);
+            i.getUbigeo().setInmuebleZonaList(null);
+            for(InmuebleFoto foto: i.getInmuebleFotoList()){
+                foto.setInmueble(null);
+                foto.getFoto().setInmuebleFotos(null);
+            }
+            //for(Opinion o: i.getOpiniones()){
+               // o.setInmueble(null);
+            // o.getClient().setOpiniones(null);
+            // o.getClient().setInmuebles(null);
+            //}
         }
         return inmuebles;
     }

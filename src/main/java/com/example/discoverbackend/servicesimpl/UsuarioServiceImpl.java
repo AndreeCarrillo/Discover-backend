@@ -4,7 +4,7 @@ import com.example.discoverbackend.dtos.DTOContactoUsuario;
 import com.example.discoverbackend.entities.Usuario;
 import com.example.discoverbackend.repositories.UsuarioRepository;
 import com.example.discoverbackend.services.UsuarioService;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
