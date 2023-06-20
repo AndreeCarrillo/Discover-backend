@@ -6,14 +6,11 @@ import com.example.discoverbackend.entities.Usuario;
 import com.example.discoverbackend.entities.Ubigeo;
 import com.example.discoverbackend.repositories.InmuebleRepository;
 import com.example.discoverbackend.services.InmuebleService;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.example.discoverbackend.repositories.UbigeoRepository;
 import com.example.discoverbackend.repositories.UsuarioRepository;
-import com.example.discoverbackend.services.InmuebleService;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service

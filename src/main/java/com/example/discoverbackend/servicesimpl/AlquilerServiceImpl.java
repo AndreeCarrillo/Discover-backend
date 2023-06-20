@@ -1,5 +1,6 @@
 package com.example.discoverbackend.servicesimpl;
 
+import com.example.discoverbackend.dtos.AlquilerRequest;
 import com.example.discoverbackend.entities.Alquiler;
 import com.example.discoverbackend.entities.Inmueble;
 import com.example.discoverbackend.entities.Usuario;
@@ -23,9 +24,9 @@ public class AlquilerServiceImpl implements AlquilerService {
     InmuebleRepository inmuebleRepository;
 
     @Override
-    public Alquiler createAlquiler(Alquiler alquiler) {
-        Usuario usuario = usuarioRepository.findById(alquiler.getClient().getId()).get();
-        Inmueble inmueble = inmuebleRepository.findById(alquiler.getInmueble().getId()).get();
+    public Alquiler createAlquiler(AlquilerRequest alquiler) {
+        Usuario usuario = usuarioRepository.findById(alquiler.getClient_id()).get();
+        Inmueble inmueble = inmuebleRepository.findById(alquiler.getInmueble_id()).get();
         Alquiler newAlquiler = new Alquiler(usuario, inmueble,alquiler.getPrice(), alquiler.getTransactionDate(), true);
         Alquiler savedAlquiler = alquilerRepository.save(newAlquiler);
         //savedAlquiler.setClient(null);

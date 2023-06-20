@@ -4,7 +4,7 @@ import com.example.discoverbackend.entities.Inmueble;
 import com.example.discoverbackend.entities.Ubigeo;
 import com.example.discoverbackend.repositories.UbigeoRepository;
 import com.example.discoverbackend.services.UbigeoService;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

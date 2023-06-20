@@ -1,5 +1,6 @@
 package com.example.discoverbackend.controllers;
 
+import com.example.discoverbackend.dtos.AlquilerRequest;
 import com.example.discoverbackend.entities.Alquiler;
 import com.example.discoverbackend.services.AlquilerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class AlquilerController {
     AlquilerService alquilerService;
 
     @PostMapping("/alquiler")
-    public ResponseEntity<Alquiler> saveAlquiler(@RequestBody Alquiler alquiler){
+    public ResponseEntity<Alquiler> saveAlquiler(@RequestBody AlquilerRequest alquiler){
         Alquiler savealquiler = alquilerService.createAlquiler(alquiler);
         return new ResponseEntity<Alquiler>(savealquiler,HttpStatus.CREATED);
     }
