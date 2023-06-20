@@ -25,7 +25,8 @@ public class DiscoverBackendApplication {
         TipoCaracteristicaRepository tipoCaracteristicaRepository,
         InmuebleRepository inmuebleRepository,
         UsuarioRepository usuarioRepository,
-        UbigeoRepository ubigeoRepository
+        UbigeoRepository ubigeoRepository,
+        AlquilerRepository alquilerRepository
     ){
         return args -> {
             tipoCaracteristicaRepository.save(new TipoCaracteristica("Servicios"));
@@ -120,9 +121,99 @@ public class DiscoverBackendApplication {
 
             System.out.println("--------------");
 
-            ubigeoRepository.save(new Ubigeo(150101, "Lima", "Lima", "Lima", Arrays.asList(null, null)));
+            //alquilerrepositories
 
-            Ubigeo ubigeo1 = ubigeoRepository.findById(Long.valueOf(1)).get();
+            System.out.println("--------------");
+
+            ubigeoRepository.save(new Ubigeo(150101, "Lima", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150102, "Ancon", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150103, "Ate", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150104, "Barranco", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150105, "Breña", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150106, "Carabayllo", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150107, "Chaclacayo", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150108, "Chorrillos", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150109, "Cieneguilla", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150110, "Comas", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150111, "El Agustino", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150112, "Independencia", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150113, "Jesus Maria", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150114, "La Molina", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150115, "La Victoria", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150116, "Lince", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150117, "Los Olivos", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150118, "Lurigancho", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150119, "Lurin", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150120, "Magdalena del Mar", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150121, "Miraflores", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150122, "Pachacamac", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150123, "Pucusana", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150124, "Pueblo Libre", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150125, "Puente Piedra", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150126, "Punta Hermosa", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150127, "Punta Negra", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150128, "Rimac", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150129, "San Bartolo", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150130, "San Borja", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150131, "San Isidro", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150132, "San Juan de Lurigancho", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150133, "San Juan de Miraflores", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150134, "San Luis", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150135, "San Martin de Porres", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150136, "San Miguel", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150137, "Santa Anita", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150138, "Santa Maria del Mar", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150139, "Santa Rosa", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150140, "Santiago de Surco", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150141, "Surquillo", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150142, "Villa El Salvador", "Lima", "Lima", Arrays.asList(null, null)));
+            ubigeoRepository.save(new Ubigeo(150143, "Villa Maria del Triunfo", "Lima", "Lima", Arrays.asList(null, null)));
+
+
+            Ubigeo ubigeo1 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo2 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo3 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo4 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo5 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo6 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo7 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo8 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo9 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo10 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo11 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo12 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo13 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo14 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo15 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo16 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo17 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo18 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo19 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo20 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo21 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo22 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo23 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo24 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo25 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo26 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo27 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo28 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo29 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo30 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo31 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo32 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo33 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo34 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo35 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo36 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo37 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo38 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo39 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo40 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo41 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo42 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo43 = ubigeoRepository.findById(1L).get();
+
             System.out.println("--------------");
 
             inmuebleRepository.save(new Inmueble("Departamento", "Habitacion Compartida", "Jirón de la Unión 456, Cercado de Lima", 1200.00, 3, 2, 5, 100,"Más de 10 años", Arrays.asList("https://i.postimg.cc/x8VHg1jq/367345008.webp",
