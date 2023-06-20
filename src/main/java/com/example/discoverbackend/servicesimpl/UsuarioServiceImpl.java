@@ -21,9 +21,10 @@ public class UsuarioServiceImpl implements UsuarioService {
     public List<Usuario> listAll() {
         List<Usuario> usuarios;
         usuarios = usuarioRepository.findAll();
-        /*for (Usuario u: usuarios){
+        for (Usuario u: usuarios){
             u.setInmuebles(null);
-        }*/
+            u.setOpiniones(null);
+        }
         return usuarios;
     }
 
@@ -47,14 +48,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
 
-    public List<DTOContactoUsuario> listContactoUsuario(Long id) {
-        List<Usuario> usuarioList = usuarioRepository.findAll();
-        List<DTOContactoUsuario> dtoContactoUsuarioList = new ArrayList<>();
+    public DTOContactoUsuario listContactoUsuario(Long id) {
+        Usuario u = usuarioRepository.findById(id).get();
         String monthString = new String();
         String dayString = new String();
-        for (Usuario u: usuarioList){
-            if (u.getId() == id)
-            {
+        String monthString1 = new String();
+        String dayString1 = new String();
+
                 String fullname = u.getFirstName()+" "+u.getLastNameDad()+" "+u.getLastNameMom();
 
                 Integer year = u.getDateAffiliation().getYear() + 1900;
@@ -73,14 +73,25 @@ public class UsuarioServiceImpl implements UsuarioService {
                     dayString=day.toString();
                 }
 
-                String dateString = year + " - " + monthString + " - " + dayString;
-                DTOContactoUsuario dtoContactoUsuario = new DTOContactoUsuario(fullname, u.getTelephone(), u.getEmail(), dateString);
-                dtoContactoUsuarioList.add(dtoContactoUsuario);
-                dayString="";
-                monthString="";
-            }
+                Integer year1 = u.getDateBirth().getYear()+1900;
+                Integer month1= u.getDateBirth().getMonth() + 1;
+                Integer day1= u.getDateBirth().getDate();
+                if (month1<10){
+                    monthString1 = "0"+month;
 
-        }
-        return dtoContactoUsuarioList;
+                }else if (month1>=10){
+                    monthString1 = month.toString();
+                }
+                if (day1<10){
+                    dayString1="0"+day1;
+                }else if (day1>=10) {
+                    dayString1=day1.toString();
+                }
+
+                String dateString = year + " - " + monthString + " - " + dayString;
+                String dateStringBirth = year1+" - "+monthString1+" - "+dayString1;
+                DTOContactoUsuario dtoContactoUsuario = new DTOContactoUsuario(fullname, u.getTelephone(), u.getEmail(), dateString, dateStringBirth);
+
+        return dtoContactoUsuario;
     }
 }

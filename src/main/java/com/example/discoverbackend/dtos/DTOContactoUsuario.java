@@ -12,5 +12,6 @@ public class DTOContactoUsuario {
     private String telephone;
     private String email;
     private String dateAfiiliation;
+    private String dateBirth;
 
 }

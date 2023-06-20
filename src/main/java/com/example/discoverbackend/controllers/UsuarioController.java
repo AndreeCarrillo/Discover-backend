@@ -36,8 +36,8 @@ public class UsuarioController {
     }
 
     @GetMapping("/contact/{id}")
-    public ResponseEntity<List<DTOContactoUsuario>> listContactUsuario(@PathVariable("id") Long id){
-        List<DTOContactoUsuario> dtoContactoUsuarios = usuarioService.listContactoUsuario(id);
-        return new ResponseEntity<List<DTOContactoUsuario>>(dtoContactoUsuarios, HttpStatus.OK);
+    public ResponseEntity<DTOContactoUsuario> listContactUsuario(@PathVariable("id") Long id){
+        DTOContactoUsuario dtoContactoUsuarios = usuarioService.listContactoUsuario(id);
+        return new ResponseEntity<DTOContactoUsuario>(dtoContactoUsuarios, HttpStatus.OK);
     }
 }

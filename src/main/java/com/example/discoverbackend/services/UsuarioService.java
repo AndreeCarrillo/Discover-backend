@@ -12,5 +12,5 @@ public interface UsuarioService {
     public List<Usuario> listAll();
     public Usuario listById(Long id);
     public void delete(Long id, boolean forced);
-    public List<DTOContactoUsuario> listContactoUsuario(Long id);
+    public DTOContactoUsuario listContactoUsuario(Long id);
 }
