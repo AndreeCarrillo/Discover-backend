@@ -1,7 +1,10 @@
 package com.example.discoverbackend.controllers;
 
+import com.example.discoverbackend.dtos.InmuebleRequest;
 import com.example.discoverbackend.entities.Inmueble;
+import com.example.discoverbackend.entities.InmuebleCaracteristica;
 import com.example.discoverbackend.entities.Usuario;
+import com.example.discoverbackend.services.InmuebleCaracteristicaService;
 import com.example.discoverbackend.services.InmuebleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,9 +37,10 @@ public class InmuebleController {
     }
 
     @PostMapping ("/new-inmueble")
-    public ResponseEntity<Inmueble> createInmueble(@RequestBody Inmueble inmueble) {
-        Inmueble savedInmueble = inmuebleService.save(inmueble);
+    public ResponseEntity<Inmueble> createInmueble(@RequestBody InmuebleRequest inmuebleRequest ) {
+        Inmueble savedInmueble = inmuebleService.save(inmuebleRequest);
         return new ResponseEntity<Inmueble>(savedInmueble, HttpStatus.CREATED);
+
     }
 
     @DeleteMapping("/inmuebles/{id}")

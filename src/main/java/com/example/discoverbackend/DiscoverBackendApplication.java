@@ -10,9 +10,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.text.SimpleDateFormat;
 import java.time.Year;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 @SpringBootApplication
 public class DiscoverBackendApplication {
@@ -28,7 +26,7 @@ public class DiscoverBackendApplication {
         InmuebleRepository inmuebleRepository,
         UsuarioRepository usuarioRepository,
         UbigeoRepository ubigeoRepository,
-
+        InmuebleCaracteristicaRepository inmuebleCaracteristicaRepository,
         FotoRepository fotoRepository,
         InmuebleFotoRepository inmuebleFotoRepository,
         AlquilerRepository alquilerRepository
@@ -73,6 +71,37 @@ public class DiscoverBackendApplication {
             caracteristicaRepository.save(new Caracteristica("Central", tipo4));
             caracteristicaRepository.save(new Caracteristica("Espacioso", tipo4));
             caracteristicaRepository.save(new Caracteristica("Elegante", tipo4));
+            Caracteristica caracteristica1 = caracteristicaRepository.findById(Long.valueOf(1)).get();
+            Caracteristica caracteristica2 = caracteristicaRepository.findById(Long.valueOf(2)).get();
+            Caracteristica caracteristica3 = caracteristicaRepository.findById(Long.valueOf(3)).get();
+            Caracteristica caracteristica4 = caracteristicaRepository.findById(Long.valueOf(4)).get();
+            Caracteristica caracteristica5 = caracteristicaRepository.findById(Long.valueOf(5)).get();
+            Caracteristica caracteristica6 = caracteristicaRepository.findById(Long.valueOf(6)).get();
+            Caracteristica caracteristica7 = caracteristicaRepository.findById(Long.valueOf(7)).get();
+            Caracteristica caracteristica8 = caracteristicaRepository.findById(Long.valueOf(8)).get();
+            Caracteristica caracteristica9 = caracteristicaRepository.findById(Long.valueOf(9)).get();
+            Caracteristica caracteristica10 = caracteristicaRepository.findById(Long.valueOf(10)).get();
+            Caracteristica caracteristica11 = caracteristicaRepository.findById(Long.valueOf(11)).get();
+            Caracteristica caracteristica12 = caracteristicaRepository.findById(Long.valueOf(12)).get();
+            Caracteristica caracteristica13 = caracteristicaRepository.findById(Long.valueOf(13)).get();
+            Caracteristica caracteristica14 = caracteristicaRepository.findById(Long.valueOf(14)).get();
+            Caracteristica caracteristica15 = caracteristicaRepository.findById(Long.valueOf(15)).get();
+            Caracteristica caracteristica16 = caracteristicaRepository.findById(Long.valueOf(16)).get();
+            Caracteristica caracteristica17 = caracteristicaRepository.findById(Long.valueOf(17)).get();
+            Caracteristica caracteristica18 = caracteristicaRepository.findById(Long.valueOf(18)).get();
+            Caracteristica caracteristica19 = caracteristicaRepository.findById(Long.valueOf(19)).get();
+            Caracteristica caracteristica20 = caracteristicaRepository.findById(Long.valueOf(20)).get();
+            Caracteristica caracteristica21 = caracteristicaRepository.findById(Long.valueOf(21)).get();
+            Caracteristica caracteristica22 = caracteristicaRepository.findById(Long.valueOf(22)).get();
+            Caracteristica caracteristica23 = caracteristicaRepository.findById(Long.valueOf(23)).get();
+            Caracteristica caracteristica24 = caracteristicaRepository.findById(Long.valueOf(24)).get();
+            Caracteristica caracteristica25 = caracteristicaRepository.findById(Long.valueOf(25)).get();
+            Caracteristica caracteristica26 = caracteristicaRepository.findById(Long.valueOf(26)).get();
+            Caracteristica caracteristica27 = caracteristicaRepository.findById(Long.valueOf(27)).get();
+            Caracteristica caracteristica28 = caracteristicaRepository.findById(Long.valueOf(28)).get();
+            Caracteristica caracteristica29 = caracteristicaRepository.findById(Long.valueOf(29)).get();
+            Caracteristica caracteristica30 = caracteristicaRepository.findById(Long.valueOf(30)).get();
+
 
             System.out.println("--------------");
 
@@ -265,6 +294,19 @@ public class DiscoverBackendApplication {
 
             System.out.println("--------------");
 
+            List<Caracteristica> caracteristicas = caracteristicaRepository.findAll();
+            List<Inmueble> inmuebles = inmuebleRepository.findAll();
+            Random random = new Random();
+            for(Inmueble inmueble : inmuebles) {
+                for(int i = 0; i < 7; i++) {
+                    Caracteristica caracteristicaRandom = caracteristicas.get(random.nextInt(caracteristicas.size()));
+                    InmuebleCaracteristica inmuebleCaracteristica = new InmuebleCaracteristica(inmueble, caracteristicaRandom);
+                    inmuebleCaracteristicaRepository.save(inmuebleCaracteristica);
+                }
+            }
+
+
+            System.out.println("--------------");
 
             fotoRepository.save(new Foto("https://i.postimg.cc/x8VHg1jq/367345008.webp"));
             fotoRepository.save(new Foto("https://i.postimg.cc/zXZwJ0rK/367345011.webp"));

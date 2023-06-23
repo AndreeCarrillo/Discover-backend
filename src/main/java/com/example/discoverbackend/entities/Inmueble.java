@@ -39,6 +39,8 @@ public class Inmueble {
     private List<Opinion> opiniones;
     @OneToMany(mappedBy = "inmueble")
     private List<InmuebleFoto> inmuebleFotoList;
+//    @OneToMany(mappedBy = "inmueble")
+//    private List<InmuebleCaracteristica> caracteristicaList;
 
 
     public Inmueble(String propertyType, String sharedRoom, String address, Double price, Integer numBedrooms, Integer numBathrooms, Integer numGuests, Integer squareMeter, String timeAntiquity, String description, Usuario usuario, Ubigeo ubigeo) {
