@@ -1,5 +1,7 @@
 # Discover backend
 
+Backend proyecto from Discover Application Web
+
 | Integrante      | Github User |
 | :---------------: | :---------------: |
 | Jose Avilla  | [NotJofe ](https://github.com/NotJofe) |
