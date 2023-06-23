@@ -1,12 +1,11 @@
 package com.example.discoverbackend.servicesimpl;
 
 import com.example.discoverbackend.entities.*;
+import com.example.discoverbackend.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.example.discoverbackend.repositories.InmuebleRepository;
 import com.example.discoverbackend.services.InmuebleService;
-import com.example.discoverbackend.repositories.UbigeoRepository;
-import com.example.discoverbackend.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
+import com.example.discoverbackend.dtos.InmuebleRequest;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -20,6 +19,10 @@ public class InmuebleServiceImpl implements InmuebleService {
     UsuarioRepository usuarioRepository;
     @Autowired
     UbigeoRepository ubigeoRepository;
+    @Autowired
+    CaracteristicaRepository caracteristicaRepository;
+    @Autowired
+    InmuebleCaracteristicaRepository inmuebleCaracteristicaRepository;
 
     public List<Inmueble> listAll(){
         List<Inmueble> inmuebles;
@@ -56,7 +59,7 @@ public class InmuebleServiceImpl implements InmuebleService {
     }
 
     @Transactional
-    public Inmueble save(Inmueble inmueble){
+    public Inmueble save(InmuebleRequest inmueble){
         Inmueble newInmueble = inmuebleRepository.save(new Inmueble(inmueble.getPropertyType(), inmueble.getSharedRoom(), inmueble.getAddress(), inmueble.getPrice(), inmueble.getNumBedrooms(), inmueble.getNumBathrooms(), inmueble.getNumGuests(), inmueble.getSquareMeter(), inmueble.getTimeAntiquity(), inmueble.getDescription(), inmueble.getUsuario(), inmueble.getUbigeo()));
         newInmueble.getUsuario().setInmuebles(null);
         newInmueble.getUsuario().setOpiniones(null);
@@ -65,6 +68,10 @@ public class InmuebleServiceImpl implements InmuebleService {
         for(InmuebleFoto foto: newInmueble.getInmuebleFotoList()){
             foto.setInmueble(null);
             foto.getFoto().setInmuebleFotos(null);
+        }
+        for (Long caracteristicaId : inmueble.getCaracteristicasIds()){
+            InmuebleCaracteristica inmuebleCaracteristica = new InmuebleCaracteristica(newInmueble, caracteristicaRepository.findById(caracteristicaId).get());
+            inmuebleCaracteristicaRepository.save(inmuebleCaracteristica);
         }
         return newInmueble;
     }
