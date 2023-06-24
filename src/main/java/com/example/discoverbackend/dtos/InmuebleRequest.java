@@ -25,6 +25,4 @@ public class InmuebleRequest {
     private Usuario usuario;
     private Ubigeo ubigeo;
     private List<Long> caracteristicasIds;
-
-
 }
