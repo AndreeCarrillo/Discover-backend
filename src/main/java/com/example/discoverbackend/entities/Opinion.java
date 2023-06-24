@@ -15,8 +15,8 @@ public class Opinion {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Usuario client;
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "inmueble_id")
@@ -26,8 +26,8 @@ public class Opinion {
     private String observaciones;
     private String linkFoto;
 
-    public Opinion(Usuario client, Inmueble inmueble, Integer calificacion, String observaciones, String linkFoto) {
-        this.client = client;
+    public Opinion(Usuario usuario, Inmueble inmueble, Integer calificacion, String observaciones, String linkFoto) {
+        this.usuario = usuario;
         this.inmueble = inmueble;
         this.calificacion = calificacion;
         this.observaciones = observaciones;
