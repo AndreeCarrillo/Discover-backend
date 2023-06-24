@@ -18,7 +18,7 @@ public class AlquilerController {
     AlquilerService alquilerService;
 
     @PostMapping("/alquiler")
-    public ResponseEntity<Alquiler> saveAlquiler(@RequestBody AlquilerRequest alquiler){
+    public ResponseEntity<Alquiler> saveAlquiler(@RequestBody Alquiler alquiler){
         Alquiler savealquiler = alquilerService.createAlquiler(alquiler);
         return new ResponseEntity<Alquiler>(savealquiler,HttpStatus.CREATED);
     }
@@ -33,6 +33,12 @@ public class AlquilerController {
     public ResponseEntity<Alquiler> setActivateAlquiler(@PathVariable Long id){
         Alquiler alquiler = alquilerService.updateAlquiler(id);
         return new ResponseEntity<Alquiler>(alquiler, HttpStatus.OK);
+    }
+
+    @GetMapping("/alquiler/summary")
+    public ResponseEntity<List<AlquilerRequest>> getAlquilerRequest() {
+        List<AlquilerRequest> alquilerRequests = alquilerService.listAlquilerRequest();
+        return new ResponseEntity<List<AlquilerRequest>>(alquilerRequests, HttpStatus.OK);
     }
 
 }

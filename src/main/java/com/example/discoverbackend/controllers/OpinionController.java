@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "htpp://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class OpinionController {
@@ -25,10 +25,15 @@ public class OpinionController {
         return new ResponseEntity<Opinion>(saveOpinion, HttpStatus.CREATED);
     }
 
-    @GetMapping("/opinion/{user_id}")
-    public ResponseEntity<List<Opinion>> allOpinionByUserId (@PathVariable Long user_id){
+    @GetMapping("/opinion/{usuario_id}")
+    public ResponseEntity<List<Opinion>> allOpinionByUserId (@PathVariable("usuario_id") Long user_id){
         List<Opinion> opinionList = opinionService.listOpinionByUser(user_id);
         return new ResponseEntity<List<Opinion>>(opinionList, HttpStatus.OK);
     }
 
+    @GetMapping("/opiniones")
+    public ResponseEntity<List<Opinion>> allOpinion(){
+        List<Opinion> opinionList = opinionService.listAll();
+        return new ResponseEntity<List<Opinion>>(opinionList, HttpStatus.OK);
+    }
 }
