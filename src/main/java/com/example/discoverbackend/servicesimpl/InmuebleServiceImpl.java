@@ -36,12 +36,17 @@ public class InmuebleServiceImpl implements InmuebleService {
                 foto.setInmueble(null);
                 foto.getFoto().setInmuebleFotos(null);
             }
+            for(InmuebleCaracteristica c: i.getCaracteristicaList()){
+                c.getCaracteristica().getTipoCaracteristica().setCaracteristicas(null);
+                c.setInmueble(null);
+            }
+        }
             /*for(Opinion o: i.getOpiniones()){
                  o.setInmueble(null);
                  o.getClient().setOpiniones(null);
                  o.getClient().setInmuebles(null);
             }*/
-        }
+
         return inmuebles;
     }
     public Inmueble listById(Long id){

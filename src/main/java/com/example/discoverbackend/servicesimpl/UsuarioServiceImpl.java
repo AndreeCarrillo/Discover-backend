@@ -32,6 +32,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario usuario;
         usuario=usuarioRepository.findById(id).orElseThrow();
         usuario.setInmuebles(null);
+        usuario.setOpiniones(null);
         return usuario;
     }
 
