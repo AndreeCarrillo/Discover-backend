@@ -1,5 +1,6 @@
 package com.example.discoverbackend.services;
 
+import com.example.discoverbackend.dtos.PrincipalInmueblesResponse;
 import com.example.discoverbackend.dtos.InmuebleRequest;
 import com.example.discoverbackend.entities.Inmueble;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 public interface InmuebleService {
 
-    public List<Inmueble> listAll();
+    public List<PrincipalInmueblesResponse> listAll();
 
     public Inmueble listById(Long id);
 
