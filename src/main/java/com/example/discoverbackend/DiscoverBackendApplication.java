@@ -72,7 +72,7 @@ public class DiscoverBackendApplication {
             caracteristicaRepository.save(new Caracteristica("Central", tipo4,"filter_tilt_shift"));
             caracteristicaRepository.save(new Caracteristica("Espacioso", tipo4,"social_distance"));
             caracteristicaRepository.save(new Caracteristica("Elegante", tipo4,"local_bar"));
-            
+
             Caracteristica caracteristica1 = caracteristicaRepository.findById(Long.valueOf(1)).get();
             Caracteristica caracteristica2 = caracteristicaRepository.findById(Long.valueOf(2)).get();
             Caracteristica caracteristica3 = caracteristicaRepository.findById(Long.valueOf(3)).get();
