@@ -1,6 +1,7 @@
 package com.example.discoverbackend.controllers;
 
 import com.example.discoverbackend.dtos.InmuebleRequest;
+import com.example.discoverbackend.dtos.PrincipalInmueblesResponse;
 import com.example.discoverbackend.entities.Inmueble;
 import com.example.discoverbackend.entities.InmuebleCaracteristica;
 import com.example.discoverbackend.entities.Usuario;
@@ -25,9 +26,9 @@ public class InmuebleController {
     InmuebleService inmuebleService;
 
     @GetMapping("/inmuebles")
-    public ResponseEntity<List<Inmueble>> getAllInmuebles(){
-        List<Inmueble> inmuebles = inmuebleService.listAll();
-        return new ResponseEntity<List<Inmueble>>(inmuebles, HttpStatus.OK);
+    public ResponseEntity<List<PrincipalInmueblesResponse>> getAllInmuebles(){
+        List<PrincipalInmueblesResponse> inmuebles = inmuebleService.listAll();
+        return new ResponseEntity<List<PrincipalInmueblesResponse>>(inmuebles, HttpStatus.OK);
     }
 
     @GetMapping("/inmuebles/{id}")

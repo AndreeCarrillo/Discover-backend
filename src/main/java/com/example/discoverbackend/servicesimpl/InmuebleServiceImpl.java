@@ -1,5 +1,6 @@
 package com.example.discoverbackend.servicesimpl;
 
+import com.example.discoverbackend.dtos.PrincipalInmueblesResponse;
 import com.example.discoverbackend.entities.*;
 import com.example.discoverbackend.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,9 @@ import com.example.discoverbackend.services.InmuebleService;
 import org.springframework.stereotype.Service;
 import com.example.discoverbackend.dtos.InmuebleRequest;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,25 +27,24 @@ public class InmuebleServiceImpl implements InmuebleService {
     @Autowired
     InmuebleCaracteristicaRepository inmuebleCaracteristicaRepository;
 
-    public List<Inmueble> listAll(){
-        List<Inmueble> inmuebles;
-        inmuebles=inmuebleRepository.findAll();
-        for (Inmueble i: inmuebles){
-            i.getUsuario().setInmuebles(null);
-            i.getUsuario().setOpiniones(null);
-            i.setOpiniones(null);
-            i.getUbigeo().setInmuebleZonaList(null);
-            for(InmuebleFoto foto: i.getInmuebleFotoList()){
-                foto.setInmueble(null);
-                foto.getFoto().setInmuebleFotos(null);
-            }
-            /*for(Opinion o: i.getOpiniones()){
-                 o.setInmueble(null);
-                 o.getClient().setOpiniones(null);
-                 o.getClient().setInmuebles(null);
-            }*/
+    public List<PrincipalInmueblesResponse> listAll(){
+        List<PrincipalInmueblesResponse> propertiesResponse = new ArrayList<>();
+        List<Inmueble> properties=inmuebleRepository.findAll();
+        for(Inmueble i: properties){
+            String linkPhotoUser = i.getUsuario().getLinkPhotoProfile();
+            String fullName = i.getUsuario().getFirstName() + i.getUsuario().getLastNameDad() + i.getUsuario().getLastNameMom();
+            String province = i.getUbigeo().getProvincia();
+            String department = i.getUbigeo().getDepartamento();
+            String district = i.getUbigeo().getDistrito();
+            String linkPhotoProperty = i.getInmuebleFotoList().get(0).getFoto().getPhotoLink();
+            Double price = i.getPrice();
+            Integer squareMeter = i.getSquareMeter();
+            Integer numBedrooms = i.getNumBedrooms();
+            Integer numBathrooms = i.getNumBathrooms();
+            String description = i.getDescription();
+            propertiesResponse.add(new PrincipalInmueblesResponse(linkPhotoUser, fullName, province, department, district, linkPhotoProperty, price, squareMeter, numBedrooms, numBathrooms, description));
         }
-        return inmuebles;
+        return propertiesResponse;
     }
     public Inmueble listById(Long id){
         Inmueble inmueble;
