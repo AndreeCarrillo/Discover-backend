@@ -3,6 +3,7 @@ package com.example.discoverbackend.controllers;
 import com.example.discoverbackend.dtos.DTOInmuebleFoto;
 import com.example.discoverbackend.dtos.InmuebleRequest;
 import com.example.discoverbackend.dtos.PrincipalInmueblesResponse;
+import com.example.discoverbackend.dtos.ShowInmuebleResponse;
 import com.example.discoverbackend.entities.Inmueble;
 import com.example.discoverbackend.entities.InmuebleCaracteristica;
 import com.example.discoverbackend.entities.Usuario;
@@ -34,9 +35,9 @@ public class InmuebleController {
     }
 
     @GetMapping("/inmuebles/{id}")
-    public ResponseEntity<Inmueble> getInmueblesById(@PathVariable("id") Long id) {
-        Inmueble inmueble = inmuebleService.listById(id);
-        return new ResponseEntity<Inmueble>(inmueble, HttpStatus.OK);
+    public ResponseEntity<ShowInmuebleResponse> getInmueblesById(@PathVariable("id") Long id) {
+        ShowInmuebleResponse inmueble = inmuebleService.listDataInmueble(id);
+        return new ResponseEntity<ShowInmuebleResponse>(inmueble, HttpStatus.OK);
     }
 
     //post de dto de dtoinmueblefoto

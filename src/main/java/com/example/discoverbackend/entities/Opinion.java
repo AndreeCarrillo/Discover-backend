@@ -22,11 +22,11 @@ public class Opinion {
     @JoinColumn(name = "inmueble_id")
     private Inmueble inmueble;
 
-    private Integer calificacion;
+    private Double calificacion;
     private String observaciones;
     private String linkFoto;
 
-    public Opinion(Usuario usuario, Inmueble inmueble, Integer calificacion, String observaciones, String linkFoto) {
+    public Opinion(Usuario usuario, Inmueble inmueble, Double calificacion, String observaciones, String linkFoto) {
         this.usuario = usuario;
         this.inmueble = inmueble;
         this.calificacion = calificacion;
