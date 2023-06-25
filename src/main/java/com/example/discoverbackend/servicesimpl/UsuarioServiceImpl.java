@@ -1,31 +1,47 @@
 package com.example.discoverbackend.servicesimpl;
 
 import com.example.discoverbackend.dtos.DTOContactoUsuario;
+import com.example.discoverbackend.dtos.RegisterUserRequest;
+import com.example.discoverbackend.entities.RoleApplication;
 import com.example.discoverbackend.entities.Usuario;
+import com.example.discoverbackend.repositories.RoleRepository;
 import com.example.discoverbackend.repositories.UsuarioRepository;
 import com.example.discoverbackend.services.UsuarioService;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
-public class UsuarioServiceImpl implements UsuarioService {
+public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     @Autowired
     UsuarioRepository usuarioRepository;
+    @Autowired
+    RoleRepository roleRepository;
+    private final PasswordEncoder encoder;
 
-    public List<Usuario> listAll() {
-        List<Usuario> usuarios;
-        usuarios = usuarioRepository.findAll();
-        for (Usuario u: usuarios){
-            u.setInmuebles(null);
-            u.setOpiniones(null);
-        }
-        return usuarios;
+    @Override
+    public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
+        Usuario user = usuarioRepository.findByDni(dni)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with dni: " + dni));
+
+        return new User(user.getDni(), user.getPassword(), getAuthority(user));
+    }
+
+    private Set<SimpleGrantedAuthority> getAuthority(Usuario user) {
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        user.getRoles().forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRole().getName()));
+        });
+        return authorities;
     }
 
     public Usuario listById(Long id) {
@@ -36,8 +52,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuario;
     }
 
-    public Usuario save(Usuario usuario) {
-        Usuario newUsuario = new Usuario(usuario.getFirstName(), usuario.getLastNameDad(), usuario.getLastNameMom(), usuario.getDni(), usuario.getTelephone(), usuario.getEmail(), usuario.getPassword(), usuario.getLinkPhotoDni(), usuario.getLinkPhotoProfile(), usuario.getDateBirth(), usuario.getDateAffiliation(), usuario.getInmuebles());
+    public Usuario save(RegisterUserRequest usuario) {
+        Usuario newUsuario = new Usuario(usuario.getFirstName(), usuario.getLastNameDad(), usuario.getLastNameMom(), usuario.getDni(), usuario.getNumPhone(), usuario.getEmail(), );
         Usuario savedUsuario = usuarioRepository.save(newUsuario);
         return savedUsuario;
     }

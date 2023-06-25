@@ -1,6 +1,7 @@
 package com.example.discoverbackend.controllers;
 
 import com.example.discoverbackend.dtos.DTOContactoUsuario;
+import com.example.discoverbackend.dtos.RegisterUserRequest;
 import com.example.discoverbackend.entities.Usuario;
 import com.example.discoverbackend.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
 
-    @PostMapping("/new-usuario")
-    public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario){
+    @PostMapping("/register")
+    public ResponseEntity<Usuario> createUsuario(@RequestBody RegisterUserRequest usuario){
         Usuario savedUsuario = usuarioService.save(usuario);
         return new ResponseEntity<Usuario>(savedUsuario, HttpStatus.CREATED);
     }

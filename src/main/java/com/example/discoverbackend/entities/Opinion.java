@@ -24,13 +24,11 @@ public class Opinion {
 
     private Double calificacion;
     private String observaciones;
-    private String linkFoto;
 
-    public Opinion(Usuario usuario, Inmueble inmueble, Double calificacion, String observaciones, String linkFoto) {
+    public Opinion(Usuario usuario, Inmueble inmueble, Double calificacion, String observaciones) {
         this.usuario = usuario;
         this.inmueble = inmueble;
         this.calificacion = calificacion;
         this.observaciones = observaciones;
-        this.linkFoto = linkFoto;
     }
 }
