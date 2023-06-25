@@ -30,7 +30,9 @@ public class DiscoverBackendApplication {
         FotoRepository fotoRepository,
         InmuebleFotoRepository inmuebleFotoRepository,
         AlquilerRepository alquilerRepository,
-        OpinionRepository opinionRepository
+        OpinionRepository opinionRepository,
+        RoleUserRepository roleUserRepository,
+        RoleRepository roleRepository
 
     ){
         return args -> {
@@ -130,8 +132,8 @@ public class DiscoverBackendApplication {
             usuarioRepository.save(new Usuario("Gustavo",  "García", "Pérez", "78912345", "987111321", "gustavo.garcia@example.com", "Gustavo5678", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/SRNywVv4/person-smiling.jpg", new Date(82,9,28), new Date(123,12,15), null));
 
 
-
-
+            RoleApplication user = roleRepository.save(new RoleApplication("USER"));
+            RoleApplication admin = roleRepository.save(new RoleApplication("ADMIN"));
 
             Usuario usuario1 = usuarioRepository.findById(Long.valueOf(1)).get();
             Usuario usuario2 = usuarioRepository.findById(Long.valueOf(2)).get();
@@ -153,6 +155,28 @@ public class DiscoverBackendApplication {
             Usuario usuario18 = usuarioRepository.findById(Long.valueOf(18)).get();
             Usuario usuario19 = usuarioRepository.findById(Long.valueOf(19)).get();
             Usuario usuario20 = usuarioRepository.findById(Long.valueOf(20)).get();
+
+            roleUserRepository.save(new RoleUser(usuario1,user));
+            roleUserRepository.save(new RoleUser(usuario2,user));
+            roleUserRepository.save(new RoleUser(usuario3,user));
+            roleUserRepository.save(new RoleUser(usuario4,user));
+            roleUserRepository.save(new RoleUser(usuario5,user));
+            roleUserRepository.save(new RoleUser(usuario6,user));
+            roleUserRepository.save(new RoleUser(usuario7,user));
+            roleUserRepository.save(new RoleUser(usuario8,user));
+            roleUserRepository.save(new RoleUser(usuario9,user));
+            roleUserRepository.save(new RoleUser(usuario10,user));
+            roleUserRepository.save(new RoleUser(usuario11,user));
+            roleUserRepository.save(new RoleUser(usuario12,user));
+            roleUserRepository.save(new RoleUser(usuario13,user));
+            roleUserRepository.save(new RoleUser(usuario14,user));
+            roleUserRepository.save(new RoleUser(usuario15,user));
+            roleUserRepository.save(new RoleUser(usuario16,user));
+            roleUserRepository.save(new RoleUser(usuario17,user));
+            roleUserRepository.save(new RoleUser(usuario18,user));
+            roleUserRepository.save(new RoleUser(usuario19,user));
+            roleUserRepository.save(new RoleUser(usuario20,user));
+
 
             System.out.println("--------------");
 

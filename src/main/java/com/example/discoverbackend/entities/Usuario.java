@@ -4,10 +4,7 @@ import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name="usuarios")
@@ -38,22 +35,18 @@ public class Usuario {
     @OneToMany (mappedBy = "usuario", cascade={CascadeType.REMOVE})
     private List<Opinion> opiniones;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_rol",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "rol_id")
-    )
-    private Set<RoleApplication> roles = new HashSet<>();
+    @OneToMany(mappedBy = "user")
+    private List<RoleUser> roles;
 
-    public Set<String> getRolName() {
-        Set<String> rolesName = new HashSet<>();
+    /*public List<String> getRolName() {
+        List<String> rolesName  = new ArrayList<>();
 
         roles.forEach(role -> {
-            rolesName.add(role.getName());
+            rolesName.add(role.getRole().getName());
         });
 
         return rolesName;
-    }
+    }*/
 
     public Usuario(String firstName, String lastNameDad, String lastNameMom, String dni, String telephone, String email, String password, String linkPhotoDni, String linkPhotoProfile, Date dateBirth, Date dateAffiliation, List<Inmueble> inmuebles) {
         this.firstName = firstName;

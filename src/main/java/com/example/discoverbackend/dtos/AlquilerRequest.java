@@ -11,11 +11,9 @@ import java.util.Date;
 @NoArgsConstructor
 public class AlquilerRequest {
 
-    private String location; //Ubicación
-    private String fullNameOwner; //Nombre completo del propietario
-    private Double price; //Precio alquiler
-    private Date transactionDate; //Fecha transacción
-    private Boolean active; //Alquiler activo
-    private Long property_id; //Inmueble ID
+    private Long client_id;
+    private Long inmueble_id;
+    private Double price;
+    private Date transactionDate;
 
 }

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity(name = "rol")
@@ -19,6 +20,10 @@ public class RoleApplication {
 
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
-    public Set<Usuario> users = new HashSet<>();
+    @OneToMany(mappedBy = "role")
+    private List<RoleUser> users;
+
+    public RoleApplication(String name) {
+        this.name = name;
+    }
 }
