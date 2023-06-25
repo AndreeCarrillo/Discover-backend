@@ -12,6 +12,8 @@ import com.example.discoverbackend.services.AlquilerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,10 +26,9 @@ public class AlquilerServiceImpl implements AlquilerService {
     @Autowired
     InmuebleRepository inmuebleRepository;
 
-    @Override
-    public Alquiler createAlquiler(AlquilerRequest alquiler) {
-        Usuario usuario = usuarioRepository.findById(alquiler.getClient_id()).get();
-        Inmueble inmueble = inmuebleRepository.findById(alquiler.getInmueble_id()).get();
+    public Alquiler createAlquiler(Alquiler alquiler) {
+        Usuario usuario = usuarioRepository.findById(alquiler.getClient().getId()).get();
+        Inmueble inmueble = inmuebleRepository.findById(alquiler.getInmueble().getId()).get();
         Alquiler newAlquiler = new Alquiler(usuario, inmueble,alquiler.getPrice(), alquiler.getTransactionDate(), true);
         Alquiler savedAlquiler = alquilerRepository.save(newAlquiler);
         savedAlquiler.getClient().setInmuebles(null);
@@ -74,5 +75,27 @@ public class AlquilerServiceImpl implements AlquilerService {
             f.getFoto().setInmuebleFotos(null);
         }
         return alquilerRepository.save(alquiler);
+    }
+
+    public List<AlquilerRequest> listAlquilerRequest() {
+        List<Alquiler> alquilerList = alquilerRepository.findAll();
+        List<AlquilerRequest> alquilerRequestList = new ArrayList<>();
+
+        for(Alquiler a: alquilerList) {
+
+            String location = a.getInmueble().getAddress();
+            String fullNameOwner = a.getClient().getFirstName() + " " + a.getClient().getLastNameDad() + " " +a.getClient().getLastNameMom();
+            Double price = a.getPrice();
+            Date transactionDate = a.getTransactionDate();
+            Boolean active = a.getActivate();
+            Long property_id = a.getInmueble().getId();
+
+            AlquilerRequest alquilerRequest = new AlquilerRequest(location, fullNameOwner, price, transactionDate, active, property_id);
+            alquilerRequestList.add(alquilerRequest);
+
+        }
+
+        return alquilerRequestList;
+
     }
 }

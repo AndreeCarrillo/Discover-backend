@@ -1,5 +1,6 @@
 package com.example.discoverbackend.controllers;
 
+import com.example.discoverbackend.dtos.DTOInmuebleFoto;
 import com.example.discoverbackend.dtos.InmuebleRequest;
 import com.example.discoverbackend.dtos.PrincipalInmueblesResponse;
 import com.example.discoverbackend.entities.Inmueble;
@@ -25,6 +26,7 @@ public class InmuebleController {
     @Autowired
     InmuebleService inmuebleService;
 
+    //get de dto de inmueblefoto
     @GetMapping("/inmuebles")
     public ResponseEntity<List<PrincipalInmueblesResponse>> getAllInmuebles(){
         List<PrincipalInmueblesResponse> inmuebles = inmuebleService.listAll();
@@ -37,12 +39,13 @@ public class InmuebleController {
         return new ResponseEntity<Inmueble>(inmueble, HttpStatus.OK);
     }
 
-    @PostMapping ("/new-inmueble")
-    public ResponseEntity<Inmueble> createInmueble(@RequestBody InmuebleRequest inmuebleRequest ) {
+    //post de dto de dtoinmueblefoto
+    /*@PostMapping ("/new-inmueble")
+    public ResponseEntity<DTOInmuebleFoto> createInmueble(@RequestBody InmuebleRequest inmuebleRequest ) {
         Inmueble savedInmueble = inmuebleService.save(inmuebleRequest);
         return new ResponseEntity<Inmueble>(savedInmueble, HttpStatus.CREATED);
 
-    }
+    }*/
 
     @DeleteMapping("/inmuebles/{id}")
     public ResponseEntity<HttpStatus> deleteInmueble(@PathVariable("id") Long id) {

@@ -35,7 +35,7 @@ public class Usuario {
     @OneToMany (mappedBy = "usuario", cascade={CascadeType.REMOVE})
     private List<Inmueble> inmuebles;
 
-    @OneToMany (mappedBy = "client", cascade={CascadeType.REMOVE})
+    @OneToMany (mappedBy = "usuario", cascade={CascadeType.REMOVE})
     private List<Opinion> opiniones;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
