@@ -7,6 +7,7 @@ import com.example.discoverbackend.services.UsuarioService;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,23 +19,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    public List<Usuario> listAll() {
-        List<Usuario> usuarios;
-        usuarios = usuarioRepository.findAll();
-        for (Usuario u: usuarios){
-            u.setInmuebles(null);
-            u.setOpiniones(null);
-        }
-        return usuarios;
-    }
-
-    public Usuario listById(Long id) {
-        Usuario usuario;
-        usuario=usuarioRepository.findById(id).orElseThrow();
-        usuario.setInmuebles(null);
-        usuario.setOpiniones(null);
-        return usuario;
-    }
 
     public Usuario save(Usuario usuario) {
         Usuario newUsuario = new Usuario(usuario.getFirstName(), usuario.getLastNameDad(), usuario.getLastNameMom(), usuario.getDni(), usuario.getTelephone(), usuario.getEmail(), usuario.getPassword(), usuario.getLinkPhotoDni(), usuario.getLinkPhotoProfile(), usuario.getDateBirth(), usuario.getDateAffiliation(), usuario.getInmuebles());
@@ -91,7 +75,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
                 String dateString = year + " - " + monthString + " - " + dayString;
                 String dateStringBirth = year1+" - "+monthString1+" - "+dayString1;
-                DTOContactoUsuario dtoContactoUsuario = new DTOContactoUsuario(fullname, u.getTelephone(), u.getEmail(), dateString, dateStringBirth);
+                DTOContactoUsuario dtoContactoUsuario = new DTOContactoUsuario(fullname, u.getTelephone(), u.getEmail(), dateString, dateStringBirth, u.getLinkPhotoProfile());
 
         return dtoContactoUsuario;
     }

@@ -22,24 +22,32 @@ public class OpinionServiceImpl implements OpinionService {
     @Autowired
     InmuebleRepository inmuebleRepository;
 
-    @Override
     public Opinion createOpinion(Opinion opinion) {
-        Usuario usuario = usuarioRepository.findById(opinion.getClient().getId()).get();
+        Usuario usuario = usuarioRepository.findById(opinion.getUsuario().getId()).get();
         Inmueble inmueble = inmuebleRepository.findById(opinion.getInmueble().getId()).get();
         Opinion newOpinion = new Opinion(usuario, inmueble, opinion.getCalificacion(), opinion.getObservaciones(), opinion.getLinkFoto());
         Opinion savedOpinion = opinionRepository.save(newOpinion);
-        savedOpinion.getClient().setOpiniones(null);
+        savedOpinion.getUsuario().setOpiniones(null);
         savedOpinion.getInmueble().setOpiniones(null);
         return savedOpinion;
     }
 
-    @Override
     public List<Opinion> listOpinionByUser(Long id) {
-        List<Opinion> opinionList = opinionRepository.findByClient_Id(id);
+        List<Opinion> opinionList = opinionRepository.findByUsuario_Id(id);
         for(Opinion o: opinionList){
-            o.getClient().setOpiniones(null);
-            o.getInmueble().setOpiniones(null);
+            o.setUsuario(null);
+            o.setInmueble(null);
         }
         return opinionList;
+    }
+
+    public List<Opinion> listAll(){
+        List<Opinion> opinions;
+        opinions = opinionRepository.findAll();
+        for (Opinion o: opinions){
+            o.setUsuario(null);
+            o.setInmueble(null);
+        }
+        return opinions;
     }
 }
