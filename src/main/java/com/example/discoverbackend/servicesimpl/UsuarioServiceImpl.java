@@ -1,16 +1,28 @@
 package com.example.discoverbackend.servicesimpl;
 
 import com.example.discoverbackend.dtos.DTOContactoUsuario;
+import com.example.discoverbackend.dtos.LogInResponse;
+import com.example.discoverbackend.dtos.LoginRequest;
 import com.example.discoverbackend.dtos.RegisterUserRequest;
+import com.example.discoverbackend.entities.Inmueble;
 import com.example.discoverbackend.entities.RoleApplication;
+import com.example.discoverbackend.entities.RoleUser;
 import com.example.discoverbackend.entities.Usuario;
 import com.example.discoverbackend.repositories.RoleRepository;
+import com.example.discoverbackend.repositories.RoleUserRepository;
 import com.example.discoverbackend.repositories.UsuarioRepository;
+import com.example.discoverbackend.security.JwtTokenUtil;
 import com.example.discoverbackend.services.UsuarioService;
 import javax.transaction.Transactional;
+
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,49 +33,35 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
-    @Autowired
+@AllArgsConstructor
+public class UsuarioServiceImpl implements UsuarioService {
+
+
+    private final AuthenticationManager authManager;
     UsuarioRepository usuarioRepository;
-    @Autowired
+
     RoleRepository roleRepository;
-    private final PasswordEncoder encoder;
 
-    @Override
-    public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
-        Usuario user = usuarioRepository.findByDni(dni)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with dni: " + dni));
+    RoleUserRepository roleUserRepository;
 
-        return new User(user.getDni(), user.getPassword(), getAuthority(user));
-    }
+    PasswordEncoder encoder;
 
-    private Set<SimpleGrantedAuthority> getAuthority(Usuario user) {
-        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-        user.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRole().getName()));
-        });
-        return authorities;
-    }
-
-    public Usuario listById(Long id) {
-        Usuario usuario;
-        usuario=usuarioRepository.findById(id).orElseThrow();
-        usuario.setInmuebles(null);
-        usuario.setOpiniones(null);
-        return usuario;
-    }
+    private final JwtTokenUtil jwtTokenUtil;
 
     public Usuario save(RegisterUserRequest usuario) {
-        Usuario newUsuario = new Usuario(usuario.getFirstName(), usuario.getLastNameDad(), usuario.getLastNameMom(), usuario.getDni(), usuario.getNumPhone(), usuario.getEmail(), );
+        RoleApplication rol = roleRepository.findByName("USER");
+        Usuario newUsuario = new Usuario(usuario.getFirstName(), usuario.getLastNameDad(), usuario.getLastNameMom(), usuario.getDni(), usuario.getNumPhone(), usuario.getEmail(), encoder.encode(usuario.getPassword()),usuario.getLinkPhotoDni(), usuario.getLinkPhotoProfile(), usuario.getBirthDate(), new Date(), null);
         Usuario savedUsuario = usuarioRepository.save(newUsuario);
+        roleUserRepository.save(new RoleUser(savedUsuario, rol));
+        List<RoleUser> roles = roleUserRepository.findAllByUser(savedUsuario);
+        savedUsuario.setRoles(roles);
+        for(RoleUser ru: savedUsuario.getRoles()){
+            ru.setUser(null);
+            ru.getRole().setUsers(null);
+        }
+
         return savedUsuario;
     }
-
-    @Transactional
-    public void delete(Long id, boolean forced) {
-        Usuario usuario = usuarioRepository.findById(id).get();
-        usuarioRepository.delete(usuario);
-    }
-
 
     public DTOContactoUsuario listContactoUsuario(Long id) {
         Usuario u = usuarioRepository.findById(id).get();
@@ -111,4 +109,16 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
         return dtoContactoUsuario;
     }
+
+    @Override
+    public LogInResponse login(LoginRequest loginRequest) {
+        Authentication authentication = authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtTokenUtil.generateJwtToken(authentication);
+        return new LogInResponse(jwt);
+    }
+
+
 }
