@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface AlquilerRepository extends JpaRepository<Alquiler, Long> {
     List<Alquiler> findByClient_Id (Long id);
+
+    List<Alquiler> deleteAllByInmueble_Id(Long id);
 }

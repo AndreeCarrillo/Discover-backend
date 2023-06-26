@@ -1,5 +1,6 @@
 package com.example.discoverbackend.servicesimpl;
 
+import com.example.discoverbackend.dtos.OpinionRequest;
 import com.example.discoverbackend.entities.Inmueble;
 import com.example.discoverbackend.entities.Opinion;
 import com.example.discoverbackend.entities.Usuario;
@@ -22,24 +23,19 @@ public class OpinionServiceImpl implements OpinionService {
     @Autowired
     InmuebleRepository inmuebleRepository;
 
-    @Override
-    public Opinion createOpinion(Opinion opinion) {
-        Usuario usuario = usuarioRepository.findById(opinion.getClient().getId()).get();
-        Inmueble inmueble = inmuebleRepository.findById(opinion.getInmueble().getId()).get();
-        Opinion newOpinion = new Opinion(usuario, inmueble, opinion.getCalificacion(), opinion.getObservaciones(), opinion.getLinkFoto());
+    public Opinion createOpinion(OpinionRequest opinion) {
+        Usuario usuario = usuarioRepository.findById(opinion.getUser_id()).get();
+        Inmueble inmueble = inmuebleRepository.findById(opinion.getProperty_id()).get();
+        Opinion newOpinion = new Opinion(usuario, inmueble, opinion.getQualification(), opinion.getObservation());
         Opinion savedOpinion = opinionRepository.save(newOpinion);
-        savedOpinion.getClient().setOpiniones(null);
+        savedOpinion.getUsuario().setOpiniones(null);
+        savedOpinion.getUsuario().setInmuebles(null);
+        savedOpinion.getUsuario().setRoles(null);
         savedOpinion.getInmueble().setOpiniones(null);
+        savedOpinion.getInmueble().setInmuebleFotoList(null);
+        savedOpinion.getInmueble().getUbigeo().setInmuebleZonaList(null);
+        savedOpinion.getInmueble().setCaracteristicaList(null);
+        savedOpinion.getInmueble().setUsuario(null);
         return savedOpinion;
-    }
-
-    @Override
-    public List<Opinion> listOpinionByUser(Long id) {
-        List<Opinion> opinionList = opinionRepository.findByClient_Id(id);
-        for(Opinion o: opinionList){
-            o.getClient().setOpiniones(null);
-            o.getInmueble().setOpiniones(null);
-        }
-        return opinionList;
     }
 }

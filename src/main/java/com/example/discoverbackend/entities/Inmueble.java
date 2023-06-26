@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-
 @Entity
 @Table(name = "inmuebles")
 @Data
@@ -35,12 +34,12 @@ public class Inmueble {
     @JoinColumn(name = "ubigeo_id")
     private Ubigeo ubigeo;
 
-    @OneToMany (mappedBy = "inmueble", cascade={CascadeType.REMOVE})
+    @OneToMany(mappedBy = "inmueble")
     private List<Opinion> opiniones;
     @OneToMany(mappedBy = "inmueble")
     private List<InmuebleFoto> inmuebleFotoList;
-//    @OneToMany(mappedBy = "inmueble")
-//    private List<InmuebleCaracteristica> caracteristicaList;
+    @OneToMany(mappedBy = "inmueble")
+    private List<InmuebleCaracteristica> caracteristicaList;
 
 
     public Inmueble(String propertyType, String sharedRoom, String address, Double price, Integer numBedrooms, Integer numBathrooms, Integer numGuests, Integer squareMeter, String timeAntiquity, String description, Usuario usuario, Ubigeo ubigeo) {

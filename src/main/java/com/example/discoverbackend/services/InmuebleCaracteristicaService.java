@@ -12,4 +12,5 @@ public interface InmuebleCaracteristicaService {
     public InmuebleCaracteristica createInmuebleCaracteristica(InmuebleCaracteristicaRequest inmuebleCaracteristicaRequest);
 
 //    public List<InmuebleCaracteristica> listCaracteristicaByInmueble (Long id);
+
 }

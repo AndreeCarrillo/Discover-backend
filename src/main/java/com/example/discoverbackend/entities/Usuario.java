@@ -4,8 +4,7 @@ import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name="usuarios")
@@ -33,8 +32,11 @@ public class Usuario {
     @OneToMany (mappedBy = "usuario", cascade={CascadeType.REMOVE})
     private List<Inmueble> inmuebles;
 
-    @OneToMany (mappedBy = "client", cascade={CascadeType.REMOVE})
+    @OneToMany (mappedBy = "usuario", cascade={CascadeType.REMOVE})
     private List<Opinion> opiniones;
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    private List<RoleUser> roles;
 
     public Usuario(String firstName, String lastNameDad, String lastNameMom, String dni, String telephone, String email, String password, String linkPhotoDni, String linkPhotoProfile, Date dateBirth, Date dateAffiliation, List<Inmueble> inmuebles) {
         this.firstName = firstName;
