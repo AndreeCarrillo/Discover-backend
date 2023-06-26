@@ -12,6 +12,7 @@ import java.util.List;
 public interface UsuarioService {
 
     public Usuario save(RegisterUserRequest usuario);
+
     public DTOContactoUsuario listContactoUsuario(Long id);
 
     public LogInResponse login(LoginRequest loginRequest);

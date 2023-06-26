@@ -45,7 +45,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     RoleUserRepository roleUserRepository;
 
     PasswordEncoder encoder;
-
     private final JwtTokenUtil jwtTokenUtil;
 
     public Usuario save(RegisterUserRequest usuario) {
@@ -105,7 +104,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
                 String dateString = year + " - " + monthString + " - " + dayString;
                 String dateStringBirth = year1+" - "+monthString1+" - "+dayString1;
-                DTOContactoUsuario dtoContactoUsuario = new DTOContactoUsuario(fullname, u.getTelephone(), u.getEmail(), dateString, dateStringBirth);
+                DTOContactoUsuario dtoContactoUsuario = new DTOContactoUsuario(fullname, u.getTelephone(), u.getEmail(), dateString, dateStringBirth, u.getLinkPhotoProfile());
 
         return dtoContactoUsuario;
     }

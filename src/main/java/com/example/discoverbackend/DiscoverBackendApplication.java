@@ -634,6 +634,14 @@ public class DiscoverBackendApplication {
 
             System.out.println("--------------");
 
+            /**
+             *List<Usuario> usuariosFoto = usuarioRepository.userWithProfilePicture();
+             *             for (Usuario u: usuariosFoto) {
+             *                 System.out.println(u.getFirstName());
+             *             }
+             */
+
+
         };
     }
 }
