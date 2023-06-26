@@ -36,6 +36,7 @@ public class InmuebleServiceImpl implements InmuebleService {
 
     @Autowired
     FotoRepository fotoRepository;
+
     public List<PrincipalInmueblesResponse> listAll(){
         List<PrincipalInmueblesResponse> propertiesResponse = new ArrayList<PrincipalInmueblesResponse>();
         List<Inmueble> properties = inmuebleRepository.findAll();
@@ -45,6 +46,7 @@ public class InmuebleServiceImpl implements InmuebleService {
             String province = i.getUbigeo().getProvincia();
             String department = i.getUbigeo().getDepartamento();
             String district = i.getUbigeo().getDistrito();
+            //String linkPhotoProperty = i.getInmuebleFotoList().get(0).getFoto().getPhotoLink();
             String linkPhotoProperty = i.getInmuebleFotoList().get(0).getFoto().getPhotoLink();
             Double price = i.getPrice();
             Integer squareMeter = i.getSquareMeter();
@@ -92,37 +94,32 @@ public class InmuebleServiceImpl implements InmuebleService {
     public Inmueble save(InmuebleRequest inmueble){
         Usuario usuario = usuarioRepository.findById(inmueble.getUsuario_id()).get();
         Ubigeo ubigeo = ubigeoRepository.findUbigeoByDepartamentoAndProvinciaAndDistrito(inmueble.getDepartamento(), inmueble.getProvincia(), inmueble.getDistrito());
-        Inmueble newInmueble = inmuebleRepository.save(new Inmueble(inmueble.getPropertyType(), inmueble.getSharedRoom(), inmueble.getAddress(), inmueble.getPrice(), inmueble.getNumBedrooms(), inmueble.getNumBathrooms(), inmueble.getNumGuests(), inmueble.getSquareMeter(), inmueble.getTimeAntiquity(), inmueble.getDescription(),usuario, ubigeo));
-        List<Foto> foto = new ArrayList<>();
+        Inmueble saveInmueble = inmuebleRepository.save(new Inmueble(inmueble.getPropertyType(), inmueble.getSharedRoom(), inmueble.getAddress(), inmueble.getPrice(), inmueble.getNumBedrooms(), inmueble.getNumBathrooms(), inmueble.getNumGuests(), inmueble.getSquareMeter(), inmueble.getTimeAntiquity(), inmueble.getDescription(),usuario, ubigeo));
+        List<Foto> foto = new ArrayList<Foto>();
         for (String f: inmueble.getFoto()){
            Foto newFoto = fotoRepository.save(new Foto(f));
            foto.add(newFoto);
         }
-        List<InmuebleFoto> inmuebleFotos = new ArrayList<>();
+        List<InmuebleFoto> inmuebleFotos = new ArrayList<InmuebleFoto>();
         for(Foto foto1 : foto){
-           InmuebleFoto inmuebleFoto = inmuebleFotoRepository.save(new InmuebleFoto(newInmueble,foto1));
+           InmuebleFoto inmuebleFoto = inmuebleFotoRepository.save(new InmuebleFoto(saveInmueble,foto1));
            inmuebleFotos.add(inmuebleFoto);
         }
-
         for(Long c: inmueble.getCaracteristicasIds()){
            Caracteristica newCaracteristica = caracteristicaRepository.findById(c).get();
-           inmuebleCaracteristicaRepository.save(new InmuebleCaracteristica(newInmueble, newCaracteristica));
-        }
-        newInmueble.setInmuebleFotoList(inmuebleFotos);
-        newInmueble.getUsuario().setInmuebles(null);
-        newInmueble.getUsuario().setOpiniones(null);
-        newInmueble.getUsuario().setRoles(null);
-        newInmueble.setOpiniones(null);
-        newInmueble.getUbigeo().setInmuebleZonaList(null);
-        for(InmuebleFoto fotos: newInmueble.getInmuebleFotoList()){
-            fotos.setInmueble(null);
-            fotos.getFoto().setInmuebleFotos(null);
+           inmuebleCaracteristicaRepository.save(new InmuebleCaracteristica(saveInmueble, newCaracteristica));
         }
         for (Long caracteristicaId : inmueble.getCaracteristicasIds()){
-            InmuebleCaracteristica inmuebleCaracteristica = new InmuebleCaracteristica(newInmueble, caracteristicaRepository.findById(caracteristicaId).get());
+            InmuebleCaracteristica inmuebleCaracteristica = new InmuebleCaracteristica(saveInmueble, caracteristicaRepository.findById(caracteristicaId).get());
             inmuebleCaracteristicaRepository.save(inmuebleCaracteristica);
         }
-        return newInmueble;
+        saveInmueble.setInmuebleFotoList(null);
+        saveInmueble.getUsuario().setInmuebles(null);
+        saveInmueble.getUsuario().setOpiniones(null);
+        saveInmueble.getUsuario().setRoles(null);
+        saveInmueble.setOpiniones(null);
+        saveInmueble.getUbigeo().setInmuebleZonaList(null);
+        return saveInmueble;
     }
     @Transactional
     public void delete(Long id, boolean forced) {
