@@ -24,20 +24,16 @@ public class UsuarioController {
         Usuario savedUsuario = usuarioService.save(usuario);
         return new ResponseEntity<Usuario>(savedUsuario, HttpStatus.CREATED);
     }
-    @GetMapping("/usuarios")
-    public ResponseEntity<List<Usuario>> getAllUsuarios(){
-        List<Usuario> usuarios = usuarioService.listAll();
-        return new ResponseEntity<List<Usuario>>(usuarios, HttpStatus.OK);
-    }
-    @GetMapping("/usuarios/{id}")
-    public ResponseEntity<Usuario> getEmployeesById(@PathVariable("id") Long id) {
-        Usuario usuario = usuarioService.listById(id);
-        return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
-    }
 
     @GetMapping("/contact/{id}")
     public ResponseEntity<DTOContactoUsuario> listContactUsuario(@PathVariable("id") Long id){
         DTOContactoUsuario dtoContactoUsuarios = usuarioService.listContactoUsuario(id);
         return new ResponseEntity<DTOContactoUsuario>(dtoContactoUsuarios, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/usuario/{id}")
+    public ResponseEntity<HttpStatus> deleteUsuario(@PathVariable("id") Long id) {
+        usuarioService.delete(id, true);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

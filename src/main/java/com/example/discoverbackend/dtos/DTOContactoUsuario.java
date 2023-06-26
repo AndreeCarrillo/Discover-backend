@@ -13,5 +13,6 @@ public class DTOContactoUsuario {
     private String email;
     private String dateAfiiliation;
     private String dateBirth;
+    private String linkFotoPerfil;
 
 }
