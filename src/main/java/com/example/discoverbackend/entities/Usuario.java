@@ -35,18 +35,8 @@ public class Usuario {
     @OneToMany (mappedBy = "usuario", cascade={CascadeType.REMOVE})
     private List<Opinion> opiniones;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private List<RoleUser> roles;
-
-    /*public List<String> getRolName() {
-        List<String> rolesName  = new ArrayList<>();
-
-        roles.forEach(role -> {
-            rolesName.add(role.getRole().getName());
-        });
-
-        return rolesName;
-    }*/
 
     public Usuario(String firstName, String lastNameDad, String lastNameMom, String dni, String telephone, String email, String password, String linkPhotoDni, String linkPhotoProfile, Date dateBirth, Date dateAffiliation, List<Inmueble> inmuebles) {
         this.firstName = firstName;

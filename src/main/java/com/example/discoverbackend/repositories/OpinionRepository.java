@@ -9,4 +9,6 @@ import java.util.List;
 public interface OpinionRepository extends JpaRepository<Opinion, Long> {
     @Query(value="SELECT * FROM opiniones WHERE usuario_id=?1", nativeQuery = true)
     List<Opinion> findByUsuario_Id (Long id);
+
+    List<Opinion> deleteAllByInmueble_Id (Long id);
 }

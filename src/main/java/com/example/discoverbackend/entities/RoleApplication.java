@@ -20,7 +20,7 @@ public class RoleApplication {
 
     private String name;
 
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role",fetch = FetchType.EAGER)
     private List<RoleUser> users;
 
     public RoleApplication(String name) {

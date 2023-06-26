@@ -80,6 +80,8 @@ public class AlquilerServiceImpl implements AlquilerService {
         newAlquiler.getClient().setInmuebles(null);
         newAlquiler.getClient().setOpiniones(null);
         newAlquiler.getClient().setRoles(null);
+        //newAlquiler.setInmueble(null);
+        //newAlquiler.setClient(null);
         newAlquiler.getInmueble().getUbigeo().setInmuebleZonaList(null);
         newAlquiler.getInmueble().setUsuario(null);
         newAlquiler.getInmueble().setOpiniones(null);

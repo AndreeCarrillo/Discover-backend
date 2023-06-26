@@ -7,6 +7,7 @@ import com.example.discoverbackend.dtos.RegisterUserRequest;
 import com.example.discoverbackend.entities.Usuario;
 import com.example.discoverbackend.services.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class UsuarioController {
         Usuario savedUsuario = usuarioService.save(usuario);
         return new ResponseEntity<Usuario>(savedUsuario, HttpStatus.CREATED);
     }
-
+    @Operation(security = {@SecurityRequirement(name = "bearer-key")})
     @GetMapping("/contact/{id}")
     public ResponseEntity<DTOContactoUsuario> listContactUsuario(@PathVariable("id") Long id){
         DTOContactoUsuario dtoContactoUsuarios = usuarioService.listContactoUsuario(id);
