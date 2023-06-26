@@ -8,5 +8,4 @@ import java.util.List;
 public interface InmuebleCaracteristicaRepository extends JpaRepository<InmuebleCaracteristica,Long> {
     List<InmuebleCaracteristica> findByInmueble_Id(Long id);
 
-
 }

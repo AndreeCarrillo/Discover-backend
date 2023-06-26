@@ -27,6 +27,10 @@ public class InmuebleServiceImpl implements InmuebleService {
     @Autowired
     InmuebleCaracteristicaRepository inmuebleCaracteristicaRepository;
 
+    @Autowired
+    InmuebleFotoRepository inmuebleFotoRepository;
+    @Autowired
+    FotoRepository fotoRepository;
     public List<PrincipalInmueblesResponse> listAll(){
         List<PrincipalInmueblesResponse> propertiesResponse = new ArrayList<>();
         List<Inmueble> properties=inmuebleRepository.findAll();
@@ -62,14 +66,32 @@ public class InmuebleServiceImpl implements InmuebleService {
 
     @Transactional
     public Inmueble save(InmuebleRequest inmueble){
-        Inmueble newInmueble = inmuebleRepository.save(new Inmueble(inmueble.getPropertyType(), inmueble.getSharedRoom(), inmueble.getAddress(), inmueble.getPrice(), inmueble.getNumBedrooms(), inmueble.getNumBathrooms(), inmueble.getNumGuests(), inmueble.getSquareMeter(), inmueble.getTimeAntiquity(), inmueble.getDescription(), inmueble.getUsuario(), inmueble.getUbigeo()));
+        Usuario usuario = usuarioRepository.findById(inmueble.getUsuario_id()).get();
+        Ubigeo ubigeo = ubigeoRepository.findUbigeoByDepartamentoAndProvinciaAndDistrito(inmueble.getDepartamento(), inmueble.getProvincia(), inmueble.getDistrito());
+        Inmueble newInmueble = inmuebleRepository.save(new Inmueble(inmueble.getPropertyType(), inmueble.getSharedRoom(), inmueble.getAddress(), inmueble.getPrice(), inmueble.getNumBedrooms(), inmueble.getNumBathrooms(), inmueble.getNumGuests(), inmueble.getSquareMeter(), inmueble.getTimeAntiquity(), inmueble.getDescription(),usuario, ubigeo));
+        List<Foto> foto = new ArrayList<>();
+        for (String f: inmueble.getFoto()){
+           Foto newFoto = fotoRepository.save(new Foto(f));
+           foto.add(newFoto);
+        }
+        List<InmuebleFoto> inmuebleFotos = new ArrayList<>();
+        for(Foto foto1 : foto){
+           InmuebleFoto inmuebleFoto = inmuebleFotoRepository.save(new InmuebleFoto(newInmueble,foto1));
+           inmuebleFotos.add(inmuebleFoto);
+        }
+
+        for(Long c: inmueble.getCaracteristicasIds()){
+           Caracteristica newCaracteristica = caracteristicaRepository.findById(c).get();
+           inmuebleCaracteristicaRepository.save(new InmuebleCaracteristica(newInmueble, newCaracteristica));
+        }
+        newInmueble.setInmuebleFotoList(inmuebleFotos);
         newInmueble.getUsuario().setInmuebles(null);
         newInmueble.getUsuario().setOpiniones(null);
         newInmueble.setOpiniones(null);
         newInmueble.getUbigeo().setInmuebleZonaList(null);
-        for(InmuebleFoto foto: newInmueble.getInmuebleFotoList()){
-            foto.setInmueble(null);
-            foto.getFoto().setInmuebleFotos(null);
+        for(InmuebleFoto fotos: newInmueble.getInmuebleFotoList()){
+            fotos.setInmueble(null);
+            fotos.getFoto().setInmuebleFotos(null);
         }
         for (Long caracteristicaId : inmueble.getCaracteristicasIds()){
             InmuebleCaracteristica inmuebleCaracteristica = new InmuebleCaracteristica(newInmueble, caracteristicaRepository.findById(caracteristicaId).get());

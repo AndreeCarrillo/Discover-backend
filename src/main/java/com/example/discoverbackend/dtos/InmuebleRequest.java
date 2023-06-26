@@ -22,7 +22,10 @@ public class InmuebleRequest {
     private Integer squareMeter;
     private String timeAntiquity;
     private String description;
-    private Usuario usuario;
-    private Ubigeo ubigeo;
+    private Long usuario_id;
+    private String departamento;
+    private String provincia;
+    private String distrito;
+    private List<String> foto;
     private List<Long> caracteristicasIds;
 }
