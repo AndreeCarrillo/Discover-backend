@@ -1,21 +1,15 @@
 package com.example.discoverbackend.controllers;
 
-import com.example.discoverbackend.dtos.DTOInmuebleFoto;
 import com.example.discoverbackend.dtos.InmuebleRequest;
 import com.example.discoverbackend.dtos.PrincipalInmueblesResponse;
 import com.example.discoverbackend.dtos.ShowInmuebleResponse;
 import com.example.discoverbackend.entities.Inmueble;
-import com.example.discoverbackend.entities.InmuebleCaracteristica;
-import com.example.discoverbackend.entities.Usuario;
-import com.example.discoverbackend.services.InmuebleCaracteristicaService;
 import com.example.discoverbackend.services.InmuebleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.util.EmptyStackException;
 
 import java.util.List;
 
@@ -40,13 +34,12 @@ public class InmuebleController {
         return new ResponseEntity<ShowInmuebleResponse>(inmueble, HttpStatus.OK);
     }
 
-    //post de dto de dtoinmueblefoto
-    /*@PostMapping ("/new-inmueble")
-    public ResponseEntity<DTOInmuebleFoto> createInmueble(@RequestBody InmuebleRequest inmuebleRequest ) {
-        Inmueble savedInmueble = inmuebleService.save(inmuebleRequest);
+    @PostMapping ("/new-inmueble")
+    public ResponseEntity<Inmueble> createInmueble(@RequestBody InmuebleRequest inmueble ) {
+        Inmueble savedInmueble = inmuebleService.save(inmueble);
         return new ResponseEntity<Inmueble>(savedInmueble, HttpStatus.CREATED);
 
-    }*/
+    }
 
     @DeleteMapping("/inmuebles/{id}")
     public ResponseEntity<HttpStatus> deleteInmueble(@PathVariable("id") Long id) {
