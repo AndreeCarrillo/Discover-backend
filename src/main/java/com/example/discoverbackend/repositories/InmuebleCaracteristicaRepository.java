@@ -11,5 +11,7 @@ public interface InmuebleCaracteristicaRepository extends JpaRepository<Inmueble
     @Query(value = "SELECT*FROM InmuebleCaracteristica where inmueble_id=?1", nativeQuery = true)
     List<InmuebleCaracteristica> findByInmueble_Id(Long id);
 
+    @Query(value = "SELECT i FROM InmuebleCaracteristica i WHERE i.inmueble =?1")
+    List<InmuebleCaracteristica> findByInmueble_Id(Long id);
 
 }

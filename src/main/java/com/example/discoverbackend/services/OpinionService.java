@@ -8,4 +8,6 @@ public interface OpinionService {
     public Opinion createOpinion(Opinion opinion);
 
     public List<Opinion> listOpinionByUser (Long id);
+
+    public List<Opinion> listAll();
 }

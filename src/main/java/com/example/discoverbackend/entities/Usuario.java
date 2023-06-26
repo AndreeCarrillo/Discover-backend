@@ -33,7 +33,7 @@ public class Usuario {
     @OneToMany (mappedBy = "usuario", cascade={CascadeType.REMOVE})
     private List<Inmueble> inmuebles;
 
-    @OneToMany (mappedBy = "client", cascade={CascadeType.REMOVE})
+    @OneToMany (mappedBy = "usuario", cascade={CascadeType.REMOVE})
     private List<Opinion> opiniones;
 
     public Usuario(String firstName, String lastNameDad, String lastNameMom, String dni, String telephone, String email, String password, String linkPhotoDni, String linkPhotoProfile, Date dateBirth, Date dateAffiliation, List<Inmueble> inmuebles) {
