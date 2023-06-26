@@ -29,12 +29,16 @@ public class InmuebleServiceImpl implements InmuebleService {
     InmuebleFotoRepository inmuebleFotoRepository;
     @Autowired
     UsuarioServiceImpl usuarioService;
+    @Autowired
+    AlquilerRepository alquilerRepository;
+    @Autowired
+    OpinionRepository opinionRepository;
 
     @Autowired
     FotoRepository fotoRepository;
     public List<PrincipalInmueblesResponse> listAll(){
-        List<PrincipalInmueblesResponse> propertiesResponse = new ArrayList<>();
-        List<Inmueble> properties=inmuebleRepository.findAll();
+        List<PrincipalInmueblesResponse> propertiesResponse = new ArrayList<PrincipalInmueblesResponse>();
+        List<Inmueble> properties = inmuebleRepository.findAll();
         for(Inmueble i: properties){
             String linkPhotoUser = i.getUsuario().getLinkPhotoProfile();
             String fullName = i.getUsuario().getFirstName() + i.getUsuario().getLastNameDad() + i.getUsuario().getLastNameMom();
@@ -107,6 +111,7 @@ public class InmuebleServiceImpl implements InmuebleService {
         newInmueble.setInmuebleFotoList(inmuebleFotos);
         newInmueble.getUsuario().setInmuebles(null);
         newInmueble.getUsuario().setOpiniones(null);
+        newInmueble.getUsuario().setRoles(null);
         newInmueble.setOpiniones(null);
         newInmueble.getUbigeo().setInmuebleZonaList(null);
         for(InmuebleFoto fotos: newInmueble.getInmuebleFotoList()){
@@ -121,6 +126,17 @@ public class InmuebleServiceImpl implements InmuebleService {
     }
     @Transactional
     public void delete(Long id, boolean forced) {
+        alquilerRepository.deleteAllByInmueble_Id(id);
+        inmuebleCaracteristicaRepository.deleteAllByInmueble_Id(id);
+        opinionRepository.deleteAllByInmueble_Id(id);
+        List<InmuebleFoto> inmuebleFotos = inmuebleFotoRepository.findByInmueble_Id(id);
+        List<Foto> fotos = new ArrayList<Foto>();
+        for(InmuebleFoto ifo: inmuebleFotos){
+            Foto foto = ifo.getFoto();
+            fotos.add(foto);
+        }
+        inmuebleFotoRepository.deleteAllByInmueble_Id(id);
+        fotoRepository.deleteAll(fotos);
         Inmueble inmueble = inmuebleRepository.findById(id).get();
         inmuebleRepository.delete(inmueble);
     }

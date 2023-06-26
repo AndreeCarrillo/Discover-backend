@@ -1,37 +1,66 @@
 package com.example.discoverbackend.servicesimpl;
 
 import com.example.discoverbackend.dtos.DTOContactoUsuario;
+import com.example.discoverbackend.dtos.LogInResponse;
+import com.example.discoverbackend.dtos.LoginRequest;
+import com.example.discoverbackend.dtos.RegisterUserRequest;
+import com.example.discoverbackend.entities.Inmueble;
+import com.example.discoverbackend.entities.RoleApplication;
+import com.example.discoverbackend.entities.RoleUser;
 import com.example.discoverbackend.entities.Usuario;
+import com.example.discoverbackend.repositories.RoleRepository;
+import com.example.discoverbackend.repositories.RoleUserRepository;
 import com.example.discoverbackend.repositories.UsuarioRepository;
+import com.example.discoverbackend.security.JwtTokenUtil;
 import com.example.discoverbackend.services.UsuarioService;
 import javax.transaction.Transactional;
+
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
+@AllArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService {
-    @Autowired
+
+
+    private final AuthenticationManager authManager;
     UsuarioRepository usuarioRepository;
 
+    RoleRepository roleRepository;
 
-    public Usuario save(Usuario usuario) {
-        Usuario newUsuario = new Usuario(usuario.getFirstName(), usuario.getLastNameDad(), usuario.getLastNameMom(), usuario.getDni(), usuario.getTelephone(), usuario.getEmail(), usuario.getPassword(), usuario.getLinkPhotoDni(), usuario.getLinkPhotoProfile(), usuario.getDateBirth(), usuario.getDateAffiliation(), usuario.getInmuebles());
+    RoleUserRepository roleUserRepository;
+
+    PasswordEncoder encoder;
+    private final JwtTokenUtil jwtTokenUtil;
+
+    public Usuario save(RegisterUserRequest usuario) {
+        RoleApplication rol = roleRepository.findByName("USER");
+        Usuario newUsuario = new Usuario(usuario.getFirstName(), usuario.getLastNameDad(), usuario.getLastNameMom(), usuario.getDni(), usuario.getNumPhone(), usuario.getEmail(), encoder.encode(usuario.getPassword()),usuario.getLinkPhotoDni(), usuario.getLinkPhotoProfile(), usuario.getBirthDate(), new Date(), null);
         Usuario savedUsuario = usuarioRepository.save(newUsuario);
+        roleUserRepository.save(new RoleUser(savedUsuario, rol));
+        List<RoleUser> roles = roleUserRepository.findAllByUser(savedUsuario);
+        savedUsuario.setRoles(roles);
+        for(RoleUser ru: savedUsuario.getRoles()){
+            ru.setUser(null);
+            ru.getRole().setUsers(null);
+        }
+
         return savedUsuario;
     }
-
-    @Transactional
-    public void delete(Long id, boolean forced) {
-        Usuario usuario = usuarioRepository.findById(id).get();
-        usuarioRepository.delete(usuario);
-    }
-
 
     public DTOContactoUsuario listContactoUsuario(Long id) {
         Usuario u = usuarioRepository.findById(id).get();
@@ -79,4 +108,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         return dtoContactoUsuario;
     }
+
+    @Override
+    public LogInResponse login(LoginRequest loginRequest) {
+        Authentication authentication = authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtTokenUtil.generateJwtToken(authentication);
+        return new LogInResponse(jwt);
+    }
+
+
 }
