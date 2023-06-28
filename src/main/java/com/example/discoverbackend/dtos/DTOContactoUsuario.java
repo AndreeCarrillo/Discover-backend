@@ -9,7 +9,10 @@ import java.util.Date;
 @AllArgsConstructor
 public class DTOContactoUsuario {
     private Long id;
-    private String fullName;
+    private String name;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
+    private String dni;
     private String telephone;
     private String email;
     private String dateAfiiliation;

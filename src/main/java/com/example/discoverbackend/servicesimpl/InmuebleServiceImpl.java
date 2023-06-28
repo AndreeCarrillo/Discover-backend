@@ -44,7 +44,7 @@ public class InmuebleServiceImpl implements InmuebleService {
         for(Inmueble i: properties){
             Long id = i.getId();
             String linkPhotoUser = i.getUsuario().getLinkPhotoProfile();
-            String fullName = i.getUsuario().getFirstName() + i.getUsuario().getLastNameDad() + i.getUsuario().getLastNameMom();
+            String fullName = i.getUsuario().getFirstName() + " " +i.getUsuario().getLastNameDad() + " " + i.getUsuario().getLastNameMom();
             String province = i.getUbigeo().getProvincia();
             String department = i.getUbigeo().getDepartamento();
             String district = i.getUbigeo().getDistrito();

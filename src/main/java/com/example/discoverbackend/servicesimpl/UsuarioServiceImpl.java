@@ -104,7 +104,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
                 String dateString = year + " - " + monthString + " - " + dayString;
                 String dateStringBirth = year1+" - "+monthString1+" - "+dayString1;
-                DTOContactoUsuario dtoContactoUsuario = new DTOContactoUsuario(id, fullname, u.getTelephone(), u.getEmail(), dateString, dateStringBirth, u.getLinkPhotoProfile());
+                DTOContactoUsuario dtoContactoUsuario = new DTOContactoUsuario(id, u.getFirstName(), u.getLastNameDad(), u.getLastNameMom(), u.getDni(), u.getTelephone(), u.getEmail(), dateString, dateStringBirth, u.getLinkPhotoProfile());
 
         return dtoContactoUsuario;
     }
