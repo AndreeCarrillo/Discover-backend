@@ -1,6 +1,7 @@
 package com.example.discoverbackend.servicesimpl;
 
 import com.example.discoverbackend.dtos.*;
+import com.example.discoverbackend.dtos.TipoCaracteristica;
 import com.example.discoverbackend.entities.*;
 import com.example.discoverbackend.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,19 +42,29 @@ public class InmuebleServiceImpl implements InmuebleService {
         List<PrincipalInmueblesResponse> propertiesResponse = new ArrayList<PrincipalInmueblesResponse>();
         List<Inmueble> properties = inmuebleRepository.findAll();
         for(Inmueble i: properties){
+            Long id = i.getId();
             String linkPhotoUser = i.getUsuario().getLinkPhotoProfile();
             String fullName = i.getUsuario().getFirstName() + i.getUsuario().getLastNameDad() + i.getUsuario().getLastNameMom();
             String province = i.getUbigeo().getProvincia();
             String department = i.getUbigeo().getDepartamento();
             String district = i.getUbigeo().getDistrito();
-            //String linkPhotoProperty = i.getInmuebleFotoList().get(0).getFoto().getPhotoLink();
             String linkPhotoProperty = i.getInmuebleFotoList().get(0).getFoto().getPhotoLink();
             Double price = i.getPrice();
             Integer squareMeter = i.getSquareMeter();
+            Integer numGuest = i.getNumGuests();
             Integer numBedrooms = i.getNumBedrooms();
             Integer numBathrooms = i.getNumBathrooms();
             String description = i.getDescription();
-            propertiesResponse.add(new PrincipalInmueblesResponse(linkPhotoUser, fullName, province, department, district, linkPhotoProperty, price, squareMeter, numBedrooms, numBathrooms, description));
+            String properType = i.getPropertyType();
+            String sharedRoom = i.getSharedRoom();
+            List<TipoCaracteristica> caracteristicaList = new ArrayList<TipoCaracteristica>();
+            for(InmuebleCaracteristica ic: i.getCaracteristicaList()){
+                String featureType = ic.getCaracteristica().getTipoCaracteristica().getName();
+                String featureName = ic.getCaracteristica().getName();
+                caracteristicaList.add(new TipoCaracteristica(featureType, featureName));
+            }
+
+            propertiesResponse.add(new PrincipalInmueblesResponse(id,linkPhotoUser, fullName, province, department, district, linkPhotoProperty, price, squareMeter,numGuest, numBedrooms, numBathrooms, description, properType, sharedRoom, caracteristicaList));
         }
         return propertiesResponse;
     }
@@ -81,13 +92,13 @@ public class InmuebleServiceImpl implements InmuebleService {
         for (InmuebleFoto inmuebleFoto : inmuebleFotos) {
             photoUrls.add(inmuebleFoto.getFoto().getPhotoLink());
         }
+
         List<DTOIconCaracteristica> listCaracteristaInmuebleIcons = getInmuebleCharacteristics(i);
         DTOContactoUsuario owner =usuarioService.listContactoUsuario(i.getUsuario().getId());
         List<DTOOpinion> listOpinions = getInmuebleOpinions(i);
 
-        ShowInmuebleResponse showInmuebleResponse = new ShowInmuebleResponse(i.getAddress(), i.getTimeAntiquity(),photoUrls, i.getPrice(),i.getNumGuests(),listCaracteristaInmuebleIcons,owner,i.getUsuario().getLinkPhotoProfile(),i.getNumBedrooms(),i.getNumBathrooms(), i.getSquareMeter(),i.getDescription(),listOpinions);
+        ShowInmuebleResponse showInmuebleResponse = new ShowInmuebleResponse(id, i.getAddress(), i.getTimeAntiquity(),photoUrls, i.getPrice(),i.getNumGuests(),listCaracteristaInmuebleIcons,owner,i.getUsuario().getLinkPhotoProfile(),i.getNumBedrooms(),i.getNumBathrooms(), i.getSquareMeter(),i.getDescription(),listOpinions);
         return showInmuebleResponse;
-
     }
 
     @Transactional
@@ -136,6 +147,15 @@ public class InmuebleServiceImpl implements InmuebleService {
         fotoRepository.deleteAll(fotos);
         Inmueble inmueble = inmuebleRepository.findById(id).get();
         inmuebleRepository.delete(inmueble);
+    }
+
+    public List<String> gettAllSharedRoom(){
+        return inmuebleRepository.getSharedRoom();
+    }
+
+    @Override
+    public List<String> getAllPropertiesTypes() {
+        return inmuebleRepository.getPropertyType();
     }
 
 }

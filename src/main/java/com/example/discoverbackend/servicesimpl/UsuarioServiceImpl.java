@@ -104,7 +104,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
                 String dateString = year + " - " + monthString + " - " + dayString;
                 String dateStringBirth = year1+" - "+monthString1+" - "+dayString1;
-                DTOContactoUsuario dtoContactoUsuario = new DTOContactoUsuario(fullname, u.getTelephone(), u.getEmail(), dateString, dateStringBirth, u.getLinkPhotoProfile());
+                DTOContactoUsuario dtoContactoUsuario = new DTOContactoUsuario(id, fullname, u.getTelephone(), u.getEmail(), dateString, dateStringBirth, u.getLinkPhotoProfile());
 
         return dtoContactoUsuario;
     }
@@ -116,7 +116,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtTokenUtil.generateJwtToken(authentication);
-        return new LogInResponse(jwt);
+        Usuario usuario = usuarioRepository.findByEmail(loginRequest.getEmail()).get();
+        return new LogInResponse(jwt, usuario.getId());
     }
 
 

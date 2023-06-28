@@ -13,9 +13,11 @@ public interface InmuebleService {
 
     public ShowInmuebleResponse listDataInmueble(Long id);
 
-//    public Inmueble listById(Long id);
-
     public Inmueble save(InmuebleRequest inmueble);
 
     public void delete(Long id, boolean forced);
+
+    public List<String> getAllPropertiesTypes();
+
+    public List<String> gettAllSharedRoom();
 }

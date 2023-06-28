@@ -7,12 +7,14 @@ import com.example.discoverbackend.entities.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.convert.ThreeTenBackPortConverters;
 
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 public class ShowInmuebleResponse {
+    private Long id;
     private String address;
     private String timeAntiquity;
     private List<String> inmuebleFotoList;

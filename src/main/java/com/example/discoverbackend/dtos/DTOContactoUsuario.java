@@ -8,6 +8,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 public class DTOContactoUsuario {
+    private Long id;
     private String fullName;
     private String telephone;
     private String email;
