@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 import java.text.SimpleDateFormat;
@@ -30,7 +31,10 @@ public class DiscoverBackendApplication {
         FotoRepository fotoRepository,
         InmuebleFotoRepository inmuebleFotoRepository,
         AlquilerRepository alquilerRepository,
-        OpinionRepository opinionRepository
+        OpinionRepository opinionRepository,
+        RoleUserRepository roleUserRepository,
+        RoleRepository roleRepository,
+        PasswordEncoder encoder
 
     ){
         return args -> {
@@ -108,30 +112,31 @@ public class DiscoverBackendApplication {
             System.out.println("--------------");
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            usuarioRepository.save(new Usuario("Vanessa", "Castillo", "Gomes", "43451826", "901023352","vanessa.castillo@gmail.com","vanessa_2kamx","https://i.postimg.cc/6QN9f9wF/documento-identidad-peru-vanessa.jpg","https://i.postimg.cc/15qXG7wn/Screenshot-2023-05-01-220937.jpg", formatter.parse("1995-09-12"), formatter.parse("2023-03-14"), null));
-            usuarioRepository.save(new Usuario("Carlos", "Rodríguez","Salas", "23456789", "901012352", "carlos.rodriguez@outlook.com", "Carlos1234", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg","https://i.postimg.cc/nL8PsrZ9/hombre-foto.jpg", new Date(85,05,15), new Date(123,04,02), null ));
-            usuarioRepository.save(new Usuario("Fernanda","Gómez", "Vargas","34567890","345678921","fernanda.gomez@yahoo.com","Fernanda1234","https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg","https://i.postimg.cc/BZc4JWTC/retrato-de-joven-feliz-positivo-sonriendo-c-mara-166576783.jpg", new Date(92,10,30), new Date(2023,04,05),null));
-            usuarioRepository.save(new Usuario("Miguel",  "Sánchez", "Ortiz", "12345696", "923457822", "miguel.sanchez@outlook.com", "Miguel1234", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/qqgLDH4d/inline-image-preview.jpg", new Date(80,12,20), new Date(123,04,29), null));
-            usuarioRepository.save(new Usuario("María",  "Fernández", "Castañeda", "12345697", "912345792", "maria.fernandez@gmail.com", "Maria1234", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/1zZvmdcp/photo-1659332589233-3637f89be936.jpg", new Date(95,10,10), new Date(123,04,30), null));
-            usuarioRepository.save(new Usuario("Juan",  "Perez", "Paz", "12345678", "987654321", "juan.perez@gmail.com", "Juan1234", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/zXb7nNxC/istockphoto-1212501093-640x640.jpg", new Date(95,10,15), new Date(122,1,1), null));
-            usuarioRepository.save(new Usuario("María",  "López", "Vázquez", "87654321", "765432109", "maria.lopez@example.com", "Maria5678", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/zDcZzJLK/women-i-am-young-girls-beautiful.jpg", new Date(1990,2,12), new Date(122,03,15), null));
-            usuarioRepository.save(new Usuario("Pedro",  "Ramírez", "Gutiérrez", "98765432", "876543210", "pedro.ramirez@example.com", "Pedro9012", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/6Q0f9pQX/happy-smile-face.jpg", new Date(85,05,20), new Date(122,05,10), null));
-            usuarioRepository.save(new Usuario("Luis",  "Gonzales", "Vargas", "34567891", "987654321", "luis.gonzales@example.com", "Luis4567", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/Rh37Q1LS/pexels-photo-6421292.jpg", new Date(88,07,20), new Date(122,06,05), null));
-            usuarioRepository.save(new Usuario("Mónica",  "Díaz", "López", "45678912", "987654321", "monica.diaz@example.com", "Monica8910", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/q7k2ZHxZ/concepto-de-bienestar-y-personas-cierre-una-atractiva-rubia-sonriendo-con-dientes-blancos-mirando-la.jpg", new Date(93,02,18), new Date(122,9,01), null));
-            usuarioRepository.save(new Usuario("Jorge",  "Flores", "Castro", "56789123", "947654321", "jorge.flores@example.com", "Jorge2345", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://example.com/foto_perfil.jpg", new Date(98,11,28), new Date(2022,10,15), null));
-            usuarioRepository.save(new Usuario("Carmen",  "Guzmán", "Ramírez", "67891234", "987624321", "carmen.guzman@example.com", "Carmen3456", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/44K21pdH/personas-reales-feliz-chica-natural-sonriendo-y-mirando-t-mido-la-c-mara-ruboriz-ndose-de-halagos-pi.jpg", new Date(80,06,05), new Date(122,11,1), null));
-            usuarioRepository.save(new Usuario("Antonio",  "Vega", "López", "78912345", "907654817", "antonio.vega@example.com", "Antonio7890", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/j5n6yQXs/joven-dispara-con-su-c-mara-retrato-de-un-asi-tico-gracioso-tomando-fotos-disparando-fot-grafo-casua.jpg", new Date(91,03,14), new Date(123,01,15), null));
-            usuarioRepository.save(new Usuario("Sofía",  "Mendoza", "Gómez", "89123456", "917653021", "sofia.mendoza@example.com", "Sofia5678", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/Y9vRbwpB/portrait-people-cute-girl-smile.jpg", new Date(97,9,20), new Date(2023,03,01), null));
-            usuarioRepository.save(new Usuario("Miguel",  "Castillo", "Hernández", "91234567", "985657311", "miguel.castillo@example.com", "Miguel1234", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/Gm3kX1Qg/man-person-portrait-sitting-smile-smiling-wear-looking-at-camera-one-person-real-people.jpg", new Date(92,12,10), new Date(123,04,15), null));
-            usuarioRepository.save(new Usuario("Laura",  "Martínez", "Vargas", "34567891", "957354001", "laura.martinez@example.com", "Laura5678", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/9McV7JV9/female-indian-young-girl-woman-people.jpg", new Date(87,3,5), new Date(123,06,01), null));
-            usuarioRepository.save(new Usuario("Lorena",  "Hernández", "Sánchez", "45678912", "922654321", "lorena.hernandez@example.com", "Lorena9012", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/zXxLXHCp/istockphoto-1443543154-170667a.jpg", new Date(95,8,2), new Date(123,8,15), null));
-            usuarioRepository.save(new Usuario("Javier",  "González", "Morales", "56789123", "917654451", "javier.gonzalez@example.com", "Javier3456", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/0yJ8Rzcz/pexels-photo-5215015.jpg", new Date(84,11,12), new Date(123,10,12), null));
-            usuarioRepository.save(new Usuario("Marisol",  "Sánchez", "López", "67891234", "981234321", "marisol.sanchez@example.com", "Marisol1234", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/J01nRRt9/sonriente-mujer-bonita-joven-mirando-camara-tocar-cara-1262-15253.jpg", new Date(90,06,18), new Date(123,11,01), null));
-            usuarioRepository.save(new Usuario("Gustavo",  "García", "Pérez", "78912345", "987111321", "gustavo.garcia@example.com", "Gustavo5678", "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/SRNywVv4/person-smiling.jpg", new Date(82,9,28), new Date(123,12,15), null));
+            usuarioRepository.save(new Usuario("Vanessa", "Castillo", "Gomes", "43451826", "901023352","vanessa.castillo@gmail.com",encoder.encode("vanessa_2kamx"),"https://i.postimg.cc/6QN9f9wF/documento-identidad-peru-vanessa.jpg","https://i.postimg.cc/15qXG7wn/Screenshot-2023-05-01-220937.jpg",  new Date(85,05,15), new Date(123,04,02), null));
+            usuarioRepository.save(new Usuario("Carlos", "Rodríguez","Salas", "23456789", "901012352", "carlos.rodriguez@outlook.com", encoder.encode("Carlos1234"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg","https://i.postimg.cc/nL8PsrZ9/hombre-foto.jpg", new Date(85,05,15), new Date(123,04,02), null ));
+            usuarioRepository.save(new Usuario("Fernanda","Gómez", "Vargas","34567890","345678921","fernanda.gomez@yahoo.com",encoder.encode("Fernanda1234"),"https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg","https://i.postimg.cc/BZc4JWTC/retrato-de-joven-feliz-positivo-sonriendo-c-mara-166576783.jpg", new Date(92,10,30), new Date(123,04,05),null));
+            usuarioRepository.save(new Usuario("Miguel",  "Sánchez", "Ortiz", "12345696", "923457822", "miguel.sanchez@outlook.com", encoder.encode("Miguel1234"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/qqgLDH4d/inline-image-preview.jpg", new Date(80,12,20), new Date(123,04,29), null));
+            usuarioRepository.save(new Usuario("María",  "Fernández", "Castañeda", "12345697", "912345792", "maria.fernandez@gmail.com", encoder.encode("Maria1234"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/1zZvmdcp/photo-1659332589233-3637f89be936.jpg", new Date(95,10,10), new Date(123,04,30), null));
+            usuarioRepository.save(new Usuario("Juan",  "Perez", "Paz", "12345678", "987654321", "juan.perez@gmail.com", encoder.encode("Juan1234"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/zXb7nNxC/istockphoto-1212501093-640x640.jpg", new Date(95,10,15), new Date(122,1,1), null));
+            usuarioRepository.save(new Usuario("María",  "López", "Vázquez", "87654321", "765432109", "maria.lopez@example.com", encoder.encode("Maria5678"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/zDcZzJLK/women-i-am-young-girls-beautiful.jpg", new Date(90,2,12), new Date(122,03,15), null));
+            usuarioRepository.save(new Usuario("Pedro",  "Ramírez", "Gutiérrez", "98765432", "876543210", "pedro.ramirez@example.com", encoder.encode("Pedro9012"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/6Q0f9pQX/happy-smile-face.jpg", new Date(85,05,20), new Date(122,05,10), null));
+            usuarioRepository.save(new Usuario("Luis",  "Gonzales", "Vargas", "34567891", "987654321", "luis.gonzales@example.com", encoder.encode("Luis4567"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/Rh37Q1LS/pexels-photo-6421292.jpg", new Date(88,07,20), new Date(122,06,05), null));
+            usuarioRepository.save(new Usuario("Mónica",  "Díaz", "López", "45678912", "987654321", "monica.diaz@example.com", encoder.encode("Monica8910"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/q7k2ZHxZ/concepto-de-bienestar-y-personas-cierre-una-atractiva-rubia-sonriendo-con-dientes-blancos-mirando-la.jpg", new Date(93,02,18), new Date(122,9,01), null));
+            usuarioRepository.save(new Usuario("Jorge",  "Flores", "Castro", "56789123", "947654321", "jorge.flores@example.com", encoder.encode("Jorge2345"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "admin" +
+                    "", new Date(98,11,28), new Date(2022,10,15), null));
+            usuarioRepository.save(new Usuario("Carmen",  "Guzmán", "Ramírez", "67891234", "987624321", "carmen.guzman@example.com", encoder.encode("Carmen3456"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/44K21pdH/personas-reales-feliz-chica-natural-sonriendo-y-mirando-t-mido-la-c-mara-ruboriz-ndose-de-halagos-pi.jpg", new Date(80,06,05), new Date(122,11,1), null));
+            usuarioRepository.save(new Usuario("Antonio",  "Vega", "López", "78912345", "907654817", "antonio.vega@example.com", encoder.encode("Antonio7890"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/j5n6yQXs/joven-dispara-con-su-c-mara-retrato-de-un-asi-tico-gracioso-tomando-fotos-disparando-fot-grafo-casua.jpg", new Date(91,03,14), new Date(123,01,15), null));
+            usuarioRepository.save(new Usuario("Sofía",  "Mendoza", "Gómez", "89123456", "917653021", "sofia.mendoza@example.com", encoder.encode("Sofia5678"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/Y9vRbwpB/portrait-people-cute-girl-smile.jpg", new Date(97,9,20), new Date(123,03,01), null));
+            usuarioRepository.save(new Usuario("Miguel",  "Castillo", "Hernández", "91234567", "985657311", "miguel.castillo@example.com", encoder.encode("Miguel1234"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/Gm3kX1Qg/man-person-portrait-sitting-smile-smiling-wear-looking-at-camera-one-person-real-people.jpg", new Date(92,12,10), new Date(123,04,15), null));
+            usuarioRepository.save(new Usuario("Laura",  "Martínez", "Vargas", "34567891", "957354001", "laura.martinez@example.com", encoder.encode("Laura5678"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/9McV7JV9/female-indian-young-girl-woman-people.jpg", new Date(87,3,5), new Date(123,06,01), null));
+            usuarioRepository.save(new Usuario("Lorena",  "Hernández", "Sánchez", "45678912", "922654321", "lorena.hernandez@example.com", encoder.encode("Lorena9012"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/zXxLXHCp/istockphoto-1443543154-170667a.jpg", new Date(95,8,2), new Date(123,8,15), null));
+            usuarioRepository.save(new Usuario("Javier",  "González", "Morales", "56789123", "917654451", "javier.gonzalez@example.com", encoder.encode("Javier3456"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/0yJ8Rzcz/pexels-photo-5215015.jpg", new Date(84,11,12), new Date(123,10,12), null));
+            usuarioRepository.save(new Usuario("Marisol",  "Sánchez", "López", "67891234", "981234321", "marisol.sanchez@example.com", encoder.encode("Marisol1234"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/J01nRRt9/sonriente-mujer-bonita-joven-mirando-camara-tocar-cara-1262-15253.jpg", new Date(90,06,18), new Date(123,11,01), null));
+            usuarioRepository.save(new Usuario("Gustavo",  "García", "Pérez", "78912345", "987111321", "gustavo.garcia@example.com", encoder.encode("Gustavo5678"), "https://i.postimg.cc/rstV9z0X/Screenshot-2023-05-01-220903.jpg", "https://i.postimg.cc/SRNywVv4/person-smiling.jpg", new Date(82,9,28), new Date(123,12,15), null));
 
 
-
-
+            RoleApplication user = roleRepository.save(new RoleApplication("USER"));
+            RoleApplication admin = roleRepository.save(new RoleApplication("ADMIN"));
 
             Usuario usuario1 = usuarioRepository.findById(Long.valueOf(1)).get();
             Usuario usuario2 = usuarioRepository.findById(Long.valueOf(2)).get();
@@ -153,6 +158,28 @@ public class DiscoverBackendApplication {
             Usuario usuario18 = usuarioRepository.findById(Long.valueOf(18)).get();
             Usuario usuario19 = usuarioRepository.findById(Long.valueOf(19)).get();
             Usuario usuario20 = usuarioRepository.findById(Long.valueOf(20)).get();
+
+            roleUserRepository.save(new RoleUser(usuario1,user));
+            roleUserRepository.save(new RoleUser(usuario2,user));
+            roleUserRepository.save(new RoleUser(usuario3,user));
+            roleUserRepository.save(new RoleUser(usuario4,user));
+            roleUserRepository.save(new RoleUser(usuario5,user));
+            roleUserRepository.save(new RoleUser(usuario6,user));
+            roleUserRepository.save(new RoleUser(usuario7,user));
+            roleUserRepository.save(new RoleUser(usuario8,user));
+            roleUserRepository.save(new RoleUser(usuario9,user));
+            roleUserRepository.save(new RoleUser(usuario10,user));
+            roleUserRepository.save(new RoleUser(usuario11,user));
+            roleUserRepository.save(new RoleUser(usuario12,user));
+            roleUserRepository.save(new RoleUser(usuario13,user));
+            roleUserRepository.save(new RoleUser(usuario14,user));
+            roleUserRepository.save(new RoleUser(usuario15,user));
+            roleUserRepository.save(new RoleUser(usuario16,user));
+            roleUserRepository.save(new RoleUser(usuario17,user));
+            roleUserRepository.save(new RoleUser(usuario18,user));
+            roleUserRepository.save(new RoleUser(usuario19,user));
+            roleUserRepository.save(new RoleUser(usuario20,user));
+
 
             System.out.println("--------------");
 
@@ -202,48 +229,48 @@ public class DiscoverBackendApplication {
 
 
             Ubigeo ubigeo1 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo2 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo3 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo4 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo5 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo6 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo7 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo8 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo9 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo10 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo11 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo12 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo13 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo14 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo15 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo16 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo17 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo18 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo19 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo20 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo21 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo22 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo23 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo24 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo25 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo26 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo27 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo28 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo29 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo30 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo31 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo32 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo33 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo34 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo35 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo36 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo37 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo38 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo39 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo40 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo41 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo42 = ubigeoRepository.findById(1L).get();
-            Ubigeo ubigeo43 = ubigeoRepository.findById(1L).get();
+            Ubigeo ubigeo2 = ubigeoRepository.findById(2L).get();
+            Ubigeo ubigeo3 = ubigeoRepository.findById(3L).get();
+            Ubigeo ubigeo4 = ubigeoRepository.findById(4L).get();
+            Ubigeo ubigeo5 = ubigeoRepository.findById(5L).get();
+            Ubigeo ubigeo6 = ubigeoRepository.findById(6L).get();
+            Ubigeo ubigeo7 = ubigeoRepository.findById(7L).get();
+            Ubigeo ubigeo8 = ubigeoRepository.findById(8L).get();
+            Ubigeo ubigeo9 = ubigeoRepository.findById(9L).get();
+            Ubigeo ubigeo10 = ubigeoRepository.findById(10L).get();
+            Ubigeo ubigeo11 = ubigeoRepository.findById(11L).get();
+            Ubigeo ubigeo12 = ubigeoRepository.findById(12L).get();
+            Ubigeo ubigeo13 = ubigeoRepository.findById(13L).get();
+            Ubigeo ubigeo14 = ubigeoRepository.findById(14L).get();
+            Ubigeo ubigeo15 = ubigeoRepository.findById(15L).get();
+            Ubigeo ubigeo16 = ubigeoRepository.findById(16L).get();
+            Ubigeo ubigeo17 = ubigeoRepository.findById(17L).get();
+            Ubigeo ubigeo18 = ubigeoRepository.findById(18L).get();
+            Ubigeo ubigeo19 = ubigeoRepository.findById(19L).get();
+            Ubigeo ubigeo20 = ubigeoRepository.findById(20L).get();
+            Ubigeo ubigeo21 = ubigeoRepository.findById(21L).get();
+            Ubigeo ubigeo22 = ubigeoRepository.findById(22L).get();
+            Ubigeo ubigeo23 = ubigeoRepository.findById(23L).get();
+            Ubigeo ubigeo24 = ubigeoRepository.findById(24L).get();
+            Ubigeo ubigeo25 = ubigeoRepository.findById(25L).get();
+            Ubigeo ubigeo26 = ubigeoRepository.findById(26L).get();
+            Ubigeo ubigeo27 = ubigeoRepository.findById(27L).get();
+            Ubigeo ubigeo28 = ubigeoRepository.findById(28L).get();
+            Ubigeo ubigeo29 = ubigeoRepository.findById(29L).get();
+            Ubigeo ubigeo30 = ubigeoRepository.findById(30L).get();
+            Ubigeo ubigeo31 = ubigeoRepository.findById(31L).get();
+            Ubigeo ubigeo32 = ubigeoRepository.findById(32L).get();
+            Ubigeo ubigeo33 = ubigeoRepository.findById(33L).get();
+            Ubigeo ubigeo34 = ubigeoRepository.findById(34L).get();
+            Ubigeo ubigeo35 = ubigeoRepository.findById(35L).get();
+            Ubigeo ubigeo36 = ubigeoRepository.findById(36L).get();
+            Ubigeo ubigeo37 = ubigeoRepository.findById(37L).get();
+            Ubigeo ubigeo38 = ubigeoRepository.findById(38L).get();
+            Ubigeo ubigeo39 = ubigeoRepository.findById(39L).get();
+            Ubigeo ubigeo40 = ubigeoRepository.findById(40L).get();
+            Ubigeo ubigeo41 = ubigeoRepository.findById(41L).get();
+            Ubigeo ubigeo42 = ubigeoRepository.findById(42L).get();
+            Ubigeo ubigeo43 = ubigeoRepository.findById(43L).get();
 
 
 
@@ -252,25 +279,25 @@ public class DiscoverBackendApplication {
 
             System.out.println("--------------");
             inmuebleRepository.save(new Inmueble("Departamento", "Habitacion Compartida", "Jirón de la Unión 456, Cercado de Lima", 1200.00, 3, 2, 5, 100,"Más de 10 años", "Amplio departamento de 3 dormitorios y 2 baños, ideal para una familia. Ubicada en un vecindario tranquilo y seguro. Cerca de parques y escuelas.", usuario13, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Departamento", "Alojamiento Entero", "Calle Los Delfines 123, Urb. Santa Rosa", 750.00, 2, 1, 3, 70,"Menos de 1 año",  "Moderno departamento de estreno con 2 dormitorios y 1 baño. Excelente ubicación, cerca de centros comerciales y transporte público.", usuario7, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Casa","Alojamiento Entero", "Av. Separadora Industrial 345, Salamanca",2000.00, 4,3,6, 150,"Más de 20 años",  "Hermosa casa de dos pisos con 4 dormitorios, 3 baños y amplios espacios. Jardín privado y garaje para 2 autos. Ideal para familias grandes.", usuario19, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Departamento","Alojamiento Entero", "Calle San Martín 567",900.00, 1,1,2, 50,"Estreno", "Acogedor departamento de estreno con 1 dormitorio y 1 baño. Cuenta con una cocina moderna y una terraza con vista a la ciudad. Ideal para parejas o profesionales.", usuario2, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Compartida", "Av. Bolivia 789",1300.00, 3,2,4, 110,"Más de 5 años",  "Bonito departamento de 3 dormitorios y 2 baños, ubicado en una zona residencial tranquila. Cuenta con áreas comunes como piscina y zona de parrillas.", usuario16, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Casa","Habitacion Compartida", "Jirón Los Laureles 112",2200.00, 4,3,8, 180,"Más de 10 años", "Amplia casa de dos pisos con 4 dormitorios, 3 baños y un estudio. Espacios luminosos y cómodos. Ubicada en una zona residencial con vigilancia 24/7.", usuario4, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Departamento","Alojamiento Entero", "Calle Los Pinos 123, Urb. La Campiña",1500.00, 2,2,3, 90,"Menos de 1 año",  "Moderno departamento de estreno con 2 dormitorios y 2 baños en edificio con piscina, gimnasio y zona de parrillas. Ubicado cerca de centros comerciales y parques.", usuario11, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Privada", "Av. Nueva Toledo 431",850.00, 1,1,2, 45,"Más de 2 años",  "Acogedor departamento de 1 dormitorio y 1 baño, perfecto para parejas o profesionales. Cuenta con una cocina abierta y un pequeño balcón. Cerca de tiendas y transporte público.", usuario6, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Casa","Alojamiento Entero", "Calle Los Alpes 145, Urb. Santa Luzmila",2800.00, 5,4,10, 200,"Más de 20 años",  "Espaciosa casa de dos pisos con 5 dormitorios, 4 baños y un amplio jardín. Ideal para familias numerosas o grupos de amigos. Ubicada en una tranquila calle residencial.", usuario18, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Casa","Alojamiento Entero", "Av. Riva Agüero 678",1100.00, 3,2,5, 95,"Más de 5 años",  "Cómodo casa de 3 dormitorios y 2 baños, ideal para familias. Cuenta con una amplia sala y comedor. Ubicado cerca de colegios y áreas verdes.", usuario3, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Casa","Habitacion Privada", "Av. Carlos Izaguirre 987",1600.00, 3,3,6, 120,"Estreno",  "Exclusiva casa de estreno con 3 dormitorios y 3 baños. Acabados de lujo, cocina moderna y vista panorámica. Edificio con gimnasio, piscina y seguridad 24/7.", usuario15, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Privada", "Calle San Felipe 890",700.00, 1,1,2, 40,"Más de 10 años", "Departamento acogedor de 1 dormitorio y 1 baño, ideal para estudiantes o profesionales solteros. Cerca de universidades y servicios básicos.", usuario8, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Casa","Habitacion Privada", "Calle Los Alamos 135, Urb. Las Praderas",1900.00, 4,3,7, 160,"Más de 40 años", "Encantadora casa de estilo clásico con 4 dormitorios y 3 baños. Espacios amplios y luminosos, con techos altos y detalles arquitectónicos únicos. Ideal para amantes de lo vintage.", usuario9, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Casa","Habitacion Privada", "Av. Manco Cápac 543",1400.00, 3,2,5, 105,"Más de 50 años",  "Casa con encanto de 3 dormitorios y 2 baños en un tranquilo barrio residencial. Cuenta con un jardín y un patio trasero. Perfecta para familias que buscan un hogar con carácter y personalidad.", usuario5, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Privada", "Calle Los Olivos 321",1000.00, 2,1,4, 75,"Menos de 1 año", "Departamento moderno de estreno con 2 dormitorios y 1 baño. Ubicado en un edificio con áreas comunes, como gimnasio y terraza. Cerca de centros comerciales y transporte público.", usuario1, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Casa","Habitacion Privada", "Calle Los Nogales 654, Urb. El Trébol",2400.00, 5,4,8, 210,"Más de 20 años", "Casa espaciosa de 5 dormitorios y 4 baños, ideal para familias numerosas. Cuenta con una sala de estar, comedor y un amplio jardín. Ubicada en un vecindario seguro y tranquilo.", usuario14, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Privada", "Av. Central 432, San Antonio",950.00, 2,1,3, 65,"Más de 2 años", "Confortable departamento de 2 dormitorios y 1 baño en una ubicación céntrica. A pocos minutos de tiendas, restaurantes y parques. Ideal para parejas o pequeñas familias.", usuario20, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Casa","Habitacion Privada", "Av. Lurín 785",1800.00, 4,3,6, 150,"Más de 5 años", "Amplia casa de 4 dormitorios y 3 baños en una tranquila zona residencial. Cuenta con una espaciosa sala de estar, comedor y jardín. Perfecta para familias que buscan comodidad y seguridad.", usuario12, ubigeo1));
-            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Privada", "Calle Gonzales Prada 678",1200.00, 3,2,4, 100,"Estreno",  "Moderno y elegante departamento de estreno con 3 dormitorios y 2 baños. Cuenta con una amplia cocina y un balcón con vista al parque. Edificio con áreas comunes y seguridad 24/7.", usuario7, ubigeo1));
-            inmuebleRepository.save(new Inmueble("","", "Jr. La honestida",500.00, 4,2,5, 140,"Menos de 1 año", "Como apartamento", usuario18, ubigeo1));
+            inmuebleRepository.save(new Inmueble("Departamento", "Alojamiento Entero", "Calle Los Delfines 123, Urb. Santa Rosa", 750.00, 2, 1, 3, 70,"Menos de 1 año",  "Moderno departamento de estreno con 2 dormitorios y 1 baño. Excelente ubicación, cerca de centros comerciales y transporte público.", usuario7, ubigeo3));
+            inmuebleRepository.save(new Inmueble("Casa","Alojamiento Entero", "Av. Separadora Industrial 345, Salamanca",2000.00, 4,3,6, 150,"Más de 20 años",  "Hermosa casa de dos pisos con 4 dormitorios, 3 baños y amplios espacios. Jardín privado y garaje para 2 autos. Ideal para familias grandes.", usuario19, ubigeo5));
+            inmuebleRepository.save(new Inmueble("Departamento","Alojamiento Entero", "Calle San Martín 567",900.00, 1,1,2, 50,"Estreno", "Acogedor departamento de estreno con 1 dormitorio y 1 baño. Cuenta con una cocina moderna y una terraza con vista a la ciudad. Ideal para parejas o profesionales.", usuario2, ubigeo7));
+            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Compartida", "Av. Bolivia 789",1300.00, 3,2,4, 110,"Más de 5 años",  "Bonito departamento de 3 dormitorios y 2 baños, ubicado en una zona residencial tranquila. Cuenta con áreas comunes como piscina y zona de parrillas.", usuario16, ubigeo9));
+            inmuebleRepository.save(new Inmueble("Casa","Habitacion Compartida", "Jirón Los Laureles 112",2200.00, 4,3,8, 180,"Más de 10 años", "Amplia casa de dos pisos con 4 dormitorios, 3 baños y un estudio. Espacios luminosos y cómodos. Ubicada en una zona residencial con vigilancia 24/7.", usuario4, ubigeo11));
+            inmuebleRepository.save(new Inmueble("Departamento","Alojamiento Entero", "Calle Los Pinos 123, Urb. La Campiña",1500.00, 2,2,3, 90,"Menos de 1 año",  "Moderno departamento de estreno con 2 dormitorios y 2 baños en edificio con piscina, gimnasio y zona de parrillas. Ubicado cerca de centros comerciales y parques.", usuario11, ubigeo12));
+            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Privada", "Av. Nueva Toledo 431",850.00, 1,1,2, 45,"Más de 2 años",  "Acogedor departamento de 1 dormitorio y 1 baño, perfecto para parejas o profesionales. Cuenta con una cocina abierta y un pequeño balcón. Cerca de tiendas y transporte público.", usuario6, ubigeo13));
+            inmuebleRepository.save(new Inmueble("Casa","Alojamiento Entero", "Calle Los Alpes 145, Urb. Santa Luzmila",2800.00, 5,4,10, 200,"Más de 20 años",  "Espaciosa casa de dos pisos con 5 dormitorios, 4 baños y un amplio jardín. Ideal para familias numerosas o grupos de amigos. Ubicada en una tranquila calle residencial.", usuario18, ubigeo17));
+            inmuebleRepository.save(new Inmueble("Casa","Alojamiento Entero", "Av. Riva Agüero 678",1100.00, 3,2,5, 95,"Más de 5 años",  "Cómodo casa de 3 dormitorios y 2 baños, ideal para familias. Cuenta con una amplia sala y comedor. Ubicado cerca de colegios y áreas verdes.", usuario3, ubigeo19));
+            inmuebleRepository.save(new Inmueble("Casa","Habitacion Privada", "Av. Carlos Izaguirre 987",1600.00, 3,3,6, 120,"Estreno",  "Exclusiva casa de estreno con 3 dormitorios y 3 baños. Acabados de lujo, cocina moderna y vista panorámica. Edificio con gimnasio, piscina y seguridad 24/7.", usuario15, ubigeo21));
+            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Privada", "Calle San Felipe 890",700.00, 1,1,2, 40,"Más de 10 años", "Departamento acogedor de 1 dormitorio y 1 baño, ideal para estudiantes o profesionales solteros. Cerca de universidades y servicios básicos.", usuario8, ubigeo21));
+            inmuebleRepository.save(new Inmueble("Casa","Habitacion Privada", "Calle Los Alamos 135, Urb. Las Praderas",1900.00, 4,3,7, 160,"Más de 40 años", "Encantadora casa de estilo clásico con 4 dormitorios y 3 baños. Espacios amplios y luminosos, con techos altos y detalles arquitectónicos únicos. Ideal para amantes de lo vintage.", usuario9, ubigeo25));
+            inmuebleRepository.save(new Inmueble("Casa","Habitacion Privada", "Av. Manco Cápac 543",1400.00, 3,2,5, 105,"Más de 50 años",  "Casa con encanto de 3 dormitorios y 2 baños en un tranquilo barrio residencial. Cuenta con un jardín y un patio trasero. Perfecta para familias que buscan un hogar con carácter y personalidad.", usuario5, ubigeo26));
+            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Privada", "Calle Los Olivos 321",1000.00, 2,1,4, 75,"Menos de 1 año", "Departamento moderno de estreno con 2 dormitorios y 1 baño. Ubicado en un edificio con áreas comunes, como gimnasio y terraza. Cerca de centros comerciales y transporte público.", usuario1, ubigeo30));
+            inmuebleRepository.save(new Inmueble("Casa","Habitacion Privada", "Calle Los Nogales 654, Urb. El Trébol",2400.00, 5,4,8, 210,"Más de 20 años", "Casa espaciosa de 5 dormitorios y 4 baños, ideal para familias numerosas. Cuenta con una sala de estar, comedor y un amplio jardín. Ubicada en un vecindario seguro y tranquilo.", usuario14, ubigeo13));
+            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Privada", "Av. Central 432, San Antonio",950.00, 2,1,3, 65,"Más de 2 años", "Confortable departamento de 2 dormitorios y 1 baño en una ubicación céntrica. A pocos minutos de tiendas, restaurantes y parques. Ideal para parejas o pequeñas familias.", usuario20, ubigeo18));
+            inmuebleRepository.save(new Inmueble("Casa","Habitacion Privada", "Av. Lurín 785",1800.00, 4,3,6, 150,"Más de 5 años", "Amplia casa de 4 dormitorios y 3 baños en una tranquila zona residencial. Cuenta con una espaciosa sala de estar, comedor y jardín. Perfecta para familias que buscan comodidad y seguridad.", usuario12, ubigeo34));
+            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Privada", "Calle Gonzales Prada 678",1200.00, 3,2,4, 100,"Estreno",  "Moderno y elegante departamento de estreno con 3 dormitorios y 2 baños. Cuenta con una amplia cocina y un balcón con vista al parque. Edificio con áreas comunes y seguridad 24/7.", usuario7, ubigeo43));
+            inmuebleRepository.save(new Inmueble("Departamento","Habitacion Privada", "Jr. La honestida",500.00, 4,2,5, 140,"Menos de 1 año", "Como apartamento", usuario18, ubigeo1));
 
 
             Inmueble inmueble1 = inmuebleRepository.findById(Long.valueOf(1)).get();
@@ -551,60 +578,60 @@ public class DiscoverBackendApplication {
 
             System.out.println("--------------");
 
-            opinionRepository.save(new Opinion(usuario1, inmueble1, 4.3, "El inmueble estaba bien ubicado y era cómodo. La comunicación con el anfitrión fue excelente. Sin embargo, el baño podría haber estado más limpio.", "https://i.postimg.cc/52GWnbtW/pousada-casa-do-molino.jpg"));
-            opinionRepository.save(new Opinion(usuario3, inmueble4, 5.0, "Gran experiencia en este inmueble. Las habitaciones eran amplias y la ubicación perfecta. La atención del anfitrión fue inmejorable.", ""));
-            opinionRepository.save(new Opinion(usuario20, inmueble6, 3.1, "El inmueble estaba bien en general, pero la conexión a internet era lenta y la cocina necesitaba más utensilios.", "https://i.postimg.cc/qRTY5RVS/interior-de-la-cocina-vac-a-91263131.jpg"));
-            opinionRepository.save(new Opinion(usuario5, inmueble2, 5.0, "Pasamos un tiempo maravilloso en este inmueble. Las habitaciones eran cómodas y la cocina estaba bien equipada. La ubicación era excelente, cerca de restaurantes y tiendas.", ""));
-            opinionRepository.save(new Opinion(usuario11, inmueble8, 4.2, "El inmueble era amplio y limpio. La ubicación era conveniente, pero el ruido de la calle era un poco molesto durante la noche.", "https://i.postimg.cc/D0CM0PJ3/tipos-de-muebles-para-sala.webp"));
-            opinionRepository.save(new Opinion(usuario8, inmueble14, 3.1, "El inmueble tenía una excelente ubicación, pero faltaba mantenimiento en algunas áreas. La atención del anfitrión fue buena.", ""));
-            opinionRepository.save(new Opinion(usuario10, inmueble14, 4.7, "El inmueble era agradable y cómodo, pero podría haber estado un poco más limpio. La atención del anfitrión fue muy amable y atenta.", ""));
-            opinionRepository.save(new Opinion(usuario19, inmueble12, 4.5, "El inmueble estaba bien ubicado y tenía un diseño agradable. El anfitrión fue atento, pero había poco espacio para guardar nuestras pertenencias.", "https://i.postimg.cc/QMpY139b/maneras-volver-sala-estar-acogedora.webp"));
-            opinionRepository.save(new Opinion(usuario17, inmueble14, 5.0, "Disfrutamos mucho de nuestra estancia en este inmueble. Era espacioso, cómodo y bien decorado. El anfitrión fue muy amable y siempre estuvo disponible para responder nuestras preguntas.", ""));
-            opinionRepository.save(new Opinion(usuario1, inmueble16, 3.4, "El inmueble era básico pero funcional. La ubicación era buena, pero el ruido de los vecinos era un poco molesto. El anfitrión fue atento y servicial.", "https://i.postimg.cc/4Nm8wtHn/mejor-puerta-para-casa-1.jpg"));
-            opinionRepository.save(new Opinion(usuario17, inmueble15, 4.7, "El inmueble estaba limpio y bien cuidado, pero la conexión Wi-Fi era lenta y poco confiable. El anfitrión fue amable y atento a nuestras necesidades.", ""));
-            opinionRepository.save(new Opinion(usuario6, inmueble17, 5.0, "El inmueble era hermoso y bien mantenido. La ubicación era excelente, y el anfitrión fue muy atento y siempre estuvo disponible para ayudarnos.", "https://i.postimg.cc/MG8dWFPj/thread-21950169-15070763766771596119.png"));
-            opinionRepository.save(new Opinion(usuario12, inmueble13, 5.0, "Nos encantó nuestra estancia en este inmueble. Estaba impecablemente limpio y bien equipado. La ubicación era perfecta, y el anfitrión fue muy servicial y atento.", ""));
-            opinionRepository.save(new Opinion(usuario6, inmueble12, 4.2, "El inmueble estaba en una ubicación conveniente y tenía todo lo necesario para nuestra estancia. Sin embargo, el ruido de la calle era un poco molesto por la noche.", ""));
-            opinionRepository.save(new Opinion(usuario6, inmueble18, 3.2, "El inmueble era cómodo pero un poco antiguo. La ubicación era buena, pero el estacionamiento era un problema. El anfitrión fue amable y atento.", "https://i.postimg.cc/Kz0NDvZn/estacionamiento-856838.jpg"));
-            opinionRepository.save(new Opinion(usuario19, inmueble9, 4.1, "El inmueble era agradable y tenía una buena ubicación. El anfitrión fue atento y servicial. Sin embargo, la conexión Wi-Fi era irregular y el estacionamiento era limitado.", ""));
-            opinionRepository.save(new Opinion(usuario7, inmueble12, 5.0, "Disfrutamos mucho de nuestra estancia en este inmueble. La ubicación era excelente y el anfitrión fue muy amable y servicial. El inmueble estaba muy limpio y bien equipado.", ""));
-            opinionRepository.save(new Opinion(usuario5, inmueble20, 4.6, "El inmueble estaba en buenas condiciones y la ubicación era conveniente. Sin embargo, el ruido del tráfico fue un problema durante nuestra estancia. El anfitrión fue amable y atento.", ""));
-            opinionRepository.save(new Opinion(usuario11, inmueble11, 5.0, "Tuvimos una estancia estupenda en este inmueble. La ubicación era perfecta, cerca de tiendas y restaurantes. El anfitrión fue muy servicial y nos proporcionó todo lo que necesitábamos.", "https://i.postimg.cc/abcdef/sample-photo-19.jpg"));
-            opinionRepository.save(new Opinion(usuario5, inmueble8, 4.4, "El inmueble era cómodo y bien ubicado. La cocina estaba bien equipada, pero el baño necesitaba una actualización. El anfitrión fue muy amable y servicial.", ""));
-            opinionRepository.save(new Opinion(usuario5, inmueble13, 5.0, "El inmueble tenía una vista increíble y estaba ubicado en un vecindario tranquilo. ¡Definitivamente lo recomendaría!", "https://i.postimg.cc/g23HBKzc/departamento-1.webp"));
-            opinionRepository.save(new Opinion(usuario17, inmueble3, 3.2, "El inmueble estaba bastante limpio, pero algunos electrodomésticos no funcionaban correctamente y la conexión Wi-Fi era inestable.", ""));
-            opinionRepository.save(new Opinion(usuario9, inmueble6, 4.0, "Disfrutamos nuestra estancia en este inmueble, aunque el estacionamiento era un poco limitado. La ubicación era excelente.", "https://ejemplo.com/foto_resena_23.jpg"));
-            opinionRepository.save(new Opinion(usuario16, inmueble20, 5.0, "El diseño del inmueble era moderno y la atención al detalle era excepcional. Nos encantó nuestra estancia.", ""));
-            opinionRepository.save(new Opinion(usuario9, inmueble15, 4.4, "El inmueble estaba en una ubicación conveniente, pero el ruido de la calle era un poco molesto por la noche. En general, una buena experiencia.", "https://i.postimg.cc/B67T1Ygp/348446570.webp"));
-            opinionRepository.save(new Opinion(usuario3, inmueble14, 4.9, "El departamento es espacioso y bien ubicado. La atención del anfitrión fue excelente. Sin embargo, el ruido de la calle era un poco molesto por las noches.", ""));
-            opinionRepository.save(new Opinion(usuario19, inmueble5, 5.0, "Nos encantó nuestra estadía en este inmueble. La vista era increíble y estaba cerca de restaurantes y tiendas. El anfitrión fue muy amable y atento.", ""));
-            opinionRepository.save(new Opinion(usuario6, inmueble11, 3.1, "El lugar estaba bien, pero la limpieza dejaba mucho que desear. Además, hubo problemas con el Wi-Fi durante nuestra estancia.", ""));
-            opinionRepository.save(new Opinion(usuario15, inmueble20, 4.3, "El inmueble era cómodo y tenía todo lo necesario para nuestra estancia. La ubicación era conveniente. Sin embargo, sería bueno agregar más utensilios de cocina.", "https://i.postimg.cc/JzQPzQ96/como-pintar-departamento-forma-correcta.jpg"));
-            opinionRepository.save(new Opinion(usuario9, inmueble3, 4.5, "El apartamento estaba bien ubicado y tenía una decoración agradable. La comunicación con el anfitrión fue buena. Aunque el baño podría haber estado más limpio.", ""));
-            opinionRepository.save(new Opinion(usuario4, inmueble17, 5.0, "La casa era encantadora y muy espaciosa. La zona era tranquila y perfecta para nuestro grupo. El anfitrión fue muy atento y nos proporcionó información útil sobre la zona.", ""));
-            opinionRepository.save(new Opinion(usuario13, inmueble8, 3.5, "El inmueble estaba bien ubicado, pero la limpieza no era la mejor. Encontramos algunas áreas sucias y había un olor desagradable en el baño.", ""));
-            opinionRepository.save(new Opinion(usuario11, inmueble12, 4.3, "El departamento tenía una vista maravillosa y estaba cerca de restaurantes y tiendas. Sin embargo, el estacionamiento era un poco complicado.", ""));
-            opinionRepository.save(new Opinion(usuario20, inmueble4, 5.1, "La decoración del inmueble era increíble y la cocina estaba bien equipada. La ubicación era céntrica, lo que facilitó el acceso a lugares de interés turístico y restaurantes.", "https://i.postimg.cc/667jfnvq/venta-de-departamento-cajamarca-groenlandia-3-dormitorios-4-ba-os-2030093660989036323.jpg"));
-            opinionRepository.save(new Opinion(usuario7, inmueble9, 4.5, "El departamento era acogedor y tenía una excelente vista. La comunicación con el anfitrión fue fluida. Sin embargo, el colchón de la cama podría haber sido más cómodo.", ""));
-            opinionRepository.save(new Opinion(usuario18, inmueble1, 3.8, "La ubicación era buena, pero el lugar necesitaba mejoras en la limpieza y mantenimiento. Además, el Wi-Fi no funcionaba correctamente.", ""));
-            opinionRepository.save(new Opinion(usuario5, inmueble15, 5.0, "Disfrutamos mucho de nuestra estancia en esta casa. Estaba bien amueblada y tenía un hermoso jardín. El anfitrión fue muy atento y nos proporcionó recomendaciones locales.", "https://i.postimg.cc/mrXjQgZ7/ey-Jid-WNr-ZXQi-Oi-Jwcm-Qtb-Glmd-Wxs-Y29ubm-Vjd-C1i-YWNr-ZW5k-LWIy-Yi1pb-WFn-ZXMi-LCJr-ZXki-Oi-Jwcm9w-ZXJ0a-WVz-L2-U5-OTM2-Mz-Jk.jpg"));
-            opinionRepository.save(new Opinion(usuario14, inmueble6, 4.9, "El inmueble tenía una terraza agradable y estaba cerca de tiendas y restaurantes. La comunicación con el anfitrión fue buena. No obstante, el ruido del vecindario por las noches era un poco molesto.", ""));
-            opinionRepository.save(new Opinion(usuario2, inmueble19, 4.4, "El lugar era bastante amplio y tenía mucha luz natural. La ubicación era conveniente. Sin embargo, la conexión a internet podría haber sido mejor.", ""));
-            opinionRepository.save(new Opinion(usuario16, inmueble10, 3.3, "El apartamento estaba bien, pero le faltaba mantenimiento en algunas áreas. Además, el equipamiento de la cocina era escaso.", "https://i.postimg.cc/B6zFv8Sw/que-es-un-departamento-duplex.jpg"));
-            opinionRepository.save(new Opinion(usuario1, inmueble18, 5.0, "La casa estaba impecablemente limpia y tenía todas las comodidades necesarias. El anfitrión fue muy atento y nos ayudó con todas nuestras dudas.", ""));
-            opinionRepository.save(new Opinion(usuario17, inmueble2, 4.4, "El apartamento tenía una buena ubicación, cerca de parques y supermercados. La comunicación con el anfitrión fue fluida. No obstante, la presión del agua en la ducha era baja.", "https://i.postimg.cc/6pVCh5cy/venta-de-un-departamento-DEV358951660704964-13.jpg"));
-            opinionRepository.save(new Opinion(usuario8, inmueble16, 4.2, "El inmueble contaba con un diseño agradable y estaba bien ubicado. El anfitrión fue amable. Sin embargo, faltaba un poco de limpieza en el baño.", ""));
-            opinionRepository.save(new Opinion(usuario10, inmueble13, 5.0, "El departamento era espacioso y tenía una excelente vista. La ubicación era perfecta para explorar la ciudad. El anfitrión fue atento y siempre estuvo disponible para ayudarnos.", ""));
-            opinionRepository.save(new Opinion(usuario19, inmueble4, 3.1, "Hola, no me gusta", "https://i.postimg.cc/k5mRVLnk/84459.png"));
-            opinionRepository.save(new Opinion(usuario19, inmueble18, 3.2, "Hola no me gusto", "https://i.postimg.cc/k5mRVLnk/84459.png"));
-            opinionRepository.save(new Opinion(usuario19, inmueble6, 3.5, "Hola, sigue sin gustarme", "https://i.postimg.cc/k5mRVLnk/84459.png"));
-            opinionRepository.save(new Opinion(usuario19, inmueble7, 4.8, "Me gusto mucho el inmueble", "https://i.postimg.cc/k5mRVLnk/84459.png"));
-            opinionRepository.save(new Opinion(usuario19, inmueble7, 3.5, "No me gusto mucho el inmueble", "https://i.postimg.cc/k5mRVLnk/84459.png"));
-            opinionRepository.save(new Opinion(usuario19, inmueble9, 5.0, "Me gusto mucho el inmueble", "https://i.postimg.cc/k5mRVLnk/84459.png"));
-            opinionRepository.save(new Opinion(usuario19, inmueble19, 3.2, "El lugar era bastante amplio y tenía mucha luz natural. La ubicación era conveniente. Sin embargo, la conexión a internet podría haber sido mejor.", "https://i.postimg.cc/k5mRVLnk/84459.png"));
-            opinionRepository.save(new Opinion(usuario19, inmueble1, 2.3, "No me gusta", "https://i.postimg.cc/k5mRVLnk/84459.png"));
-            opinionRepository.save(new Opinion(usuario19, inmueble8, 3.5, "Me gusta", "https://i.postimg.cc/k5mRVLnk/84459.png"));
-            opinionRepository.save(new Opinion(usuario19, inmueble5, 4.8, "Excelente experiencia", "https://i.postimg.cc/k5mRVLnk/84459.png"));
+            opinionRepository.save(new Opinion(usuario1, inmueble1, 4.3, "El inmueble estaba bien ubicado y era cómodo. La comunicación con el anfitrión fue excelente. Sin embargo, el baño podría haber estado más limpio."));
+            opinionRepository.save(new Opinion(usuario3, inmueble4, 5.0, "Gran experiencia en este inmueble. Las habitaciones eran amplias y la ubicación perfecta. La atención del anfitrión fue inmejorable."));
+            opinionRepository.save(new Opinion(usuario20, inmueble6, 3.1, "El inmueble estaba bien en general, pero la conexión a internet era lenta y la cocina necesitaba más utensilios."));
+            opinionRepository.save(new Opinion(usuario5, inmueble2, 5.0, "Pasamos un tiempo maravilloso en este inmueble. Las habitaciones eran cómodas y la cocina estaba bien equipada. La ubicación era excelente, cerca de restaurantes y tiendas."));
+            opinionRepository.save(new Opinion(usuario11, inmueble8, 4.2, "El inmueble era amplio y limpio. La ubicación era conveniente, pero el ruido de la calle era un poco molesto durante la noche."));
+            opinionRepository.save(new Opinion(usuario8, inmueble14, 3.1, "El inmueble tenía una excelente ubicación, pero faltaba mantenimiento en algunas áreas. La atención del anfitrión fue buena."));
+            opinionRepository.save(new Opinion(usuario10, inmueble14, 4.7, "El inmueble era agradable y cómodo, pero podría haber estado un poco más limpio. La atención del anfitrión fue muy amable y atenta."));
+            opinionRepository.save(new Opinion(usuario19, inmueble12, 4.5, "El inmueble estaba bien ubicado y tenía un diseño agradable. El anfitrión fue atento, pero había poco espacio para guardar nuestras pertenencias."));
+            opinionRepository.save(new Opinion(usuario17, inmueble14, 5.0, "Disfrutamos mucho de nuestra estancia en este inmueble. Era espacioso, cómodo y bien decorado. El anfitrión fue muy amable y siempre estuvo disponible para responder nuestras preguntas."));
+            opinionRepository.save(new Opinion(usuario1, inmueble16, 3.4, "El inmueble era básico pero funcional. La ubicación era buena, pero el ruido de los vecinos era un poco molesto. El anfitrión fue atento y servicial."));
+            opinionRepository.save(new Opinion(usuario17, inmueble15, 4.7, "El inmueble estaba limpio y bien cuidado, pero la conexión Wi-Fi era lenta y poco confiable. El anfitrión fue amable y atento a nuestras necesidades."));
+            opinionRepository.save(new Opinion(usuario6, inmueble17, 5.0, "El inmueble era hermoso y bien mantenido. La ubicación era excelente, y el anfitrión fue muy atento y siempre estuvo disponible para ayudarnos."));
+            opinionRepository.save(new Opinion(usuario12, inmueble13, 5.0, "Nos encantó nuestra estancia en este inmueble. Estaba impecablemente limpio y bien equipado. La ubicación era perfecta, y el anfitrión fue muy servicial y atento."));
+            opinionRepository.save(new Opinion(usuario6, inmueble12, 4.2, "El inmueble estaba en una ubicación conveniente y tenía todo lo necesario para nuestra estancia. Sin embargo, el ruido de la calle era un poco molesto por la noche."));
+            opinionRepository.save(new Opinion(usuario6, inmueble18, 3.2, "El inmueble era cómodo pero un poco antiguo. La ubicación era buena, pero el estacionamiento era un problema. El anfitrión fue amable y atento."));
+            opinionRepository.save(new Opinion(usuario19, inmueble9, 4.1, "El inmueble era agradable y tenía una buena ubicación. El anfitrión fue atento y servicial. Sin embargo, la conexión Wi-Fi era irregular y el estacionamiento era limitado."));
+            opinionRepository.save(new Opinion(usuario7, inmueble12, 5.0, "Disfrutamos mucho de nuestra estancia en este inmueble. La ubicación era excelente y el anfitrión fue muy amable y servicial. El inmueble estaba muy limpio y bien equipado."));
+            opinionRepository.save(new Opinion(usuario5, inmueble20, 4.6, "El inmueble estaba en buenas condiciones y la ubicación era conveniente. Sin embargo, el ruido del tráfico fue un problema durante nuestra estancia. El anfitrión fue amable y atento."));
+            opinionRepository.save(new Opinion(usuario11, inmueble11, 5.0, "Tuvimos una estancia estupenda en este inmueble. La ubicación era perfecta, cerca de tiendas y restaurantes. El anfitrión fue muy servicial y nos proporcionó todo lo que necesitábamos."));
+            opinionRepository.save(new Opinion(usuario5, inmueble8, 4.4, "El inmueble era cómodo y bien ubicado. La cocina estaba bien equipada, pero el baño necesitaba una actualización. El anfitrión fue muy amable y servicial."));
+            opinionRepository.save(new Opinion(usuario5, inmueble13, 5.0, "El inmueble tenía una vista increíble y estaba ubicado en un vecindario tranquilo. ¡Definitivamente lo recomendaría!"));
+            opinionRepository.save(new Opinion(usuario17, inmueble3, 3.2, "El inmueble estaba bastante limpio, pero algunos electrodomésticos no funcionaban correctamente y la conexión Wi-Fi era inestable."));
+            opinionRepository.save(new Opinion(usuario9, inmueble6, 4.0, "Disfrutamos nuestra estancia en este inmueble, aunque el estacionamiento era un poco limitado. La ubicación era excelente."));
+            opinionRepository.save(new Opinion(usuario16, inmueble20, 5.0, "El diseño del inmueble era moderno y la atención al detalle era excepcional. Nos encantó nuestra estancia."));
+            opinionRepository.save(new Opinion(usuario9, inmueble15, 4.4, "El inmueble estaba en una ubicación conveniente, pero el ruido de la calle era un poco molesto por la noche. En general, una buena experiencia."));
+            opinionRepository.save(new Opinion(usuario3, inmueble14, 4.9, "El departamento es espacioso y bien ubicado. La atención del anfitrión fue excelente. Sin embargo, el ruido de la calle era un poco molesto por las noches."));
+            opinionRepository.save(new Opinion(usuario19, inmueble5, 5.0, "Nos encantó nuestra estadía en este inmueble. La vista era increíble y estaba cerca de restaurantes y tiendas. El anfitrión fue muy amable y atento."));
+            opinionRepository.save(new Opinion(usuario6, inmueble11, 3.1, "El lugar estaba bien, pero la limpieza dejaba mucho que desear. Además, hubo problemas con el Wi-Fi durante nuestra estancia."));
+            opinionRepository.save(new Opinion(usuario15, inmueble20, 4.3, "El inmueble era cómodo y tenía todo lo necesario para nuestra estancia. La ubicación era conveniente. Sin embargo, sería bueno agregar más utensilios de cocina."));
+            opinionRepository.save(new Opinion(usuario9, inmueble3, 4.5, "El apartamento estaba bien ubicado y tenía una decoración agradable. La comunicación con el anfitrión fue buena. Aunque el baño podría haber estado más limpio."));
+            opinionRepository.save(new Opinion(usuario4, inmueble17, 5.0, "La casa era encantadora y muy espaciosa. La zona era tranquila y perfecta para nuestro grupo. El anfitrión fue muy atento y nos proporcionó información útil sobre la zona."));
+            opinionRepository.save(new Opinion(usuario13, inmueble8, 3.5, "El inmueble estaba bien ubicado, pero la limpieza no era la mejor. Encontramos algunas áreas sucias y había un olor desagradable en el baño."));
+            opinionRepository.save(new Opinion(usuario11, inmueble12, 4.3, "El departamento tenía una vista maravillosa y estaba cerca de restaurantes y tiendas. Sin embargo, el estacionamiento era un poco complicado."));
+            opinionRepository.save(new Opinion(usuario20, inmueble4, 5.1, "La decoración del inmueble era increíble y la cocina estaba bien equipada. La ubicación era céntrica, lo que facilitó el acceso a lugares de interés turístico y restaurantes."));
+            opinionRepository.save(new Opinion(usuario7, inmueble9, 4.5, "El departamento era acogedor y tenía una excelente vista. La comunicación con el anfitrión fue fluida. Sin embargo, el colchón de la cama podría haber sido más cómodo."));
+            opinionRepository.save(new Opinion(usuario18, inmueble1, 3.8, "La ubicación era buena, pero el lugar necesitaba mejoras en la limpieza y mantenimiento. Además, el Wi-Fi no funcionaba correctamente."));
+            opinionRepository.save(new Opinion(usuario5, inmueble15, 5.0, "Disfrutamos mucho de nuestra estancia en esta casa. Estaba bien amueblada y tenía un hermoso jardín. El anfitrión fue muy atento y nos proporcionó recomendaciones locales."));
+            opinionRepository.save(new Opinion(usuario14, inmueble6, 4.9, "El inmueble tenía una terraza agradable y estaba cerca de tiendas y restaurantes. La comunicación con el anfitrión fue buena. No obstante, el ruido del vecindario por las noches era un poco molesto."));
+            opinionRepository.save(new Opinion(usuario2, inmueble19, 4.4, "El lugar era bastante amplio y tenía mucha luz natural. La ubicación era conveniente. Sin embargo, la conexión a internet podría haber sido mejor."));
+            opinionRepository.save(new Opinion(usuario16, inmueble10, 3.3, "El apartamento estaba bien, pero le faltaba mantenimiento en algunas áreas. Además, el equipamiento de la cocina era escaso."));
+            opinionRepository.save(new Opinion(usuario1, inmueble18, 5.0, "La casa estaba impecablemente limpia y tenía todas las comodidades necesarias. El anfitrión fue muy atento y nos ayudó con todas nuestras dudas."));
+            opinionRepository.save(new Opinion(usuario17, inmueble2, 4.4, "El apartamento tenía una buena ubicación, cerca de parques y supermercados. La comunicación con el anfitrión fue fluida. No obstante, la presión del agua en la ducha era baja."));
+            opinionRepository.save(new Opinion(usuario8, inmueble16, 4.2, "El inmueble contaba con un diseño agradable y estaba bien ubicado. El anfitrión fue amable. Sin embargo, faltaba un poco de limpieza en el baño."));
+            opinionRepository.save(new Opinion(usuario10, inmueble13, 5.0, "El departamento era espacioso y tenía una excelente vista. La ubicación era perfecta para explorar la ciudad. El anfitrión fue atento y siempre estuvo disponible para ayudarnos."));
+            opinionRepository.save(new Opinion(usuario19, inmueble4, 3.1, "Hola, no me gusta"));
+            opinionRepository.save(new Opinion(usuario19, inmueble18, 3.2, "Hola no me gusto"));
+            opinionRepository.save(new Opinion(usuario19, inmueble6, 3.5, "Hola, sigue sin gustarme"));
+            opinionRepository.save(new Opinion(usuario19, inmueble7, 4.8, "Me gusto mucho el inmueble"));
+            opinionRepository.save(new Opinion(usuario19, inmueble7, 3.5, "No me gusto mucho el inmueble"));
+            opinionRepository.save(new Opinion(usuario19, inmueble9, 5.0, "Me gusto mucho el inmueble"));
+            opinionRepository.save(new Opinion(usuario19, inmueble19, 3.2, "El lugar era bastante amplio y tenía mucha luz natural. La ubicación era conveniente. Sin embargo, la conexión a internet podría haber sido mejor."));
+            opinionRepository.save(new Opinion(usuario19, inmueble1, 2.3, "No me gusta"));
+            opinionRepository.save(new Opinion(usuario19, inmueble8, 3.5, "Me gusta"));
+            opinionRepository.save(new Opinion(usuario19, inmueble5, 4.8, "Excelente experiencia"));
 
             System.out.println("--------------");
 

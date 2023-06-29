@@ -4,16 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AlquilerRequest {
+public class TipoCaracteristica {
 
-    private Long client_id;
-    private Long inmueble_id;
-    private Double price;
-    private Date transactionDate;
-
+    private String featureType;
+    private String featureName;
 }
