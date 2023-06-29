@@ -72,7 +72,7 @@ public class AlquilerServiceImpl implements AlquilerService {
 
             String monthString = new String();
             String dayString = new String();
-            Integer year= a.getTransactionDate().getYear() + 1990;
+            Integer year= a.getTransactionDate().getYear() + 1900;
             Integer month = a.getTransactionDate().getMonth()+ 1; //2022 - 3 - 6     2022-03-06
             Integer day = a.getTransactionDate().getDate();
 
@@ -92,7 +92,7 @@ public class AlquilerServiceImpl implements AlquilerService {
             Boolean active = a.getActivate();
             Long property_id = a.getInmueble().getId();
 
-            alquilerList.add(new AlquilerResponse(location, fullNameOwner, price, transactionDate, active, property_id));
+            alquilerList.add(new AlquilerResponse(a.getId() ,location, fullNameOwner, price, transactionDate, active, property_id));
         }
         return alquilerList;
     }
