@@ -11,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class AlquilerResponse {
 
-
+    private Long id;
     private String location; //Ubicación
     private String fullNameOwner; //Nombre completo del propietario
     private Double price; //Precio alquiler
