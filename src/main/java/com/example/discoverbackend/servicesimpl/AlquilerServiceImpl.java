@@ -25,10 +25,16 @@ public class AlquilerServiceImpl implements AlquilerService {
     InmuebleRepository inmuebleRepository;
 
     public Alquiler createAlquiler(AlquilerRequest alquiler) {
+        List<Alquiler> alquileresAnteriores = alquilerRepository.findByClient_Id(alquiler.getClient_id());
+        for (Alquiler a : alquileresAnteriores) {
+            a.setActivate(false);
+            alquilerRepository.save(a);
+        }
         Usuario usuario = usuarioRepository.findById(alquiler.getClient_id()).get();
         Inmueble inmueble = inmuebleRepository.findById(alquiler.getInmueble_id()).get();
         Alquiler newAlquiler = new Alquiler(usuario, inmueble, alquiler.getPrice(), alquiler.getTransactionDate(), true);
         Alquiler savedAlquiler = alquilerRepository.save(newAlquiler);
+
         savedAlquiler.getClient().setInmuebles(null);
         savedAlquiler.getClient().setOpiniones(null);
         for(RoleUser ru: savedAlquiler.getClient().getRoles()){
