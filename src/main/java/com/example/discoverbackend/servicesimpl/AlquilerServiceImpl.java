@@ -67,9 +67,28 @@ public class AlquilerServiceImpl implements AlquilerService {
         List<Alquiler> alquileres = alquilerRepository.findByClient_Id(id);
         for (Alquiler a : alquileres) {
             String location = a.getInmueble().getAddress();
-            String fullNameOwner = a.getInmueble().getUsuario().getFirstName() + a.getInmueble().getUsuario().getLastNameDad() + a.getInmueble().getUsuario().getLastNameMom();
+            String fullNameOwner = a.getInmueble().getUsuario().getFirstName()+" " + a.getInmueble().getUsuario().getLastNameDad()+ " " + a.getInmueble().getUsuario().getLastNameMom();
             Double price = a.getPrice();
-            Date transactionDate = a.getTransactionDate();
+
+            String monthString = new String();
+            String dayString = new String();
+            Integer year= a.getTransactionDate().getYear() + 1990;
+            Integer month = a.getTransactionDate().getMonth()+ 1; //2022 - 3 - 6     2022-03-06
+            Integer day = a.getTransactionDate().getDate();
+
+            if (month<10){
+                monthString = "0"+month;
+
+            }else if (month>=10){
+                monthString = month.toString();
+            }
+            if (day<10){
+                dayString="0"+day;
+            }else if (day>=10) {
+                dayString=day.toString();
+            }
+
+            String transactionDate = year + " - "+monthString +" - " +dayString;
             Boolean active = a.getActivate();
             Long property_id = a.getInmueble().getId();
 

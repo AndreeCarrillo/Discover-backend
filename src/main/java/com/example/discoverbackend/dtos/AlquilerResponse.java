@@ -15,7 +15,7 @@ public class AlquilerResponse {
     private String location; //Ubicación
     private String fullNameOwner; //Nombre completo del propietario
     private Double price; //Precio alquiler
-    private Date transactionDate; //Fecha transacción
+    private String transactionDate; //Fecha transacción
     private Boolean active; //Alquiler activo
     private Long property_id; //Inmueble ID
 }
