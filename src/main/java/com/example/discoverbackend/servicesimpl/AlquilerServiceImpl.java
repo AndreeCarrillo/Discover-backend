@@ -35,6 +35,8 @@ public class AlquilerServiceImpl implements AlquilerService {
         }
         Usuario usuario = usuarioRepository.findById(alquiler.getClient_id()).get();
         Inmueble inmueble = inmuebleRepository.findById(alquiler.getInmueble_id()).get();
+        if(inmueble.getUsuario().getId().equals(usuario.getId()))
+            throw new RuntimeException("Dueño no puede alquilar su propio inmueble");
         Alquiler newAlquiler = new Alquiler(usuario, inmueble, alquiler.getPrice(), alquiler.getTransactionDate(), true);
         Alquiler savedAlquiler = alquilerRepository.save(newAlquiler);
 

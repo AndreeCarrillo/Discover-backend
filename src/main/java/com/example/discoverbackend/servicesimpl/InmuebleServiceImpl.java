@@ -121,10 +121,8 @@ public class InmuebleServiceImpl implements InmuebleService {
            inmuebleCaracteristicaRepository.save(new InmuebleCaracteristica(saveInmueble, newCaracteristica));
         }
         for (Long caracteristicaId : inmueble.getCaracteristicasIds()){
-            InmuebleCaracteristica inmuebleCaracteristica = new InmuebleCaracteristica(saveInmueble, caracteristicaRepository.findById(caracteristicaId).get());
-            inmuebleCaracteristicaRepository.save(inmuebleCaracteristica);
+            saveInmueble.setInmuebleFotoList(null);
         }
-        saveInmueble.setInmuebleFotoList(null);
         saveInmueble.getUsuario().setInmuebles(null);
         saveInmueble.getUsuario().setOpiniones(null);
         saveInmueble.getUsuario().setRoles(null);
