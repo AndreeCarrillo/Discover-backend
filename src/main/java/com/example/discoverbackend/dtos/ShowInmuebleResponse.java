@@ -18,6 +18,7 @@ public class ShowInmuebleResponse {
     private String address;
     private String timeAntiquity;
     private List<String> inmuebleFotoList;
+    private String typeProperty;
     private Double price;
     private Integer numGuests;
     private List<DTOIconCaracteristica> listCaracteristaInmuebleIcons;

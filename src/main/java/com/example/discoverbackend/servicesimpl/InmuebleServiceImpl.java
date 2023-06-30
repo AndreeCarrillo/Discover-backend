@@ -97,7 +97,7 @@ public class InmuebleServiceImpl implements InmuebleService {
         DTOContactoUsuario owner =usuarioService.listContactoUsuario(i.getUsuario().getId());
         List<DTOOpinion> listOpinions = getInmuebleOpinions(i);
 
-        ShowInmuebleResponse showInmuebleResponse = new ShowInmuebleResponse(id, i.getAddress(), i.getTimeAntiquity(),photoUrls, i.getPrice(),i.getNumGuests(),listCaracteristaInmuebleIcons,owner,i.getUsuario().getLinkPhotoProfile(),i.getNumBedrooms(),i.getNumBathrooms(), i.getSquareMeter(),i.getDescription(),listOpinions);
+        ShowInmuebleResponse showInmuebleResponse = new ShowInmuebleResponse(id, i.getAddress(), i.getTimeAntiquity(),photoUrls,i.getPropertyType(), i.getPrice(),i.getNumGuests(),listCaracteristaInmuebleIcons,owner,i.getUsuario().getLinkPhotoProfile(),i.getNumBedrooms(),i.getNumBathrooms(), i.getSquareMeter(),i.getDescription(),listOpinions);
         return showInmuebleResponse;
     }
 
