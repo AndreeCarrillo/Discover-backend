@@ -8,9 +8,6 @@ import java.util.List;
 
 public interface InmuebleCaracteristicaRepository extends JpaRepository<InmuebleCaracteristica,Long> {
 
-    @Query(value = "SELECT*FROM InmuebleCaracteristica where inmueble_id=?1", nativeQuery = true)
-    List<InmuebleCaracteristica> findByInmueble_Id(Long id);
-
     List<InmuebleCaracteristica> deleteAllByInmueble_Id(Long id);
 
 }
